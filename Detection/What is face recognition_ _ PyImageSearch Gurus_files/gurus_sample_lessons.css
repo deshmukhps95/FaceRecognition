@@ -1,0 +1,35 @@
+/* GENERAL STYLES */
+#top{background: url('https://gurus.pyimagesearch.com/wp-content/uploads/2015/10/sample_lesson.png') 0px 0px repeat;}
+#un-button{display: none;}
+
+/* WIDGET STYLES */
+.widget.widget-text.pyimg_tour_signup_widget_box{
+	padding: 15px; max-width: 282px; background-color: #F2F1F3; position: fixed;
+	-webkit-box-shadow: 2px 2px 5px 0px rgba(0, 0, 0, 0.35);
+	-moz-box-shadow: 2px 2px 5px 0px rgba(0, 0, 0, 0.35);
+	box-shadow: 2px 2px 5px 0px rgba(0, 0, 0, 0.35);
+}
+.widget.widget-text.pyimg_tour_signup_widget_box a{padding: 10px; font-size: 14px; text-align: center; font-weight: bold; color: #FFFFFF; background-color: #EB4946; display: block;}
+
+/* MODAL STYLES */
+.remodal h2{font-size: 24px;}
+.remodal p{font-size: 16px;}
+.remodal button{font-size: 16px; font-weight: bold;}
+.remodal button.remodal-confirm, .remodal button.remodal-cancel{padding-left: 12px; padding-right: 12px;}
+.remodal button.remodal-cancel{margin-left: 10px;}
+
+/* SIGNUP STYLES */
+#tour_signup_container{color: #333333;}
+#tour_signup_container h2{margin-top: 0px; font-size: 22px;}
+#tour_signup_container h2 span{font-weight: normal;}
+#tour_signup_container .memberships{margin-top: 20px;}
+#tour_signup_container .membership-left, #tour_signup_container .membership-right{padding-bottom: 20px; width: 305px; border: 1px solid #F0F0F0;}
+#tour_signup_container .membership-right{float: right;}
+#tour_signup_container .membership-title{padding-top: 5px; padding-bottom: 5px; font-size: 16px; font-weight: bold; color: #FFFFFF; background-color: #169FE6;}
+#tour_signup_container .membership-pricing{padding-top: 10px; padding-bottom: 10px; font-size: 28px; font-weight: bold; background-color: #F8F8F8;}
+#tour_signup_container .membership-pricing .membership-terms{font-size: 14px; font-weight: normal; font-style: italic;}
+#tour_signup_container .membership-features{padding: 5px;}
+#tour_signup_container .membership-features ul{margin-bottom: 15px; font-size: 13px; text-align: left;}
+#tour_signup_container .membership-join .signupbtn{margin-left: auto; margin-right: auto; padding: 10px; width: 90%; font-size: 18px; font-weight: bold; color: #FFFFFF; background-color: #EB4946; cursor: pointer;}
+#tour_signup_container .membership-closed{margin-left: auto; margin-right: auto; padding: 10px; width: 90%; color: #FFFFFF; background-color: #EB4946;}
+#tour_signup_container .membership-closed span{border-bottom: 1px dotted #FFFFFF; cursor: pointer;}

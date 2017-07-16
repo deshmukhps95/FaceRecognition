@@ -1,0 +1,967 @@
+<!DOCTYPE html>
+<!-- saved from url=(0134)https://gurus.pyimagesearch.com/lesson-sample-k-nearest-neighbor-classification/?email=deshmukhps95@gmail.com&__s=g47dwoaicn3csu3kv1b8 -->
+<html class=" js no-touch cssanimations csstransforms csstransforms3d csstransitions" lang="en-US" style=""><!--<![endif]--><head><meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+  
+
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>k-Nearest Neighbor classification | PyImageSearch Gurus</title>
+<link rel="pingback" href="https://gurus.pyimagesearch.com/xmlrpc.php"><link rel="shortcut icon" href="https://www.pyimagesearch.com/wp-content/themes/canvas/favicon.ico"><link rel="alternate" type="application/rss+xml" title="PyImageSearch Gurus » Feed" href="https://gurus.pyimagesearch.com/feed/">
+<link rel="alternate" type="application/rss+xml" title="PyImageSearch Gurus » Comments Feed" href="https://gurus.pyimagesearch.com/comments/feed/">
+		<script async="" src="./k-Nearest Neighbor classification _ PyImageSearch Gurus_files/analytics.js.download"></script><script async="" src="./k-Nearest Neighbor classification _ PyImageSearch Gurus_files/fbevents.js.download"></script><script type="text/javascript" async="" src="./k-Nearest Neighbor classification _ PyImageSearch Gurus_files/4768429.js.download"></script><script type="text/javascript" async="" src="./k-Nearest Neighbor classification _ PyImageSearch Gurus_files/54220efd7ab7f03f7e000043.js.download"></script><script type="text/javascript" async="" src="./k-Nearest Neighbor classification _ PyImageSearch Gurus_files/4768429.js.download"></script><script type="text/javascript">
+			window._wpemojiSettings = {"baseUrl":"https:\/\/s.w.org\/images\/core\/emoji\/72x72\/","ext":".png","source":{"concatemoji":"https:\/\/gurus.pyimagesearch.com\/wp-includes\/js\/wp-emoji-release.min.js?ver=4.4.2"}};
+			!function(a,b,c){function d(a){var c,d=b.createElement("canvas"),e=d.getContext&&d.getContext("2d"),f=String.fromCharCode;return e&&e.fillText?(e.textBaseline="top",e.font="600 32px Arial","flag"===a?(e.fillText(f(55356,56806,55356,56826),0,0),d.toDataURL().length>3e3):"diversity"===a?(e.fillText(f(55356,57221),0,0),c=e.getImageData(16,16,1,1).data.toString(),e.fillText(f(55356,57221,55356,57343),0,0),c!==e.getImageData(16,16,1,1).data.toString()):("simple"===a?e.fillText(f(55357,56835),0,0):e.fillText(f(55356,57135),0,0),0!==e.getImageData(16,16,1,1).data[0])):!1}function e(a){var c=b.createElement("script");c.src=a,c.type="text/javascript",b.getElementsByTagName("head")[0].appendChild(c)}var f,g;c.supports={simple:d("simple"),flag:d("flag"),unicode8:d("unicode8"),diversity:d("diversity")},c.DOMReady=!1,c.readyCallback=function(){c.DOMReady=!0},c.supports.simple&&c.supports.flag&&c.supports.unicode8&&c.supports.diversity||(g=function(){c.readyCallback()},b.addEventListener?(b.addEventListener("DOMContentLoaded",g,!1),a.addEventListener("load",g,!1)):(a.attachEvent("onload",g),b.attachEvent("onreadystatechange",function(){"complete"===b.readyState&&c.readyCallback()})),f=c.source||{},f.concatemoji?e(f.concatemoji):f.wpemoji&&f.twemoji&&(e(f.twemoji),e(f.wpemoji)))}(window,document,window._wpemojiSettings);
+		</script><script src="./k-Nearest Neighbor classification _ PyImageSearch Gurus_files/wp-emoji-release.min.js.download" type="text/javascript"></script>
+		<style type="text/css">
+img.wp-smiley,
+img.emoji {
+	display: inline !important;
+	border: none !important;
+	box-shadow: none !important;
+	height: 1em !important;
+	width: 1em !important;
+	margin: 0 .07em !important;
+	vertical-align: -0.1em !important;
+	background: none !important;
+	padding: 0 !important;
+}
+</style>
+<link rel="stylesheet" id="usernoise-button-css" href="./k-Nearest Neighbor classification _ PyImageSearch Gurus_files/button.css" type="text/css" media="all">
+<link rel="stylesheet" id="usernoise-form-css" href="./k-Nearest Neighbor classification _ PyImageSearch Gurus_files/form.css" type="text/css" media="all">
+<link rel="stylesheet" id="font-awesome-css" href="./k-Nearest Neighbor classification _ PyImageSearch Gurus_files/font-awesome.css" type="text/css" media="all">
+<link rel="stylesheet" id="dashicons-css" href="./k-Nearest Neighbor classification _ PyImageSearch Gurus_files/dashicons.min.css" type="text/css" media="all">
+<link rel="stylesheet" id="thickbox-css" href="./k-Nearest Neighbor classification _ PyImageSearch Gurus_files/thickbox.css" type="text/css" media="all">
+<link rel="stylesheet" id="crayon-css" href="./k-Nearest Neighbor classification _ PyImageSearch Gurus_files/crayon.min.css" type="text/css" media="all">
+<link rel="stylesheet" id="crayon-theme-arduino-ide-css" href="./k-Nearest Neighbor classification _ PyImageSearch Gurus_files/arduino-ide.css" type="text/css" media="all">
+<link rel="stylesheet" id="crayon-font-ubuntu-mono-css" href="./k-Nearest Neighbor classification _ PyImageSearch Gurus_files/ubuntu-mono.css" type="text/css" media="all">
+<link rel="stylesheet" id="gurus_remodal_css-css" href="./k-Nearest Neighbor classification _ PyImageSearch Gurus_files/remodal.css" type="text/css" media="all">
+<link rel="stylesheet" id="gurus_remodal_theme_css-css" href="./k-Nearest Neighbor classification _ PyImageSearch Gurus_files/remodal-default-theme.css" type="text/css" media="all">
+<link rel="stylesheet" id="gurus_sample_lesson_css-css" href="./k-Nearest Neighbor classification _ PyImageSearch Gurus_files/gurus_sample_lessons.css" type="text/css" media="all">
+<link rel="stylesheet" id="mp-theme-css" href="./k-Nearest Neighbor classification _ PyImageSearch Gurus_files/theme.css" type="text/css" media="all">
+<link rel="stylesheet" id="wpProQuiz_front_style-css" href="./k-Nearest Neighbor classification _ PyImageSearch Gurus_files/wpProQuiz_front.min.css" type="text/css" media="all">
+<link rel="stylesheet" id="learndash_style-css" href="./k-Nearest Neighbor classification _ PyImageSearch Gurus_files/style.css" type="text/css" media="all">
+<link rel="stylesheet" id="sfwd_front_css-css" href="./k-Nearest Neighbor classification _ PyImageSearch Gurus_files/front.css" type="text/css" media="all">
+<link rel="stylesheet" id="jquery-dropdown-css-css" href="./k-Nearest Neighbor classification _ PyImageSearch Gurus_files/jquery.dropdown.min.css" type="text/css" media="all">
+<link rel="stylesheet" id="sfwd_template_css-css" href="./k-Nearest Neighbor classification _ PyImageSearch Gurus_files/learndash_template_style.css" type="text/css" media="all">
+<link rel="stylesheet" id="badgeos-single-css" href="./k-Nearest Neighbor classification _ PyImageSearch Gurus_files/badgeos-single.css" type="text/css" media="all">
+<link rel="stylesheet" id="x-stack-css" href="./k-Nearest Neighbor classification _ PyImageSearch Gurus_files/renew.css" type="text/css" media="all">
+<link rel="stylesheet" id="x-child-css" href="./k-Nearest Neighbor classification _ PyImageSearch Gurus_files/style(1).css" type="text/css" media="all">
+<link rel="stylesheet" id="x-google-fonts-css" href="./k-Nearest Neighbor classification _ PyImageSearch Gurus_files/css" type="text/css" media="all">
+<script type="text/javascript" src="./k-Nearest Neighbor classification _ PyImageSearch Gurus_files/jquery.js.download"></script>
+<script type="text/javascript" src="./k-Nearest Neighbor classification _ PyImageSearch Gurus_files/jquery-migrate.min.js.download"></script>
+<script type="text/javascript">
+/* <![CDATA[ */
+var usernoiseButton = {"text":"Feedback","style":"background-color: #169FE6; color: #FFFFFF","class":"un-right","windowUrl":"\/wp-admin\/admin-ajax.php?action=un_load_window","showButton":"1","disableOnMobiles":"1"};
+/* ]]> */
+</script>
+<script type="text/javascript" src="./k-Nearest Neighbor classification _ PyImageSearch Gurus_files/usernoise.js.download"></script>
+<script type="text/javascript" src="./k-Nearest Neighbor classification _ PyImageSearch Gurus_files/button.js.download"></script>
+<script type="text/javascript">
+/* <![CDATA[ */
+var CrayonSyntaxSettings = {"version":"_2.7.2_beta","is_admin":"0","ajaxurl":"https:\/\/gurus.pyimagesearch.com\/wp-admin\/admin-ajax.php","prefix":"crayon-","setting":"crayon-setting","selected":"crayon-setting-selected","changed":"crayon-setting-changed","special":"crayon-setting-special","orig_value":"data-orig-value","debug":""};
+var CrayonSyntaxStrings = {"copy":"Press %s to Copy, %s to Paste","minimize":"Click To Expand Code"};
+/* ]]> */
+</script>
+<script type="text/javascript" src="./k-Nearest Neighbor classification _ PyImageSearch Gurus_files/crayon.min.js.download"></script>
+<script type="text/javascript" src="./k-Nearest Neighbor classification _ PyImageSearch Gurus_files/remodal.min.js.download"></script>
+<script type="text/javascript" src="./k-Nearest Neighbor classification _ PyImageSearch Gurus_files/jquery-dateFormat.min.js.download"></script>
+<script type="text/javascript" src="./k-Nearest Neighbor classification _ PyImageSearch Gurus_files/gurus_sample_lesson.js.download"></script>
+<script type="text/javascript" src="./k-Nearest Neighbor classification _ PyImageSearch Gurus_files/x-head.min.js.download"></script>
+<script type="text/javascript" src="./k-Nearest Neighbor classification _ PyImageSearch Gurus_files/x-shortcodes-head.min.js.download"></script>
+<link rel="https://api.w.org/" href="https://gurus.pyimagesearch.com/wp-json/">
+<link rel="canonical" href="https://gurus.pyimagesearch.com/lesson-sample-k-nearest-neighbor-classification/">
+<link rel="shortlink" href="https://gurus.pyimagesearch.com/?p=39428">
+<link rel="alternate" type="application/json+oembed" href="https://gurus.pyimagesearch.com/wp-json/oembed/1.0/embed?url=https%3A%2F%2Fgurus.pyimagesearch.com%2Flesson-sample-k-nearest-neighbor-classification%2F">
+<link rel="alternate" type="text/xml+oembed" href="https://gurus.pyimagesearch.com/wp-json/oembed/1.0/embed?url=https%3A%2F%2Fgurus.pyimagesearch.com%2Flesson-sample-k-nearest-neighbor-classification%2F&amp;format=xml">
+<style type="text/css">
+/* <![CDATA[ */
+img.latex { vertical-align: middle; border: none; }
+/* ]]> */
+</style>
+<style id="x-generated-css" type="text/css">a,h1 a:hover,h2 a:hover,h3 a:hover,h4 a:hover,h5 a:hover,h6 a:hover,.x-comment-time:hover,#reply-title small a,.comment-reply-link:hover,.x-comment-author a:hover,.x-recent-posts a:hover .h-recent-posts{color:#169fe6;}a:hover,#reply-title small a:hover{color:#169fe6;}.entry-title:before{color:#f1ba63;}a.x-img-thumbnail:hover,li.bypostauthor > article.comment{border-color:#169fe6;}.flex-direction-nav a,.flex-control-nav a:hover,.flex-control-nav a.flex-active,.x-dropcap,.x-skill-bar .bar,.x-pricing-column.featured h2,.h-comments-title small,.x-pagination a:hover,.x-entry-share .x-share:hover,.entry-thumb,.widget_tag_cloud .tagcloud a:hover,.widget_product_tag_cloud .tagcloud a:hover,.x-highlight,.x-recent-posts .x-recent-posts-img:after,.x-portfolio-filters{background-color:#169fe6;}.x-portfolio-filters:hover{background-color:#169fe6;}.x-main{width:68.79803%;}.x-sidebar{width:24.79803%;}.x-topbar .p-info,.x-topbar .p-info a,.x-topbar .x-social-global a{color:#ffffff;}.x-topbar .p-info a:hover{color:#959baf;}.x-topbar{background-color:#1f2c39;}.x-navbar .desktop .x-nav > li:before{padding-top:35px;}.x-navbar .desktop .x-nav > li > a,.x-navbar .desktop .sub-menu li > a,.x-navbar .mobile .x-nav li a{color:#ffffff;}.x-navbar .desktop .x-nav > li > a:hover,.x-navbar .desktop .x-nav > .x-active > a,.x-navbar .desktop .x-nav > .current-menu-item > a,.x-navbar .desktop .sub-menu li > a:hover,.x-navbar .desktop .sub-menu li.x-active > a,.x-navbar .desktop .sub-menu li.current-menu-item > a,.x-navbar .desktop .x-nav .x-megamenu > .sub-menu > li > a,.x-navbar .mobile .x-nav li > a:hover,.x-navbar .mobile .x-nav li.x-active > a,.x-navbar .mobile .x-nav li.current-menu-item > a{color:#ffffff;}.x-btn-navbar,.x-btn-navbar:hover{color:#ffffff;}.x-navbar .desktop .sub-menu li:before,.x-navbar .desktop .sub-menu li:after{background-color:#ffffff;}.x-navbar,.x-navbar .sub-menu{background-color:#169fe6 !important;}.x-btn-navbar,.x-btn-navbar.collapsed:hover{background-color:#666666;}.x-btn-navbar.collapsed{background-color:#444444;}.x-navbar .desktop .x-nav > li > a:hover > span,.x-navbar .desktop .x-nav > li.x-active > a > span,.x-navbar .desktop .x-nav > li.current-menu-item > a > span{box-shadow:0 2px 0 0 #ffffff;}.x-navbar .desktop .x-nav > li > a{height:90px;padding-top:35px;}.x-navbar .desktop .x-nav > li ul{top:90px;}.x-colophon.bottom{background-color:#ffffff;}.x-colophon.bottom,.x-colophon.bottom a,.x-colophon.bottom .x-social-global a{color:#a1a1a1;}.h-landmark{font-weight:300;}.x-comment-author a{color:#414141;}.x-comment-author a,.comment-form-author label,.comment-form-email label,.comment-form-url label,.comment-form-rating label,.comment-form-comment label,.widget_calendar #wp-calendar caption,.widget_calendar #wp-calendar th,.x-accordion-heading .x-accordion-toggle,.x-nav-tabs > li > a:hover,.x-nav-tabs > .active > a,.x-nav-tabs > .active > a:hover{color:#414141;}.widget_calendar #wp-calendar th{border-bottom-color:#414141;}.x-pagination span.current,.x-portfolio-filters-menu,.widget_tag_cloud .tagcloud a,.h-feature-headline span i,.widget_price_filter .ui-slider .ui-slider-handle{background-color:#414141;}@media (max-width:979px){}body{font-size:12px;font-style:normal;font-weight:300;color:#414141;background-color:#ffffff;}a:focus,select:focus,input[type="file"]:focus,input[type="radio"]:focus,input[type="submit"]:focus,input[type="checkbox"]:focus{outline:thin dotted #333;outline:5px auto #169fe6;outline-offset:-1px;}h1,h2,h3,h4,h5,h6,.h1,.h2,.h3,.h4,.h5,.h6{font-family:"Lato",sans-serif;font-style:normal;font-weight:900;}h1,.h1{letter-spacing:-0.018em;}h2,.h2{letter-spacing:-0.025em;}h3,.h3{letter-spacing:-0.031em;}h4,.h4{letter-spacing:-0.042em;}h5,.h5{letter-spacing:-0.048em;}h6,.h6{letter-spacing:-0.071em;}.w-h{font-weight:900 !important;}.x-container.width{width:90%;}.x-container.max{max-width:1220px;}.x-main.full{float:none;display:block;width:auto;}@media (max-width:979px){.x-main.full,.x-main.left,.x-main.right,.x-sidebar.left,.x-sidebar.right{float:none;display:block;width:auto !important;}}.entry-header,.entry-content{font-size:16px;}body,input,button,select,textarea{font-family:"Lato",sans-serif;}h1,h2,h3,h4,h5,h6,.h1,.h2,.h3,.h4,.h5,.h6,h1 a,h2 a,h3 a,h4 a,h5 a,h6 a,.h1 a,.h2 a,.h3 a,.h4 a,.h5 a,.h6 a,blockquote{color:#414141;}.cfc-h-tx{color:#414141 !important;}.cfc-h-bd{border-color:#414141 !important;}.cfc-h-bg{background-color:#414141 !important;}.cfc-b-tx{color:#414141 !important;}.cfc-b-bd{border-color:#414141 !important;}.cfc-b-bg{background-color:#414141 !important;}.x-navbar-inner{min-height:90px;}.x-brand{margin-top:20px;font-family:"Pacifico",cursive;font-size:44px;font-style:normal;font-weight:400;letter-spacing:-0.068em;color:#444444;}.x-brand:hover,.x-brand:focus{color:#444444;}.x-navbar .x-nav-wrap .x-nav > li > a{font-family:"Lato",sans-serif;font-style:normal;font-weight:700;letter-spacing:0.071em;text-transform:uppercase;}.x-navbar .desktop .x-nav > li > a{font-size:14px;}.x-navbar .desktop .x-nav > li > a:not(.x-btn-navbar-woocommerce){padding-left:14px;padding-right:14px;}.x-navbar .desktop .x-nav > li > a > span{margin-right:-0.071em;}.x-btn-navbar{margin-top:20px;}.x-btn-navbar,.x-btn-navbar.collapsed{font-size:22px;}@media (max-width:979px){.x-widgetbar{left:0;right:0;}}.x-btn,.button,[type="submit"]{color:#ffffff;border-color:#7fbf2a;background-color:#7fbf2a;margin-bottom:0.25em;text-shadow:0 0.075em 0.075em rgba(0,0,0,0.5);box-shadow:0 0.25em 0 0 #5f9f0a,0 4px 9px rgba(0,0,0,0.75);border-radius:0.25em;padding:0.579em 1.105em 0.842em;font-size:19px;}.x-btn:hover,.button:hover,[type="submit"]:hover{color:#fff;border-color:#7fbf2a;background-color:#7fbf2a;margin-bottom:0.25em;text-shadow:0 0.075em 0.075em rgba(0,0,0,0.5);box-shadow:0 0.25em 0 0 #5f9f0a,0 4px 9px rgba(0,0,0,0.75);}.x-btn.x-btn-real,.x-btn.x-btn-real:hover{margin-bottom:0.25em;text-shadow:0 0.075em 0.075em rgba(0,0,0,0.65);}.x-btn.x-btn-real{box-shadow:0 0.25em 0 0 #5f9f0a,0 4px 9px rgba(0,0,0,0.75);}.x-btn.x-btn-real:hover{box-shadow:0 0.25em 0 0 #5f9f0a,0 4px 9px rgba(0,0,0,0.75);}.x-btn.x-btn-flat,.x-btn.x-btn-flat:hover{margin-bottom:0;text-shadow:0 0.075em 0.075em rgba(0,0,0,0.65);box-shadow:none;}.x-btn.x-btn-transparent,.x-btn.x-btn-transparent:hover{margin-bottom:0;border-width:3px;text-shadow:none;text-transform:uppercase;background-color:transparent;box-shadow:none;}/* Adjust the color of paragraph blocks*/
+article p{color: #212121;}
+
+/* Adjust the link hover actions */
+a:hover{text-decoration: underline;}
+
+/* Make the logo fit in the header properly and add a border to the bottom of the header */
+a.x-brand img {margin-top: -15px;}
+header.masthead.masthead-inline{border-top: 5px solid #068fd6; border-bottom: 1px solid #068fd6}
+
+/* Adjust post header sizes */
+article.post header.entry-header h1.entry-title{font-size: 250%;}
+article.post .entry-content.content h1{font-size: 200%;}
+article.post .entry-content.content h2{font-size: 142.85%;}
+article.post .entry-content.content h3{font-size: 114.25%;}
+article.post .entry-content.content h4{font-size: 85.7%;}
+article.post .entry-content.content h5{font-size: 75%;}
+article.post .entry-content.content h6{font-size: 50%;}
+article.post header.entry-header h1.entry-title, article.sfwd-lessons header.entry-header h1.entry-title, article.sfwd-topic header.entry-header h1.entry-title{font-size: 250%;}
+
+/* Adjust the course in post headers */
+article.sfwd-lessons .learndash.user_has_access h1, article.sfwd-topic .learndash.user_has_access h1, article.page h1{font-size: 200%;}
+article.sfwd-lessons .learndash.user_has_access h2, article.sfwd-topic .learndash.user_has_access h2, article.page h2{font-size: 142.85%;}
+article.sfwd-lessons .learndash.user_has_access h3, article.sfwd-topic .learndash.user_has_access h3, article.page h3{font-size: 114.25%;}
+article.sfwd-lessons .learndash.user_has_access h4, article.sfwd-topic .learndash.user_has_access h4, article.page h4{font-size: 85.7%;}
+article.sfwd-lessons .learndash.user_has_access h5, article.sfwd-topic .learndash.user_has_access h5, article.page h5{font-size: 75%;}
+article.sfwd-lessons .learndash.user_has_access h6, article.sfwd-topic.learndash.user_has_access h6, article.page h6{font-size: 50%;}
+article.post header.entry-header h1.entry-title{font-size: 250%;}
+
+/* Make the post icon the standard blue */
+h1.entry-title::before, h2.entry-title::before{color: #169fe6}
+
+/* Hide the author attribution section and the tags section */
+article.post p.p-meta, article.post footer.entry-footer.cf{display: none;}
+article.sfwd-lessons header.entry-header p.p-meta{display: none;}
+article.sfwd-topic header.entry-header p.p-meta{display: none;}
+article.sfwd-courses header.entry-header{display: none;}
+article.sfwd-courses footer.entry-footer.cf{display: none;}
+article.sfwd-topic footer.entry-footer.cf{display: none;}
+article.page footer.entry-footer.cf{display: none;}
+
+/* Format quizzes */
+article.sfwd-quiz header.entry-header{display: none;}
+article.sfwd-quiz footer.entry-footer{display: none;}
+article.sfwd-quiz .wpProQuiz_content h2{margin-top: 0px;}
+
+/* Course table updates */
+article.sfwd-courses #learndash_lessons a{font-weight: bold;}
+article.sfwd-courses .notavailable_message{font-size: 13px; font-family: "Helvetica Neue",Helvetica,sans-serif; color: #717171;}
+
+/* Hide the post header section from unauthorized access */
+article.category-uncategorized header.entry-header{display: none;}
+article.category-uncategorized .mepr-unauthorized-message h4{margin-top: 0px;}
+article.sfwd-lessons footer.entry-footer.cf{display: none;}
+
+/* Fix the header on the login and authorized page */
+article#post-6 h4{font-size: 142.85%;}
+
+/* Adjust the size of the login form inputs */
+input#user_login, input#user_pass{width: 60%;}
+
+/* Adjust the widths of input fields on the registration form */
+#mepr_registerform input[type=text], input[type=password]{width: 35%;}
+
+/* Hide the header breadcrumb certain pages */
+.postid-28 header.x-header-landmark, .postid-3148 header.x-header-landmark, .postid-91 header.x-header-landmark, .postid-95 header.x-header-landmark, .postid-92 header.x-header-landmark, .postid-97 header.x-header-landmark, .postid-98 header.x-header-landmark, .postid-93 header.x-header-landmark, .postid-96 header.x-header-landmark, .postid-99 header.x-header-landmark, .postid-94 header.x-header-landmark, .postid-100 header.x-header-landmark, .page-id-6 header.x-header-landmark{display: none;}
+
+/* Adjust letter spacing on lesson not available spacing */
+small.notavailable_message{letter-spacing: -0.5px;}
+
+/* Extra padding for full line Latex equations */
+div.latex_equation_line{margin-bottom: 1.5em;}
+
+.page-id-4042 #top, .page-id-4044 #top, .page-id-4036 #top, .page-id-4103 #top, .page-id-4101 #top{background: url('https://gurus.pyimagesearch.com/wp-content/uploads/2015/10/sample_lesson.png') 0px 0px repeat;}
+
+/* BadgeOS Notification styles */
+#TB_ajaxContent{width: 640px !important;}
+#TB_title{color: #FFFFFF;}
+#badgeos_congrats .badgeos-congrats-achievement{padding: 10px; padding-left: 15px;}
+#badgeos_congrats .badgeos-congrats-achievement p.title{margin-bottom: 10px;}
+#badgeos_congrats .badgeos-congrats-achievement .content{margin-top: 10px;}
+#badgeos_congrats .badgeos-congrats-achievement .content p{margin: 0px; padding: 0px; font-size: 16px; line-height: 22px;}
+#badgeos_congrats .badgeos-congrats-achievement .content .course_progress{margin-left: 0px;}
+
+/* User achievements page */
+article.user-has-earned header.entry-header p.p-meta, article.user-has-not-earned header.entry-header p.p-meta{display: none;}
+article.user-has-earned .entry-featured, article.user-has-not-earned .entry-featured{display: none;}
+article.user-has-earned .badgeos-achievement-congratulations, article.user-has-not-earned .badgeos-achievement-congratulations{display: none;}
+
+/* Hide breadcrumb on Certificates page */
+body.page-id-10138 .x-header-landmark{display: none;}</style><script type="text/javascript" async="" src="./k-Nearest Neighbor classification _ PyImageSearch Gurus_files/tagjs"></script><img src="./k-Nearest Neighbor classification _ PyImageSearch Gurus_files/saved_resource" width="1" height="1" border="0"><img src="./k-Nearest Neighbor classification _ PyImageSearch Gurus_files/tr" width="1" height="1" border="0"><img src="./k-Nearest Neighbor classification _ PyImageSearch Gurus_files/seg" width="1" height="1" border="0"><img src="./k-Nearest Neighbor classification _ PyImageSearch Gurus_files/tr(1)" width="1" height="1" border="0"><img src="./k-Nearest Neighbor classification _ PyImageSearch Gurus_files/seg(1)" width="1" height="1" border="0"></head>
+
+<body class="page page-id-39428 page-template-default x-renew x-navbar-static-active x-full-width-layout-active x-content-sidebar-active x-v4_3_4 x-child-theme-active x-shortcodes-v3_0_5">
+
+  
+  <div id="top" class="site">
+
+  
+  
+  <header class="masthead masthead-inline" role="banner">
+    
+    
+
+  <div class="x-navbar-wrap">
+    <div class="x-navbar">
+      <div class="x-navbar-inner">
+        <div class="x-container max width">
+          
+
+<a href="https://gurus.pyimagesearch.com/lesson-sample-k-nearest-neighbor-classification/?email=deshmukhps95@gmail.com&amp;__s=g47dwoaicn3csu3kv1b8#tour_modal" class="x-brand img" title="A course and community designed to take you from computer vision beginner to guru.">
+  <img src="./k-Nearest Neighbor classification _ PyImageSearch Gurus_files/pyimagesearch_gurus_logo.png" alt="A course and community designed to take you from computer vision beginner to guru."></a>          
+<a href="https://gurus.pyimagesearch.com/lesson-sample-k-nearest-neighbor-classification/?email=deshmukhps95@gmail.com&amp;__s=g47dwoaicn3csu3kv1b8#tour_modal" class="x-btn-navbar collapsed" data-toggle="collapse" data-target=".x-nav-wrap.mobile">
+  <i class="x-icon-bars" data-x-icon=""></i>
+  <span class="visually-hidden">Navigation</span>
+</a>
+
+<nav class="x-nav-wrap desktop" role="navigation">
+  <ul id="menu-main-menu" class="x-nav"><li id="menu-item-16" class="menu-item menu-item-type-post_type menu-item-object-page menu-item-16"><a href="https://gurus.pyimagesearch.com/lesson-sample-k-nearest-neighbor-classification/?email=deshmukhps95@gmail.com&amp;__s=g47dwoaicn3csu3kv1b8#tour_modal"><span>Login</span></a></li>
+<li id="menu-item-52" class="menu-item menu-item-type-custom menu-item-object-custom menu-item-52"><a href="https://gurus.pyimagesearch.com/lesson-sample-k-nearest-neighbor-classification/?email=deshmukhps95@gmail.com&amp;__s=g47dwoaicn3csu3kv1b8#tour_modal"><span>Community</span></a></li>
+</ul></nav>
+
+<div class="x-nav-wrap mobile collapse">
+  <ul id="menu-main-menu-1" class="x-nav"><li class="menu-item menu-item-type-post_type menu-item-object-page menu-item-16"><a href="https://gurus.pyimagesearch.com/lesson-sample-k-nearest-neighbor-classification/?email=deshmukhps95@gmail.com&amp;__s=g47dwoaicn3csu3kv1b8#tour_modal"><span>Login</span></a></li>
+<li class="menu-item menu-item-type-custom menu-item-object-custom menu-item-52"><a href="https://gurus.pyimagesearch.com/lesson-sample-k-nearest-neighbor-classification/?email=deshmukhps95@gmail.com&amp;__s=g47dwoaicn3csu3kv1b8#tour_modal"><span>Community</span></a></li>
+</ul></div>        </div>
+      </div>
+    </div>
+  </div>
+
+  </header>
+
+    
+  
+    <header class="x-header-landmark">
+      <div class="x-container max width">
+        <div class="x-landmark-breadcrumbs-wrap">
+          <div class="x-landmark">
+
+          
+            <h1 class="h-landmark entry-title"><span>k-Nearest Neighbor classification</span></h1>
+
+          
+          </div>
+
+                                    <div class="x-breadcrumbs-wrap">
+                <div class="x-breadcrumbs"><a href="https://gurus.pyimagesearch.com/lesson-sample-k-nearest-neighbor-classification/?email=deshmukhps95@gmail.com&amp;__s=g47dwoaicn3csu3kv1b8#tour_modal"><span class="home"><i class="x-icon-home" data-x-icon=""></i></span></a> <span class="delimiter"><i class="x-icon-angle-right" data-x-icon=""></i></span> <span class="current">k-Nearest Neighbor classification</span></div>              </div>
+                      
+          
+        </div>
+      </div>
+    </header>
+
+  
+  <div class="x-container max width offset">
+    <div class="x-main left" role="main">
+
+              
+<article id="post-39428" class="post-39428 page type-page status-publish hentry user-has-not-earned no-post-thumbnail">
+  <div class="entry-wrap">
+            
+
+
+<div class="entry-content content">
+
+
+  <div id="attachment_2278" style="width: 610px" class="wp-caption aligncenter"><a href="https://gurus.pyimagesearch.com/lesson-sample-k-nearest-neighbor-classification/?email=deshmukhps95@gmail.com&amp;__s=g47dwoaicn3csu3kv1b8#tour_modal"><img class="wp-image-2278" src="./k-Nearest Neighbor classification _ PyImageSearch Gurus_files/lbp_mnist_01.jpg" alt="Figure 6: Our k-NN classifier is able to correctly recognize the digit &quot;6&quot;." width="600" height="409" srcset="https://gurus.pyimagesearch.com/wp-content/uploads/2015/03/lbp_mnist_01-300x204.jpg 300w, https://gurus.pyimagesearch.com/wp-content/uploads/2015/03/lbp_mnist_01-100x68.jpg 100w, https://gurus.pyimagesearch.com/wp-content/uploads/2015/03/lbp_mnist_01-865x589.jpg 865w, https://gurus.pyimagesearch.com/wp-content/uploads/2015/03/lbp_mnist_01.jpg 1000w" sizes="(max-width: 600px) 100vw, 600px"></a><p class="wp-caption-text"><strong>Figure 6:</strong> Our k-NN classifier is able to correctly recognize the digit “6”.</p></div>
+<p>We’ve spent a decent amount of time discussing the image classification in this module. We’ve learned about the challenges. The types of learning algorithms we can use. And even the general pipeline that is used to build&nbsp;<em>any</em> image classifier.</p>
+<p>But we have yet to&nbsp;<em>really</em> build an image classifier of our own.</p>
+<p>Today, that is all going to change.</p>
+<p>We’re going to start this lesson by reviewing the simplest image classification algorithm: k-Nearest Neighbor (k-NN). This algorithm is&nbsp;<em>so simple</em> that it doesn’t do any actual “learning” — yet it is still heavily used in many computer vision algorithms. And as you’ll see,&nbsp;we’ll be able to utilize this algorithm to&nbsp;<strong>recognize handwritten digits</strong> from the popular MNIST dataset.</p>
+<h1>Objectives:</h1>
+<p>By the end of this lesson, you will:</p>
+<ul>
+<li>Have an understanding of the k-Nearest Neighbor classifier.</li>
+<li>Know how to&nbsp;apply the k-Nearest Neighbor classifier to image datasets.</li>
+<li>Understand how the value of&nbsp;<em>k</em> impacts classifier performance.</li>
+<li>Be able to recognize handwritten digits from (a sample of) the <a href="https://gurus.pyimagesearch.com/lesson-sample-k-nearest-neighbor-classification/?email=deshmukhps95@gmail.com&amp;__s=g47dwoaicn3csu3kv1b8#tour_modal">MNIST dataset</a>.</li>
+</ul>
+<h1>The k-Nearest Neighbor Classifier</h1>
+<p>The k-Nearest Neighbor classifier is&nbsp;<em>by far</em> the most simple image classification algorithm. In fact, it’s&nbsp;<em>so simple</em> that it doesn’t actually “learn” anything!&nbsp;Instead, this algorithm simply relies on the distance between feature vectors, <strong><a href="https://gurus.pyimagesearch.com/lesson-sample-k-nearest-neighbor-classification/?email=deshmukhps95@gmail.com&amp;__s=g47dwoaicn3csu3kv1b8#tour_modal">much like in building an image search engine</a></strong> — only this time, we have the&nbsp;<em>labels</em> associated with each image, so we can predict and return an actual&nbsp;<em>category</em>&nbsp;for the image.</p>
+<p>Simply put, the k-NN algorithm classifies unknown data points by finding the&nbsp;<em>most common class</em> among the&nbsp;<strong><em>k</em></strong><em> closest&nbsp;examples.</em>&nbsp;Each data point in the&nbsp;<em>k</em>&nbsp;closest data points casts a vote, and the category with the highest number of votes wins!<em>&nbsp;</em>Or in plain english:&nbsp;<em>“Tell me who your neighbors are, and I’ll tell you who you are”.</em></p>
+<div id="attachment_2285" style="width: 810px" class="wp-caption aligncenter"><a href="https://gurus.pyimagesearch.com/lesson-sample-k-nearest-neighbor-classification/?email=deshmukhps95@gmail.com&amp;__s=g47dwoaicn3csu3kv1b8#tour_modal"><img class="wp-image-2285" src="./k-Nearest Neighbor classification _ PyImageSearch Gurus_files/knn_classify_question.jpg" alt="Figure 1: Given a dataset of flowers, how might we classify the the outlined in red?" width="800" height="731" srcset="https://gurus.pyimagesearch.com/wp-content/uploads/2015/03/knn_classify_question-300x274.jpg 300w, https://gurus.pyimagesearch.com/wp-content/uploads/2015/03/knn_classify_question-1024x935.jpg 1024w, https://gurus.pyimagesearch.com/wp-content/uploads/2015/03/knn_classify_question-865x790.jpg 865w, https://gurus.pyimagesearch.com/wp-content/uploads/2015/03/knn_classify_question.jpg 1200w" sizes="(max-width: 800px) 100vw, 800px"></a><p class="wp-caption-text"><strong>Figure 1:</strong> Given a dataset of flowers, how might we classify the image outlined in red?</p></div>
+<p>In order for the k-NN algorithm to work, it makes the primary assumption&nbsp;that feature vectors that lie&nbsp;<em>close together</em> in an <i>n</i>-dimensional space have similar visual contents:</p>
+<div id="attachment_2272" style="width: 660px" class="wp-caption aligncenter"><a href="https://gurus.pyimagesearch.com/lesson-sample-k-nearest-neighbor-classification/?email=deshmukhps95@gmail.com&amp;__s=g47dwoaicn3csu3kv1b8#tour_modal"><img class="wp-image-2272" src="./k-Nearest Neighbor classification _ PyImageSearch Gurus_files/lbp_cluster_examples.jpg" alt="Figure X:" width="650" height="553" srcset="https://gurus.pyimagesearch.com/wp-content/uploads/2015/03/lbp_cluster_examples-300x255.jpg 300w, https://gurus.pyimagesearch.com/wp-content/uploads/2015/03/lbp_cluster_examples-100x85.jpg 100w, https://gurus.pyimagesearch.com/wp-content/uploads/2015/03/lbp_cluster_examples-865x735.jpg 865w, https://gurus.pyimagesearch.com/wp-content/uploads/2015/03/lbp_cluster_examples.jpg 1000w" sizes="(max-width: 650px) 100vw, 650px"></a><p class="wp-caption-text"><strong>Figure 2:</strong> A visual example of three distinct “clusters” of data.</p></div>
+<p>Here, we can see three categories of images, denoted as red, blue, and green&nbsp;dots, respectively. We can see that each of these sets of data points are grouped relatively close together in our <em>n</em>-dimensional space. This implies that the distance between two&nbsp;<em>red dots</em> is&nbsp;<em>much smaller</em> than the distance between a&nbsp;<em>red dot</em> and a&nbsp;<em>blue dot</em>.</p>
+<p>However, in order to apply the k-Nearest Neighbor classifier, we first need to select a distance metric or a similarity function. We briefly discussed the Euclidean distance (often called the L2-distance) in our lesson on&nbsp;<strong><a href="https://gurus.pyimagesearch.com/lesson-sample-k-nearest-neighbor-classification/?email=deshmukhps95@gmail.com&amp;__s=g47dwoaicn3csu3kv1b8#tour_modal">color channel statistics</a></strong>:</p>
+<div class="latex_equation_line"><img src="./k-Nearest Neighbor classification _ PyImageSearch Gurus_files/a10ee73f282a0042261cf154bc9917de-ffffff-000000-0.png" alt="d(\boldsymbol{p},\boldsymbol{q}) = \sqrt{\sum_{i-1}^{N}(q_{i} - p_{i})^{2}}" title="d(\boldsymbol{p},\boldsymbol{q}) = \sqrt{\sum_{i-1}^{N}(q_{i} - p_{i})^{2}}" class="latex"></div>
+<p>But many other distance metrics exist including the Manhattan/city block distance (often called the L1-distance):</p>
+<div class="latex_equation_line"><img src="./k-Nearest Neighbor classification _ PyImageSearch Gurus_files/b55ceda57a140335b0a5da0bddc1f5c0-ffffff-000000-0.png" alt="d(\boldsymbol{p},\boldsymbol{q}) = \sum_{i-1}^{N}|q_{i} - p_{i}|" title="d(\boldsymbol{p},\boldsymbol{q}) = \sum_{i-1}^{N}|q_{i} - p_{i}|" class="latex"></div>
+<p><em><strong>Note:</strong> For more information on <img src="./k-Nearest Neighbor classification _ PyImageSearch Gurus_files/c3920eb7bf35fea775f38e6fd3801c08-ffffff-000000-0.png" alt="L^{P}" title="L^{P}" class="latex"> spaces, give <a href="https://gurus.pyimagesearch.com/lesson-sample-k-nearest-neighbor-classification/?email=deshmukhps95@gmail.com&amp;__s=g47dwoaicn3csu3kv1b8#tour_modal">this page a read</a>.</em></p>
+<p>In reality, you can use whichever distance metric/similarity function most suits your data (and gives you the best classification results). However, for the remainder of this lesson, we’ll be using the most popular distance metric: the Euclidean distance.</p>
+<h2>k-NN in action</h2>
+<p>At this point, we understand the principles of the k-NN algorithm. We know that it relies on the distance between feature vectors to make a classification. And we know that it requires a distance metric/similarity function to compute these distances.</p>
+<p>But how do we actually&nbsp;<em>make</em> the classification?</p>
+<p>To answer this question, let’s look at the following figure:</p>
+<div id="attachment_2273" style="width: 810px" class="wp-caption aligncenter"><a href="https://gurus.pyimagesearch.com/lesson-sample-k-nearest-neighbor-classification/?email=deshmukhps95@gmail.com&amp;__s=g47dwoaicn3csu3kv1b8#tour_modal"><img class="wp-image-2273" src="./k-Nearest Neighbor classification _ PyImageSearch Gurus_files/lbp_raw_flower_clusters.jpg" alt="Figure 2: An example of plotting three species of flowers according to the size and lightness of their petals." width="800" height="731" srcset="https://gurus.pyimagesearch.com/wp-content/uploads/2015/03/lbp_raw_flower_clusters-300x274.jpg 300w, https://gurus.pyimagesearch.com/wp-content/uploads/2015/03/lbp_raw_flower_clusters-1024x935.jpg 1024w, https://gurus.pyimagesearch.com/wp-content/uploads/2015/03/lbp_raw_flower_clusters-865x790.jpg 865w, https://gurus.pyimagesearch.com/wp-content/uploads/2015/03/lbp_raw_flower_clusters.jpg 1200w" sizes="(max-width: 800px) 100vw, 800px"></a><p class="wp-caption-text"><strong>Figure 3:</strong> An example of plotting three species of flowers according to the size and lightness of their petals.</p></div>
+<p>Here, we have a dataset of three types of flowers —&nbsp;<em>sunflowers</em>, <em>daises</em>, and <em>pansies</em>&nbsp;— and we have plotted them according to the&nbsp;<em>size&nbsp;</em>and&nbsp;<em>lightness</em> of their petals.</p>
+<p>Now, let’s insert a new, unknown flower and try to classify it using only a&nbsp;<strong>single neighbor</strong>&nbsp;(i.e.&nbsp;<em>k=1</em>):</p>
+<div id="attachment_2274" style="width: 810px" class="wp-caption aligncenter"><a href="https://gurus.pyimagesearch.com/lesson-sample-k-nearest-neighbor-classification/?email=deshmukhps95@gmail.com&amp;__s=g47dwoaicn3csu3kv1b8#tour_modal"><img class="wp-image-2274" src="./k-Nearest Neighbor classification _ PyImageSearch Gurus_files/lbp_classify_daisy.jpg" alt="Figure 3: In this example we insert an unknown image (highlighted as red) into the dataset and then use the distance between the unknown flower and dataset of flowers to make the classification." width="800" height="731" srcset="https://gurus.pyimagesearch.com/wp-content/uploads/2015/03/lbp_classify_daisy-300x274.jpg 300w, https://gurus.pyimagesearch.com/wp-content/uploads/2015/03/lbp_classify_daisy-1024x935.jpg 1024w, https://gurus.pyimagesearch.com/wp-content/uploads/2015/03/lbp_classify_daisy-865x790.jpg 865w, https://gurus.pyimagesearch.com/wp-content/uploads/2015/03/lbp_classify_daisy.jpg 1200w" sizes="(max-width: 800px) 100vw, 800px"></a><p class="wp-caption-text"><strong>Figure 4:</strong> In this example, we insert an unknown image (highlighted as red) into the dataset and then use the distance between the unknown flower and dataset of flowers to make the classification.</p></div>
+<p>Here, we have found the “nearest neighbor” to our test flower, indicated by&nbsp;<em>k=1</em>. And according to the label of the nearest flower, it’s a <em><strong>daisy</strong></em>.</p>
+<p>Let’s try another “unknown&nbsp;flower”, this time using&nbsp;<em>k=3</em>:</p>
+<div id="attachment_2275" style="width: 810px" class="wp-caption aligncenter"><a href="https://gurus.pyimagesearch.com/lesson-sample-k-nearest-neighbor-classification/?email=deshmukhps95@gmail.com&amp;__s=g47dwoaicn3csu3kv1b8#tour_modal"><img class="wp-image-2275" src="./k-Nearest Neighbor classification _ PyImageSearch Gurus_files/lbp_classify_sunflower.jpg" alt="Figure 4: Let&#39;s classify another flower -- only this time let&#39;s use k=3 neighbors rather than just k=1." width="800" height="731" srcset="https://gurus.pyimagesearch.com/wp-content/uploads/2015/03/lbp_classify_sunflower-300x274.jpg 300w, https://gurus.pyimagesearch.com/wp-content/uploads/2015/03/lbp_classify_sunflower-1024x935.jpg 1024w, https://gurus.pyimagesearch.com/wp-content/uploads/2015/03/lbp_classify_sunflower-865x790.jpg 865w, https://gurus.pyimagesearch.com/wp-content/uploads/2015/03/lbp_classify_sunflower.jpg 1200w" sizes="(max-width: 800px) 100vw, 800px"></a><p class="wp-caption-text"><strong>Figure 5:</strong> Let’s classify another flower — only this time let’s use <em>k=3</em> neighbors rather than just <em>k=1</em>.</p></div>
+<p>This time, we have found two<em>&nbsp;sunflowers</em> and one<em>&nbsp;daisy</em>&nbsp;in the <em>top three results</em>. Since the&nbsp;<em>sunflower</em> category has the largest number of votes, we’ll classify this unknown flower as a&nbsp;<em><strong>sunflower</strong></em>.</p>
+<p>We can keep performing this process for varying&nbsp;values of&nbsp;<em>k</em>, but&nbsp;no matter how large or small&nbsp;<em>k</em> becomes, the principle remains the same — the category with the largest number of votes in the&nbsp;<em>k</em> closest training&nbsp;points wins and is used as the&nbsp;label for the testing point.</p>
+<h2>Hyperparameter tuning</h2>
+<p>There are two clear parameters that we are concerned with when running the k-NN algorithm. The first is obvious: the value of&nbsp;<em>k</em>. What is the optimal value of&nbsp;<em>k</em>? If it’s too small (such as when <em>k=1</em>), then we gain efficiency, but become susceptible to noise and outlier data points. However, if&nbsp;<em>k</em> is too large, then we are at risk for&nbsp;<em>over-smoothing</em> our classification results and increasing bias.</p>
+<p>The second parameter we should consider tuning is the actual distance metric. Is the Euclidean distance the best choice? What about the Manhattan distance? Or <img src="./k-Nearest Neighbor classification _ PyImageSearch Gurus_files/9ca61f458c78bb5591d04aaaa14da0e7-ffffff-000000-0.png" alt="\chi^2" title="\chi^2" class="latex">?</p>
+<p>To handle this problem, we need to follow&nbsp;<strong>Step 2</strong> of our <a href="https://gurus.pyimagesearch.com/lesson-sample-k-nearest-neighbor-classification/?email=deshmukhps95@gmail.com&amp;__s=g47dwoaicn3csu3kv1b8#tour_modal">image classification pipeline</a>&nbsp;and split our data into three sets: a&nbsp;<em>training set</em>, a&nbsp;<em>validation set</em>, and a&nbsp;<em>testing set</em>.</p>
+<p>Using this three-split scheme we can:</p>
+<ol>
+<li>Train our classifier on the training data using various values of&nbsp;<em>k</em> (and various distance functions, if we wish).</li>
+<li>Evaluate the performance on the classifier on the validation set, keeping track of which parameters obtained the highest accuracy.</li>
+<li>Take the parameters that obtained the highest accuracy and train our k-NN classifier using those parameters.</li>
+<li>Evaluate our “best” classifier on the&nbsp;test set and obtain our final results.</li>
+</ol>
+<p>Again, by using this scheme, we are able to try various parameter values, find the set of parameters that gives the best performance, and then finally evaluate our classifier in an un-biased (and fair) manner.</p>
+<p>Now that we understand the basics of the k-NN algorithm, let’s apply it to recognize handwritten digits from the MNIST dataset.</p>
+<h2>Recognizing handwritten digits using MNIST</h2>
+<div id="attachment_2277" style="width: 570px" class="wp-caption aligncenter"><a href="https://gurus.pyimagesearch.com/lesson-sample-k-nearest-neighbor-classification/?email=deshmukhps95@gmail.com&amp;__s=g47dwoaicn3csu3kv1b8#tour_modal"><img class="size-full wp-image-2277" src="./k-Nearest Neighbor classification _ PyImageSearch Gurus_files/lbp_mnist_sample.jpg" alt="Figure 5: A sample of the MNIST data for handwritten digit recognition." width="560" height="112" srcset="https://gurus.pyimagesearch.com/wp-content/uploads/2015/03/lbp_mnist_sample-300x60.jpg 300w, https://gurus.pyimagesearch.com/wp-content/uploads/2015/03/lbp_mnist_sample-100x20.jpg 100w, https://gurus.pyimagesearch.com/wp-content/uploads/2015/03/lbp_mnist_sample.jpg 560w" sizes="(max-width: 560px) 100vw, 560px"></a><p class="wp-caption-text"><strong>Figure 6:</strong> A sample of the MNIST data for handwritten digit recognition.</p></div>
+<p>In the remainder of this lesson, we’ll be using the k-Nearest Neighbor classifier to classify images from the MNIST <a href="https://gurus.pyimagesearch.com/lesson-sample-k-nearest-neighbor-classification/?email=deshmukhps95@gmail.com&amp;__s=g47dwoaicn3csu3kv1b8#tour_modal">dataset</a>, which consists&nbsp;of handwritten digits. The MNIST dataset is one of the most well studied datasets in the computer vision and machine learning literature. In many cases, it’s a benchmark and a standard to which machine learning algorithms are ranked.</p>
+<p>The goal of this dataset is to correctly classify the handwritten digits <i>0-9</i>. Instead of utilizing the entire dataset (which consists of 60,000 training images and 10,000 testing images,) we’ll be using a small subset of the data provided by the <a href="https://gurus.pyimagesearch.com/lesson-sample-k-nearest-neighbor-classification/?email=deshmukhps95@gmail.com&amp;__s=g47dwoaicn3csu3kv1b8#tour_modal">scikit-learn</a> library — this subset includes 1,797 digits, which we’ll split into&nbsp;<em>training</em>,&nbsp;<em>validation</em>, and&nbsp;<em>testing sets</em>, respectively.</p>
+<p>Each image in the 1,797-digit dataset from scikit-learn is represented as a 64-dim raw pixel intensity feature vector. This means that each image is actually an&nbsp;<em>8 x 8</em> grayscale image, but scikit-learn “flattens” the image into a list.</p>
+<p>All digits are placed on a black background with the foreground being shades of white and gray.</p>
+<p><strong>Our goal here is to train a k-NN classifier on the&nbsp;<em>raw pixel intensities</em> and then classify unknown digits.</strong></p>
+<p>To accomplish this goal, we’ll be using our <strong><a href="https://gurus.pyimagesearch.com/lesson-sample-k-nearest-neighbor-classification/?email=deshmukhps95@gmail.com&amp;__s=g47dwoaicn3csu3kv1b8#tour_modal">five-step pipeline</a></strong> to train image classifiers:</p>
+<ul>
+<li><strong>Step 1 – Structuring our initial dataset:</strong> Our initial dataset consists of 1,797 digits representing the numbers <i>0-9</i>. These images are grayscale,&nbsp;<em>8 x 8</em> images with digits appearing as&nbsp;<em>white</em> on a&nbsp;<em>black</em> background. These digits have also been heavily pre-processed, aligned, and centered, making our classification job slightly easier.</li>
+<li><strong>Step 2 – Splitting the dataset:</strong> We’ll be using three splits for our experiment. The first set is our <em>training set</em>, used to train our k-NN classifier. We’ll also use a&nbsp;<em>validation set</em> to find the best value for <i>k</i>. And we’ll finally evaluate our classifier using the&nbsp;<em>testing set</em>.</li>
+<li><strong>Step 3 – Extracting features:</strong>&nbsp;Instead of extracting features to represent and characterize each digit (such as <a href="https://gurus.pyimagesearch.com/lesson-sample-k-nearest-neighbor-classification/?email=deshmukhps95@gmail.com&amp;__s=g47dwoaicn3csu3kv1b8#tour_modal">HOG</a>, <a href="https://gurus.pyimagesearch.com/lesson-sample-k-nearest-neighbor-classification/?email=deshmukhps95@gmail.com&amp;__s=g47dwoaicn3csu3kv1b8#tour_modal">Zernike Moments</a>, etc), we’ll instead use&nbsp;<em>just</em> the raw, grayscale pixel intensities of the image.</li>
+<li><strong>Step 4 – Training our classification model:</strong> Our k-NN classifier will be trained on the raw pixel intensities of the images in the training set. We’ll then determine the best value of&nbsp;<em>k</em> using the validation set.</li>
+<li><strong>Step 5 – Evaluating our&nbsp;classifier:</strong>&nbsp;Once we have found the best value of&nbsp;<em>k</em>, we can then evaluate our k-NN classifier on our testing set.</li>
+</ul>
+<p>Let’s go ahead and get this example started. Open up a new file, name it 
+			<span id="crayon-58f6fff5b796e853359201" class="crayon-syntax crayon-syntax-inline  crayon-theme-arduino-ide crayon-theme-arduino-ide-inline crayon-font-ubuntu-mono" style="font-size: 14px !important; line-height: 17px !important;font-size: 14px !important;"><span class="crayon-pre crayon-code" style="font-size: 14px !important; line-height: 17px !important;font-size: 14px !important; -moz-tab-size:4; -o-tab-size:4; -webkit-tab-size:4; tab-size:4;"><span class="crayon-v">mnist_demo</span><span class="crayon-sy">.</span><span class="crayon-v">py</span></span></span>&nbsp;, and let’s get coding:</p><!-- Crayon Syntax Highlighter v_2.7.2_beta -->
+
+		<div id="crayon-58f6fff5b797d577283258" class="crayon-syntax crayon-theme-arduino-ide crayon-font-ubuntu-mono crayon-os-pc print-yes notranslate" data-settings=" minimize scroll-mouseover" style="margin-top: 12px; margin-bottom: 12px; font-size: 14px !important; line-height: 17px !important; height: auto;">
+		
+			<div class="crayon-toolbar" data-settings=" show" style="font-size: 14px !important;height: 21px !important; line-height: 21px !important;"><span class="crayon-title">mnist_demo.py</span>
+			<div class="crayon-tools" style="font-size: 14px !important;height: 21px !important; line-height: 21px !important;"><div class="crayon-button crayon-nums-button crayon-pressed" title="Toggle Line Numbers"><div class="crayon-button-icon"></div></div><div class="crayon-button crayon-plain-button" title="Toggle Plain Code"><div class="crayon-button-icon"></div></div><div class="crayon-button crayon-wrap-button" title="Toggle Line Wrap"><div class="crayon-button-icon"></div></div><div class="crayon-button crayon-expand-button" title="Expand Code" style="display: none;"><div class="crayon-button-icon"></div></div><div class="crayon-button crayon-copy-button" title="Copy"><div class="crayon-button-icon"></div></div><div class="crayon-button crayon-popup-button" title="Open Code In New Window"><div class="crayon-button-icon"></div></div><span class="crayon-language">Python</span></div></div>
+			<div class="crayon-info" style="min-height: 19.6px !important; line-height: 19.6px !important;"></div>
+			<div class="crayon-plain-wrap"><textarea wrap="soft" class="crayon-plain print-no" data-settings="dblclick" readonly="" style="tab-size: 4; font-size: 14px !important; line-height: 17px !important; z-index: 0; opacity: 0; overflow: hidden;"># import the necessary packages
+from __future__ import print_function
+from sklearn.cross_validation import train_test_split
+from sklearn.neighbors import KNeighborsClassifier
+from sklearn.metrics import classification_report
+from sklearn import datasets
+from skimage import exposure
+import numpy as np
+import imutils
+import cv2
+
+# load the MNIST digits dataset
+mnist = datasets.load_digits()
+
+# take the MNIST data and construct the training and testing split, using 75% of the
+# data for training and 25% for testing
+(trainData, testData, trainLabels, testLabels) = train_test_split(np.array(mnist.data),
+	mnist.target, test_size=0.25, random_state=42)
+
+# now, let's take 10% of the training data and use that for validation
+(trainData, valData, trainLabels, valLabels) = train_test_split(trainData, trainLabels,
+	test_size=0.1, random_state=84)
+
+# show the sizes of each data split
+print("training data points: {}".format(len(trainLabels)))
+print("validation data points: {}".format(len(valLabels)))
+print("testing data points: {}".format(len(testLabels)))</textarea></div>
+			<div class="crayon-main" style="position: relative; z-index: 1; overflow: hidden;">
+				<table class="crayon-table">
+					<tbody><tr class="crayon-row">
+				<td class="crayon-nums " data-settings="show">
+					<div class="crayon-nums-content" style="font-size: 14px !important; line-height: 17px !important;"><div class="crayon-num" data-line="crayon-58f6fff5b797d577283258-1">1</div><div class="crayon-num crayon-striped-num" data-line="crayon-58f6fff5b797d577283258-2">2</div><div class="crayon-num" data-line="crayon-58f6fff5b797d577283258-3">3</div><div class="crayon-num crayon-striped-num" data-line="crayon-58f6fff5b797d577283258-4">4</div><div class="crayon-num" data-line="crayon-58f6fff5b797d577283258-5">5</div><div class="crayon-num crayon-striped-num" data-line="crayon-58f6fff5b797d577283258-6">6</div><div class="crayon-num" data-line="crayon-58f6fff5b797d577283258-7">7</div><div class="crayon-num crayon-striped-num" data-line="crayon-58f6fff5b797d577283258-8">8</div><div class="crayon-num" data-line="crayon-58f6fff5b797d577283258-9">9</div><div class="crayon-num crayon-striped-num" data-line="crayon-58f6fff5b797d577283258-10">10</div><div class="crayon-num" data-line="crayon-58f6fff5b797d577283258-11">11</div><div class="crayon-num crayon-striped-num" data-line="crayon-58f6fff5b797d577283258-12">12</div><div class="crayon-num" data-line="crayon-58f6fff5b797d577283258-13">13</div><div class="crayon-num crayon-striped-num" data-line="crayon-58f6fff5b797d577283258-14">14</div><div class="crayon-num" data-line="crayon-58f6fff5b797d577283258-15">15</div><div class="crayon-num crayon-striped-num" data-line="crayon-58f6fff5b797d577283258-16">16</div><div class="crayon-num" data-line="crayon-58f6fff5b797d577283258-17">17</div><div class="crayon-num crayon-striped-num" data-line="crayon-58f6fff5b797d577283258-18">18</div><div class="crayon-num" data-line="crayon-58f6fff5b797d577283258-19">19</div><div class="crayon-num crayon-striped-num" data-line="crayon-58f6fff5b797d577283258-20">20</div><div class="crayon-num" data-line="crayon-58f6fff5b797d577283258-21">21</div><div class="crayon-num crayon-striped-num" data-line="crayon-58f6fff5b797d577283258-22">22</div><div class="crayon-num" data-line="crayon-58f6fff5b797d577283258-23">23</div><div class="crayon-num crayon-striped-num" data-line="crayon-58f6fff5b797d577283258-24">24</div><div class="crayon-num" data-line="crayon-58f6fff5b797d577283258-25">25</div><div class="crayon-num crayon-striped-num" data-line="crayon-58f6fff5b797d577283258-26">26</div><div class="crayon-num" data-line="crayon-58f6fff5b797d577283258-27">27</div></div>
+				</td>
+						<td class="crayon-code"><div class="crayon-pre" style="font-size: 14px !important; line-height: 17px !important; -moz-tab-size:4; -o-tab-size:4; -webkit-tab-size:4; tab-size:4;"><div class="crayon-line" id="crayon-58f6fff5b797d577283258-1"><span class="crayon-c"># import the necessary packages</span></div><div class="crayon-line crayon-striped-line" id="crayon-58f6fff5b797d577283258-2"><span class="crayon-st">from</span><span class="crayon-h"> </span><span class="crayon-k ">__future__</span><span class="crayon-h"> </span><span class="crayon-r">import</span><span class="crayon-h"> </span><span class="crayon-e">print_function</span></div><div class="crayon-line" id="crayon-58f6fff5b797d577283258-3"><span class="crayon-st">from</span><span class="crayon-h"> </span><span class="crayon-v">sklearn</span><span class="crayon-sy">.</span><span class="crayon-e">cross_validation </span><span class="crayon-r">import</span><span class="crayon-h"> </span><span class="crayon-e">train_test_split</span></div><div class="crayon-line crayon-striped-line" id="crayon-58f6fff5b797d577283258-4"><span class="crayon-st">from</span><span class="crayon-h"> </span><span class="crayon-v">sklearn</span><span class="crayon-sy">.</span><span class="crayon-e">neighbors </span><span class="crayon-r">import</span><span class="crayon-h"> </span><span class="crayon-e">KNeighborsClassifier</span></div><div class="crayon-line" id="crayon-58f6fff5b797d577283258-5"><span class="crayon-st">from</span><span class="crayon-h"> </span><span class="crayon-v">sklearn</span><span class="crayon-sy">.</span><span class="crayon-e">metrics </span><span class="crayon-r">import</span><span class="crayon-h"> </span><span class="crayon-e">classification_report</span></div><div class="crayon-line crayon-striped-line" id="crayon-58f6fff5b797d577283258-6"><span class="crayon-st">from</span><span class="crayon-h"> </span><span class="crayon-e">sklearn </span><span class="crayon-r">import</span><span class="crayon-h"> </span><span class="crayon-e">datasets</span></div><div class="crayon-line" id="crayon-58f6fff5b797d577283258-7"><span class="crayon-st">from</span><span class="crayon-h"> </span><span class="crayon-e">skimage </span><span class="crayon-r">import</span><span class="crayon-h"> </span><span class="crayon-e">exposure</span></div><div class="crayon-line crayon-striped-line" id="crayon-58f6fff5b797d577283258-8"><span class="crayon-r">import</span><span class="crayon-h"> </span><span class="crayon-e">numpy </span><span class="crayon-st">as</span><span class="crayon-h"> </span><span class="crayon-e">np</span></div><div class="crayon-line" id="crayon-58f6fff5b797d577283258-9"><span class="crayon-r">import</span><span class="crayon-h"> </span><span class="crayon-e">imutils</span></div><div class="crayon-line crayon-striped-line" id="crayon-58f6fff5b797d577283258-10"><span class="crayon-r">import</span><span class="crayon-h"> </span><span class="crayon-v">cv2</span></div><div class="crayon-line" id="crayon-58f6fff5b797d577283258-11">&nbsp;</div><div class="crayon-line crayon-striped-line" id="crayon-58f6fff5b797d577283258-12"><span class="crayon-c"># load the MNIST digits dataset</span></div><div class="crayon-line" id="crayon-58f6fff5b797d577283258-13"><span class="crayon-v">mnist</span><span class="crayon-h"> </span><span class="crayon-o">=</span><span class="crayon-h"> </span><span class="crayon-v">datasets</span><span class="crayon-sy">.</span><span class="crayon-e">load_digits</span><span class="crayon-sy">(</span><span class="crayon-sy">)</span></div><div class="crayon-line crayon-striped-line" id="crayon-58f6fff5b797d577283258-14">&nbsp;</div><div class="crayon-line" id="crayon-58f6fff5b797d577283258-15"><span class="crayon-c"># take the MNIST data and construct the training and testing split, using 75% of the</span></div><div class="crayon-line crayon-striped-line" id="crayon-58f6fff5b797d577283258-16"><span class="crayon-c"># data for training and 25% for testing</span></div><div class="crayon-line" id="crayon-58f6fff5b797d577283258-17"><span class="crayon-sy">(</span><span class="crayon-v">trainData</span><span class="crayon-sy">,</span><span class="crayon-h"> </span><span class="crayon-v">testData</span><span class="crayon-sy">,</span><span class="crayon-h"> </span><span class="crayon-v">trainLabels</span><span class="crayon-sy">,</span><span class="crayon-h"> </span><span class="crayon-v">testLabels</span><span class="crayon-sy">)</span><span class="crayon-h"> </span><span class="crayon-o">=</span><span class="crayon-h"> </span><span class="crayon-e">train_test_split</span><span class="crayon-sy">(</span><span class="crayon-v">np</span><span class="crayon-sy">.</span><span class="crayon-k ">array</span><span class="crayon-sy">(</span><span class="crayon-v">mnist</span><span class="crayon-sy">.</span><span class="crayon-v">data</span><span class="crayon-sy">)</span><span class="crayon-sy">,</span></div><div class="crayon-line crayon-striped-line" id="crayon-58f6fff5b797d577283258-18"><span class="crayon-h">	</span><span class="crayon-v">mnist</span><span class="crayon-sy">.</span><span class="crayon-v">target</span><span class="crayon-sy">,</span><span class="crayon-h"> </span><span class="crayon-v">test_size</span><span class="crayon-o">=</span><span class="crayon-cn">0.25</span><span class="crayon-sy">,</span><span class="crayon-h"> </span><span class="crayon-v">random_state</span><span class="crayon-o">=</span><span class="crayon-cn">42</span><span class="crayon-sy">)</span></div><div class="crayon-line" id="crayon-58f6fff5b797d577283258-19">&nbsp;</div><div class="crayon-line crayon-striped-line" id="crayon-58f6fff5b797d577283258-20"><span class="crayon-c"># now, let's take 10% of the training data and use that for validation</span></div><div class="crayon-line" id="crayon-58f6fff5b797d577283258-21"><span class="crayon-sy">(</span><span class="crayon-v">trainData</span><span class="crayon-sy">,</span><span class="crayon-h"> </span><span class="crayon-v">valData</span><span class="crayon-sy">,</span><span class="crayon-h"> </span><span class="crayon-v">trainLabels</span><span class="crayon-sy">,</span><span class="crayon-h"> </span><span class="crayon-v">valLabels</span><span class="crayon-sy">)</span><span class="crayon-h"> </span><span class="crayon-o">=</span><span class="crayon-h"> </span><span class="crayon-e">train_test_split</span><span class="crayon-sy">(</span><span class="crayon-v">trainData</span><span class="crayon-sy">,</span><span class="crayon-h"> </span><span class="crayon-v">trainLabels</span><span class="crayon-sy">,</span></div><div class="crayon-line crayon-striped-line" id="crayon-58f6fff5b797d577283258-22"><span class="crayon-h">	</span><span class="crayon-v">test_size</span><span class="crayon-o">=</span><span class="crayon-cn">0.1</span><span class="crayon-sy">,</span><span class="crayon-h"> </span><span class="crayon-v">random_state</span><span class="crayon-o">=</span><span class="crayon-cn">84</span><span class="crayon-sy">)</span></div><div class="crayon-line" id="crayon-58f6fff5b797d577283258-23">&nbsp;</div><div class="crayon-line crayon-striped-line" id="crayon-58f6fff5b797d577283258-24"><span class="crayon-c"># show the sizes of each data split</span></div><div class="crayon-line" id="crayon-58f6fff5b797d577283258-25"><span class="crayon-k ">print</span><span class="crayon-sy">(</span><span class="crayon-s">"training data points: {}"</span><span class="crayon-sy">.</span><span class="crayon-k ">format</span><span class="crayon-sy">(</span><span class="crayon-k ">len</span><span class="crayon-sy">(</span><span class="crayon-v">trainLabels</span><span class="crayon-sy">)</span><span class="crayon-sy">)</span><span class="crayon-sy">)</span></div><div class="crayon-line crayon-striped-line" id="crayon-58f6fff5b797d577283258-26"><span class="crayon-k ">print</span><span class="crayon-sy">(</span><span class="crayon-s">"validation data points: {}"</span><span class="crayon-sy">.</span><span class="crayon-k ">format</span><span class="crayon-sy">(</span><span class="crayon-k ">len</span><span class="crayon-sy">(</span><span class="crayon-v">valLabels</span><span class="crayon-sy">)</span><span class="crayon-sy">)</span><span class="crayon-sy">)</span></div><div class="crayon-line" id="crayon-58f6fff5b797d577283258-27"><span class="crayon-k ">print</span><span class="crayon-sy">(</span><span class="crayon-s">"testing data points: {}"</span><span class="crayon-sy">.</span><span class="crayon-k ">format</span><span class="crayon-sy">(</span><span class="crayon-k ">len</span><span class="crayon-sy">(</span><span class="crayon-v">testLabels</span><span class="crayon-sy">)</span><span class="crayon-sy">)</span><span class="crayon-sy">)</span></div></div></td>
+					</tr>
+				</tbody></table>
+			</div>
+		</div>
+<!-- [Format Time: 0.0065 seconds] -->
+<p>
+The first thing we’ll do is import our necessary packages on&nbsp;<strong>Lines 1-10</strong>. The most important imports to take note of are:</p>
+<ul>
+<li><strong>Line 3:</strong>&nbsp;We’ll import the 
+			<span id="crayon-58f6fff5b7980704834431" class="crayon-syntax crayon-syntax-inline  crayon-theme-arduino-ide crayon-theme-arduino-ide-inline crayon-font-ubuntu-mono" style="font-size: 14px !important; line-height: 17px !important;font-size: 14px !important;"><span class="crayon-pre crayon-code" style="font-size: 14px !important; line-height: 17px !important;font-size: 14px !important; -moz-tab-size:4; -o-tab-size:4; -webkit-tab-size:4; tab-size:4;"><span class="crayon-v">train_test_split</span></span></span>&nbsp; function, which is a convenience function provided by scikit-learn to help us create training and testing splits of our data.</li>
+<li><strong>Line 4:</strong> The 
+			<span id="crayon-58f6fff5b7983995940285" class="crayon-syntax crayon-syntax-inline  crayon-theme-arduino-ide crayon-theme-arduino-ide-inline crayon-font-ubuntu-mono" style="font-size: 14px !important; line-height: 17px !important;font-size: 14px !important;"><span class="crayon-pre crayon-code" style="font-size: 14px !important; line-height: 17px !important;font-size: 14px !important; -moz-tab-size:4; -o-tab-size:4; -webkit-tab-size:4; tab-size:4;"><span class="crayon-v">KNeighborsClassifier</span></span></span>&nbsp; is our implementation of the k-NN algorithm, again provided by <a href="https://gurus.pyimagesearch.com/lesson-sample-k-nearest-neighbor-classification/?email=deshmukhps95@gmail.com&amp;__s=g47dwoaicn3csu3kv1b8#tour_modal">scikit-learn</a>.</li>
+<li><strong>Line 5:</strong> The 
+			<span id="crayon-58f6fff5b7986785519861" class="crayon-syntax crayon-syntax-inline  crayon-theme-arduino-ide crayon-theme-arduino-ide-inline crayon-font-ubuntu-mono" style="font-size: 14px !important; line-height: 17px !important;font-size: 14px !important;"><span class="crayon-pre crayon-code" style="font-size: 14px !important; line-height: 17px !important;font-size: 14px !important; -moz-tab-size:4; -o-tab-size:4; -webkit-tab-size:4; tab-size:4;"><span class="crayon-v">classification_report</span></span></span>&nbsp; function is a handy little tool that will help us evaluate the performance of our classifier.</li>
+<li><strong>Line 6:</strong> The 
+			<span id="crayon-58f6fff5b7988567645375" class="crayon-syntax crayon-syntax-inline  crayon-theme-arduino-ide crayon-theme-arduino-ide-inline crayon-font-ubuntu-mono" style="font-size: 14px !important; line-height: 17px !important;font-size: 14px !important;"><span class="crayon-pre crayon-code" style="font-size: 14px !important; line-height: 17px !important;font-size: 14px !important; -moz-tab-size:4; -o-tab-size:4; -webkit-tab-size:4; tab-size:4;"><span class="crayon-v">dataset</span></span></span>&nbsp; sub-module of scikit-learn will allow us to load our MNIST dataset.</li>
+</ul>
+<p>From there, we go ahead and load the&nbsp;MNIST dataset sample on&nbsp;<strong>Line 13</strong>. We’ll also create our training testing split on&nbsp;<strong>Lines 17 and 18</strong>, using 75% of the data for training and the remaining 25% for testing.</p>
+<p>However, we also need a validation set so we can tune the value of&nbsp;<em>k</em>. We create our validation set on&nbsp;<strong>Lines 21 and 22</strong> by partitioning our training data — 10% of the training data will be allocated to validation, while the remaining 90% will remain as training data.</p>
+<p>Finally,&nbsp;<strong>Lines 25-27</strong> show the size of each of our data splits:</p><!-- Crayon Syntax Highlighter v_2.7.2_beta -->
+
+		<div id="crayon-58f6fff5b798b895816025" class="crayon-syntax crayon-theme-arduino-ide crayon-font-ubuntu-mono crayon-os-pc print-yes notranslate" data-settings=" minimize scroll-mouseover" style="margin-top: 12px; margin-bottom: 12px; font-size: 14px !important; line-height: 17px !important; height: auto;">
+		
+			<div class="crayon-toolbar" data-settings=" show" style="font-size: 14px !important;height: 21px !important; line-height: 21px !important;"><span class="crayon-title">Size of the training, testing, and validation data splits</span>
+			<div class="crayon-tools" style="font-size: 14px !important;height: 21px !important; line-height: 21px !important;"><div class="crayon-button crayon-nums-button crayon-pressed" title="Toggle Line Numbers"><div class="crayon-button-icon"></div></div><div class="crayon-button crayon-plain-button" title="Toggle Plain Code"><div class="crayon-button-icon"></div></div><div class="crayon-button crayon-wrap-button" title="Toggle Line Wrap"><div class="crayon-button-icon"></div></div><div class="crayon-button crayon-expand-button" title="Expand Code" style="display: none;"><div class="crayon-button-icon"></div></div><div class="crayon-button crayon-copy-button" title="Copy"><div class="crayon-button-icon"></div></div><div class="crayon-button crayon-popup-button" title="Open Code In New Window"><div class="crayon-button-icon"></div></div><span class="crayon-language">Shell</span></div></div>
+			<div class="crayon-info" style="min-height: 19.6px !important; line-height: 19.6px !important;"></div>
+			<div class="crayon-plain-wrap"><textarea wrap="soft" class="crayon-plain print-no" data-settings="dblclick" readonly="" style="tab-size: 4; font-size: 14px !important; line-height: 17px !important; z-index: 0; opacity: 0; overflow: hidden;">training data points: 1212
+validation data points: 135
+testing data points: 450</textarea></div>
+			<div class="crayon-main" style="position: relative; z-index: 1; overflow: hidden;">
+				<table class="crayon-table">
+					<tbody><tr class="crayon-row">
+				<td class="crayon-nums " data-settings="show">
+					<div class="crayon-nums-content" style="font-size: 14px !important; line-height: 17px !important;"><div class="crayon-num" data-line="crayon-58f6fff5b798b895816025-1">1</div><div class="crayon-num crayon-striped-num" data-line="crayon-58f6fff5b798b895816025-2">2</div><div class="crayon-num" data-line="crayon-58f6fff5b798b895816025-3">3</div></div>
+				</td>
+						<td class="crayon-code"><div class="crayon-pre" style="font-size: 14px !important; line-height: 17px !important; -moz-tab-size:4; -o-tab-size:4; -webkit-tab-size:4; tab-size:4;"><div class="crayon-line" id="crayon-58f6fff5b798b895816025-1"><span class="crayon-e">training </span><span class="crayon-e">data </span><span class="crayon-v">points</span><span class="crayon-o">:</span><span class="crayon-h"> </span><span class="crayon-cn">1212</span></div><div class="crayon-line crayon-striped-line" id="crayon-58f6fff5b798b895816025-2"><span class="crayon-e">validation </span><span class="crayon-e">data </span><span class="crayon-v">points</span><span class="crayon-o">:</span><span class="crayon-h"> </span><span class="crayon-cn">135</span></div><div class="crayon-line" id="crayon-58f6fff5b798b895816025-3"><span class="crayon-e">testing </span><span class="crayon-e">data </span><span class="crayon-v">points</span><span class="crayon-o">:</span><span class="crayon-h"> </span><span class="crayon-cn">450</span></div></div></td>
+					</tr>
+				</tbody></table>
+			</div>
+		</div>
+<!-- [Format Time: 0.0006 seconds] -->
+<p>
+Here, we can see we are using X images for training, Y values for validation, and Z values for testing.</p>
+<p>Now that we have our data splits taken care of, let’s train our classifier and find the optimal value of&nbsp;<em>k</em>:</p><!-- Crayon Syntax Highlighter v_2.7.2_beta -->
+
+		<div id="crayon-58f6fff5b798d823283978" class="crayon-syntax crayon-theme-arduino-ide crayon-font-ubuntu-mono crayon-os-pc print-yes notranslate" data-settings=" minimize scroll-mouseover" style="margin-top: 12px; margin-bottom: 12px; font-size: 14px !important; line-height: 17px !important; height: auto;">
+		
+			<div class="crayon-toolbar" data-settings=" show" style="font-size: 14px !important;height: 21px !important; line-height: 21px !important;"><span class="crayon-title"></span>
+			<div class="crayon-tools" style="font-size: 14px !important;height: 21px !important; line-height: 21px !important;"><div class="crayon-button crayon-nums-button crayon-pressed" title="Toggle Line Numbers"><div class="crayon-button-icon"></div></div><div class="crayon-button crayon-plain-button" title="Toggle Plain Code"><div class="crayon-button-icon"></div></div><div class="crayon-button crayon-wrap-button" title="Toggle Line Wrap"><div class="crayon-button-icon"></div></div><div class="crayon-button crayon-expand-button" title="Expand Code" style="display: none;"><div class="crayon-button-icon"></div></div><div class="crayon-button crayon-copy-button" title="Copy"><div class="crayon-button-icon"></div></div><div class="crayon-button crayon-popup-button" title="Open Code In New Window"><div class="crayon-button-icon"></div></div><span class="crayon-language">Python</span></div></div>
+			<div class="crayon-info" style="min-height: 19.6px !important; line-height: 19.6px !important;"></div>
+			<div class="crayon-plain-wrap"><textarea wrap="soft" class="crayon-plain print-no" data-settings="dblclick" readonly="" style="tab-size: 4; font-size: 14px !important; line-height: 17px !important; z-index: 0; opacity: 0; overflow: hidden;"># import the necessary packages
+from __future__ import print_function
+from sklearn.cross_validation import train_test_split
+from sklearn.neighbors import KNeighborsClassifier
+from sklearn.metrics import classification_report
+from sklearn import datasets
+from skimage import exposure
+import numpy as np
+import imutils
+import cv2
+
+# load the MNIST digits dataset
+mnist = datasets.load_digits()
+
+# take the MNIST data and construct the training and testing split, using 75% of the
+# data for training and 25% for testing
+(trainData, testData, trainLabels, testLabels) = train_test_split(np.array(mnist.data),
+	mnist.target, test_size=0.25, random_state=42)
+
+# now, let's take 10% of the training data and use that for validation
+(trainData, valData, trainLabels, valLabels) = train_test_split(trainData, trainLabels,
+	test_size=0.1, random_state=84)
+
+# show the sizes of each data split
+print("training data points: {}".format(len(trainLabels)))
+print("validation data points: {}".format(len(valLabels)))
+print("testing data points: {}".format(len(testLabels)))
+
+# initialize the values of k for our k-Nearest Neighbor classifier along with the
+# list of accuracies for each value of k
+kVals = range(1, 30, 2)
+accuracies = []
+
+# loop over various values of `k` for the k-Nearest Neighbor classifier
+for k in xrange(1, 30, 2):
+	# train the k-Nearest Neighbor classifier with the current value of `k`
+	model = KNeighborsClassifier(n_neighbors=k)
+	model.fit(trainData, trainLabels)
+
+	# evaluate the model and update the accuracies list
+	score = model.score(valData, valLabels)
+	print("k=%d, accuracy=%.2f%%" % (k, score * 100))
+	accuracies.append(score)
+
+# find the value of k that has the largest accuracy
+i = np.argmax(accuracies)
+print("k=%d achieved highest accuracy of %.2f%% on validation data" % (kVals[i],
+	accuracies[i] * 100))</textarea></div>
+			<div class="crayon-main" style="position: relative; z-index: 1; overflow: hidden;">
+				<table class="crayon-table">
+					<tbody><tr class="crayon-row">
+				<td class="crayon-nums " data-settings="show">
+					<div class="crayon-nums-content" style="font-size: 14px !important; line-height: 17px !important;"><div class="crayon-num" data-line="crayon-58f6fff5b798d823283978-29">29</div><div class="crayon-num crayon-striped-num" data-line="crayon-58f6fff5b798d823283978-30">30</div><div class="crayon-num" data-line="crayon-58f6fff5b798d823283978-31">31</div><div class="crayon-num crayon-striped-num" data-line="crayon-58f6fff5b798d823283978-32">32</div><div class="crayon-num" data-line="crayon-58f6fff5b798d823283978-33">33</div><div class="crayon-num crayon-striped-num" data-line="crayon-58f6fff5b798d823283978-34">34</div><div class="crayon-num" data-line="crayon-58f6fff5b798d823283978-35">35</div><div class="crayon-num crayon-striped-num" data-line="crayon-58f6fff5b798d823283978-36">36</div><div class="crayon-num" data-line="crayon-58f6fff5b798d823283978-37">37</div><div class="crayon-num crayon-striped-num" data-line="crayon-58f6fff5b798d823283978-38">38</div><div class="crayon-num" data-line="crayon-58f6fff5b798d823283978-39">39</div><div class="crayon-num crayon-striped-num" data-line="crayon-58f6fff5b798d823283978-40">40</div><div class="crayon-num" data-line="crayon-58f6fff5b798d823283978-41">41</div><div class="crayon-num crayon-striped-num" data-line="crayon-58f6fff5b798d823283978-42">42</div><div class="crayon-num" data-line="crayon-58f6fff5b798d823283978-43">43</div><div class="crayon-num crayon-striped-num" data-line="crayon-58f6fff5b798d823283978-44">44</div><div class="crayon-num" data-line="crayon-58f6fff5b798d823283978-45">45</div><div class="crayon-num crayon-striped-num" data-line="crayon-58f6fff5b798d823283978-46">46</div><div class="crayon-num" data-line="crayon-58f6fff5b798d823283978-47">47</div><div class="crayon-num crayon-striped-num" data-line="crayon-58f6fff5b798d823283978-48">48</div></div>
+				</td>
+						<td class="crayon-code"><div class="crayon-pre" style="font-size: 14px !important; line-height: 17px !important; -moz-tab-size:4; -o-tab-size:4; -webkit-tab-size:4; tab-size:4;"><div class="crayon-line" id="crayon-58f6fff5b798d823283978-29"><span class="crayon-c"># initialize the values of k for our k-Nearest Neighbor classifier along with the</span></div><div class="crayon-line crayon-striped-line" id="crayon-58f6fff5b798d823283978-30"><span class="crayon-c"># list of accuracies for each value of k</span></div><div class="crayon-line" id="crayon-58f6fff5b798d823283978-31"><span class="crayon-v">kVals</span><span class="crayon-h"> </span><span class="crayon-o">=</span><span class="crayon-h"> </span><span class="crayon-k ">range</span><span class="crayon-sy">(</span><span class="crayon-cn">1</span><span class="crayon-sy">,</span><span class="crayon-h"> </span><span class="crayon-cn">30</span><span class="crayon-sy">,</span><span class="crayon-h"> </span><span class="crayon-cn">2</span><span class="crayon-sy">)</span></div><div class="crayon-line crayon-striped-line" id="crayon-58f6fff5b798d823283978-32"><span class="crayon-v">accuracies</span><span class="crayon-h"> </span><span class="crayon-o">=</span><span class="crayon-h"> </span><span class="crayon-sy">[</span><span class="crayon-sy">]</span></div><div class="crayon-line" id="crayon-58f6fff5b798d823283978-33">&nbsp;</div><div class="crayon-line crayon-striped-line" id="crayon-58f6fff5b798d823283978-34"><span class="crayon-c"># loop over various values of `k` for the k-Nearest Neighbor classifier</span></div><div class="crayon-line" id="crayon-58f6fff5b798d823283978-35"><span class="crayon-st">for</span><span class="crayon-h"> </span><span class="crayon-i">k</span><span class="crayon-h"> </span><span class="crayon-st">in</span><span class="crayon-h"> </span><span class="crayon-k ">xrange</span><span class="crayon-sy">(</span><span class="crayon-cn">1</span><span class="crayon-sy">,</span><span class="crayon-h"> </span><span class="crayon-cn">30</span><span class="crayon-sy">,</span><span class="crayon-h"> </span><span class="crayon-cn">2</span><span class="crayon-sy">)</span><span class="crayon-o">:</span></div><div class="crayon-line crayon-striped-line" id="crayon-58f6fff5b798d823283978-36"><span class="crayon-h">	</span><span class="crayon-c"># train the k-Nearest Neighbor classifier with the current value of `k`</span></div><div class="crayon-line" id="crayon-58f6fff5b798d823283978-37"><span class="crayon-h">	</span><span class="crayon-v">model</span><span class="crayon-h"> </span><span class="crayon-o">=</span><span class="crayon-h"> </span><span class="crayon-e">KNeighborsClassifier</span><span class="crayon-sy">(</span><span class="crayon-v">n_neighbors</span><span class="crayon-o">=</span><span class="crayon-v">k</span><span class="crayon-sy">)</span></div><div class="crayon-line crayon-striped-line" id="crayon-58f6fff5b798d823283978-38"><span class="crayon-h">	</span><span class="crayon-v">model</span><span class="crayon-sy">.</span><span class="crayon-e">fit</span><span class="crayon-sy">(</span><span class="crayon-v">trainData</span><span class="crayon-sy">,</span><span class="crayon-h"> </span><span class="crayon-v">trainLabels</span><span class="crayon-sy">)</span></div><div class="crayon-line" id="crayon-58f6fff5b798d823283978-39">&nbsp;</div><div class="crayon-line crayon-striped-line" id="crayon-58f6fff5b798d823283978-40"><span class="crayon-h">	</span><span class="crayon-c"># evaluate the model and update the accuracies list</span></div><div class="crayon-line" id="crayon-58f6fff5b798d823283978-41"><span class="crayon-h">	</span><span class="crayon-v">score</span><span class="crayon-h"> </span><span class="crayon-o">=</span><span class="crayon-h"> </span><span class="crayon-v">model</span><span class="crayon-sy">.</span><span class="crayon-e">score</span><span class="crayon-sy">(</span><span class="crayon-v">valData</span><span class="crayon-sy">,</span><span class="crayon-h"> </span><span class="crayon-v">valLabels</span><span class="crayon-sy">)</span></div><div class="crayon-line crayon-striped-line" id="crayon-58f6fff5b798d823283978-42"><span class="crayon-h">	</span><span class="crayon-k ">print</span><span class="crayon-sy">(</span><span class="crayon-s">"k=%d, accuracy=%.2f%%"</span><span class="crayon-h"> </span><span class="crayon-o">%</span><span class="crayon-h"> </span><span class="crayon-sy">(</span><span class="crayon-v">k</span><span class="crayon-sy">,</span><span class="crayon-h"> </span><span class="crayon-v">score</span><span class="crayon-h"> </span><span class="crayon-o">*</span><span class="crayon-h"> </span><span class="crayon-cn">100</span><span class="crayon-sy">)</span><span class="crayon-sy">)</span></div><div class="crayon-line" id="crayon-58f6fff5b798d823283978-43"><span class="crayon-h">	</span><span class="crayon-v">accuracies</span><span class="crayon-sy">.</span><span class="crayon-e">append</span><span class="crayon-sy">(</span><span class="crayon-v">score</span><span class="crayon-sy">)</span></div><div class="crayon-line crayon-striped-line" id="crayon-58f6fff5b798d823283978-44">&nbsp;</div><div class="crayon-line" id="crayon-58f6fff5b798d823283978-45"><span class="crayon-c"># find the value of k that has the largest accuracy</span></div><div class="crayon-line crayon-striped-line" id="crayon-58f6fff5b798d823283978-46"><span class="crayon-v">i</span><span class="crayon-h"> </span><span class="crayon-o">=</span><span class="crayon-h"> </span><span class="crayon-v">np</span><span class="crayon-sy">.</span><span class="crayon-e">argmax</span><span class="crayon-sy">(</span><span class="crayon-v">accuracies</span><span class="crayon-sy">)</span></div><div class="crayon-line" id="crayon-58f6fff5b798d823283978-47"><span class="crayon-k ">print</span><span class="crayon-sy">(</span><span class="crayon-s">"k=%d achieved highest accuracy of %.2f%% on validation data"</span><span class="crayon-h"> </span><span class="crayon-o">%</span><span class="crayon-h"> </span><span class="crayon-sy">(</span><span class="crayon-v">kVals</span><span class="crayon-sy">[</span><span class="crayon-v">i</span><span class="crayon-sy">]</span><span class="crayon-sy">,</span></div><div class="crayon-line crayon-striped-line" id="crayon-58f6fff5b798d823283978-48"><span class="crayon-h">	</span><span class="crayon-v">accuracies</span><span class="crayon-sy">[</span><span class="crayon-v">i</span><span class="crayon-sy">]</span><span class="crayon-h"> </span><span class="crayon-o">*</span><span class="crayon-h"> </span><span class="crayon-cn">100</span><span class="crayon-sy">)</span><span class="crayon-sy">)</span></div></div></td>
+					</tr>
+				</tbody></table>
+			</div>
+		</div>
+<!-- [Format Time: 0.0081 seconds] -->
+<p>
+On <b>Line 31</b>, we define the list of&nbsp;<em>k</em> values that we want to try, which consist of the&nbsp;<em>odd</em> numbers between the range <em>[1, 30]</em> (any guesses as to why we use&nbsp;<em>odd</em> numbers?).</p>
+<p>We then loop over each of these values of&nbsp;<em>k</em> and train a 
+			<span id="crayon-58f6fff5b7991547902060" class="crayon-syntax crayon-syntax-inline  crayon-theme-arduino-ide crayon-theme-arduino-ide-inline crayon-font-ubuntu-mono" style="font-size: 14px !important; line-height: 17px !important;font-size: 14px !important;"><span class="crayon-pre crayon-code" style="font-size: 14px !important; line-height: 17px !important;font-size: 14px !important; -moz-tab-size:4; -o-tab-size:4; -webkit-tab-size:4; tab-size:4;"><span class="crayon-v">KNeighborsClassifier</span></span></span>&nbsp; on&nbsp;<strong>Lines 37 and 38</strong>, supplying your training data and training labels to the 
+			<span id="crayon-58f6fff5b7994819946839" class="crayon-syntax crayon-syntax-inline  crayon-theme-arduino-ide crayon-theme-arduino-ide-inline crayon-font-ubuntu-mono" style="font-size: 14px !important; line-height: 17px !important;font-size: 14px !important;"><span class="crayon-pre crayon-code" style="font-size: 14px !important; line-height: 17px !important;font-size: 14px !important; -moz-tab-size:4; -o-tab-size:4; -webkit-tab-size:4; tab-size:4;"><span class="crayon-v">fit</span></span></span>&nbsp; method of the 
+			<span id="crayon-58f6fff5b7996825460651" class="crayon-syntax crayon-syntax-inline  crayon-theme-arduino-ide crayon-theme-arduino-ide-inline crayon-font-ubuntu-mono" style="font-size: 14px !important; line-height: 17px !important;font-size: 14px !important;"><span class="crayon-pre crayon-code" style="font-size: 14px !important; line-height: 17px !important;font-size: 14px !important; -moz-tab-size:4; -o-tab-size:4; -webkit-tab-size:4; tab-size:4;"><span class="crayon-v">model</span></span></span>&nbsp;.</p>
+<p>After our model is trained, we need to evaluate it using our validation data (<strong>Line 41</strong>). The 
+			<span id="crayon-58f6fff5b7998094123412" class="crayon-syntax crayon-syntax-inline  crayon-theme-arduino-ide crayon-theme-arduino-ide-inline crayon-font-ubuntu-mono" style="font-size: 14px !important; line-height: 17px !important;font-size: 14px !important;"><span class="crayon-pre crayon-code" style="font-size: 14px !important; line-height: 17px !important;font-size: 14px !important; -moz-tab-size:4; -o-tab-size:4; -webkit-tab-size:4; tab-size:4;"><span class="crayon-v">score</span></span></span>&nbsp; method of our model checks to see how many predictions our k-NN classifier got right (the higher the score, the better, indicating that the classifier correctly labeled the digit a higher percentage of the time). Next we&nbsp;take this score and update our list of 
+			<span id="crayon-58f6fff5b799b912303141" class="crayon-syntax crayon-syntax-inline  crayon-theme-arduino-ide crayon-theme-arduino-ide-inline crayon-font-ubuntu-mono" style="font-size: 14px !important; line-height: 17px !important;font-size: 14px !important;"><span class="crayon-pre crayon-code" style="font-size: 14px !important; line-height: 17px !important;font-size: 14px !important; -moz-tab-size:4; -o-tab-size:4; -webkit-tab-size:4; tab-size:4;"><span class="crayon-v">accuracies</span></span></span>&nbsp;so we can determine the value of&nbsp;<em>k</em> that achieved the highest accuracy on the validation set (<strong>Lines 46-48</strong>).</p>
+<p>Running our Python script, you’ll see the following output from parameter tuning phase:</p><!-- Crayon Syntax Highlighter v_2.7.2_beta -->
+
+		<div id="crayon-58f6fff5b799d319239611" class="crayon-syntax crayon-theme-arduino-ide crayon-font-ubuntu-mono crayon-os-pc print-yes notranslate" data-settings=" minimize scroll-mouseover" style="margin-top: 12px; margin-bottom: 12px; font-size: 14px !important; line-height: 17px !important; height: auto;">
+		
+			<div class="crayon-toolbar" data-settings=" show" style="font-size: 14px !important;height: 21px !important; line-height: 21px !important;"><span class="crayon-title">Using the validation data set to tune the value of `k`</span>
+			<div class="crayon-tools" style="font-size: 14px !important;height: 21px !important; line-height: 21px !important;"><div class="crayon-button crayon-nums-button crayon-pressed" title="Toggle Line Numbers"><div class="crayon-button-icon"></div></div><div class="crayon-button crayon-plain-button" title="Toggle Plain Code"><div class="crayon-button-icon"></div></div><div class="crayon-button crayon-wrap-button" title="Toggle Line Wrap"><div class="crayon-button-icon"></div></div><div class="crayon-button crayon-expand-button" title="Expand Code" style="display: none;"><div class="crayon-button-icon"></div></div><div class="crayon-button crayon-copy-button" title="Copy"><div class="crayon-button-icon"></div></div><div class="crayon-button crayon-popup-button" title="Open Code In New Window"><div class="crayon-button-icon"></div></div><span class="crayon-language">Shell</span></div></div>
+			<div class="crayon-info" style="min-height: 19.6px !important; line-height: 19.6px !important;"></div>
+			<div class="crayon-plain-wrap"><textarea wrap="soft" class="crayon-plain print-no" data-settings="dblclick" readonly="" style="tab-size: 4; font-size: 14px !important; line-height: 17px !important; z-index: 0; opacity: 0; overflow: hidden;">k=1, accuracy=99.26%
+k=3, accuracy=99.26%
+k=5, accuracy=99.26%
+k=7, accuracy=99.26%
+k=9, accuracy=99.26%
+k=11, accuracy=99.26%
+k=13, accuracy=99.26%
+k=15, accuracy=99.26%
+k=17, accuracy=98.52%
+k=19, accuracy=98.52%
+k=21, accuracy=97.78%
+k=23, accuracy=97.04%
+k=25, accuracy=97.78%
+k=27, accuracy=97.04%
+k=29, accuracy=97.04%
+k=1 achieved highest accuracy of 99.26% on validation data</textarea></div>
+			<div class="crayon-main" style="position: relative; z-index: 1; overflow: hidden;">
+				<table class="crayon-table">
+					<tbody><tr class="crayon-row">
+				<td class="crayon-nums " data-settings="show">
+					<div class="crayon-nums-content" style="font-size: 14px !important; line-height: 17px !important;"><div class="crayon-num" data-line="crayon-58f6fff5b799d319239611-1">1</div><div class="crayon-num crayon-striped-num" data-line="crayon-58f6fff5b799d319239611-2">2</div><div class="crayon-num" data-line="crayon-58f6fff5b799d319239611-3">3</div><div class="crayon-num crayon-striped-num" data-line="crayon-58f6fff5b799d319239611-4">4</div><div class="crayon-num" data-line="crayon-58f6fff5b799d319239611-5">5</div><div class="crayon-num crayon-striped-num" data-line="crayon-58f6fff5b799d319239611-6">6</div><div class="crayon-num" data-line="crayon-58f6fff5b799d319239611-7">7</div><div class="crayon-num crayon-striped-num" data-line="crayon-58f6fff5b799d319239611-8">8</div><div class="crayon-num" data-line="crayon-58f6fff5b799d319239611-9">9</div><div class="crayon-num crayon-striped-num" data-line="crayon-58f6fff5b799d319239611-10">10</div><div class="crayon-num" data-line="crayon-58f6fff5b799d319239611-11">11</div><div class="crayon-num crayon-striped-num" data-line="crayon-58f6fff5b799d319239611-12">12</div><div class="crayon-num" data-line="crayon-58f6fff5b799d319239611-13">13</div><div class="crayon-num crayon-striped-num" data-line="crayon-58f6fff5b799d319239611-14">14</div><div class="crayon-num" data-line="crayon-58f6fff5b799d319239611-15">15</div><div class="crayon-num crayon-striped-num" data-line="crayon-58f6fff5b799d319239611-16">16</div></div>
+				</td>
+						<td class="crayon-code"><div class="crayon-pre" style="font-size: 14px !important; line-height: 17px !important; -moz-tab-size:4; -o-tab-size:4; -webkit-tab-size:4; tab-size:4;"><div class="crayon-line" id="crayon-58f6fff5b799d319239611-1"><span class="crayon-v">k</span><span class="crayon-o">=</span><span class="crayon-cn">1</span><span class="crayon-sy">,</span><span class="crayon-h"> </span><span class="crayon-v">accuracy</span><span class="crayon-o">=</span><span class="crayon-cn">99.26</span><span class="crayon-o">%</span></div><div class="crayon-line crayon-striped-line" id="crayon-58f6fff5b799d319239611-2"><span class="crayon-v">k</span><span class="crayon-o">=</span><span class="crayon-cn">3</span><span class="crayon-sy">,</span><span class="crayon-h"> </span><span class="crayon-v">accuracy</span><span class="crayon-o">=</span><span class="crayon-cn">99.26</span><span class="crayon-o">%</span></div><div class="crayon-line" id="crayon-58f6fff5b799d319239611-3"><span class="crayon-v">k</span><span class="crayon-o">=</span><span class="crayon-cn">5</span><span class="crayon-sy">,</span><span class="crayon-h"> </span><span class="crayon-v">accuracy</span><span class="crayon-o">=</span><span class="crayon-cn">99.26</span><span class="crayon-o">%</span></div><div class="crayon-line crayon-striped-line" id="crayon-58f6fff5b799d319239611-4"><span class="crayon-v">k</span><span class="crayon-o">=</span><span class="crayon-cn">7</span><span class="crayon-sy">,</span><span class="crayon-h"> </span><span class="crayon-v">accuracy</span><span class="crayon-o">=</span><span class="crayon-cn">99.26</span><span class="crayon-o">%</span></div><div class="crayon-line" id="crayon-58f6fff5b799d319239611-5"><span class="crayon-v">k</span><span class="crayon-o">=</span><span class="crayon-cn">9</span><span class="crayon-sy">,</span><span class="crayon-h"> </span><span class="crayon-v">accuracy</span><span class="crayon-o">=</span><span class="crayon-cn">99.26</span><span class="crayon-o">%</span></div><div class="crayon-line crayon-striped-line" id="crayon-58f6fff5b799d319239611-6"><span class="crayon-v">k</span><span class="crayon-o">=</span><span class="crayon-cn">11</span><span class="crayon-sy">,</span><span class="crayon-h"> </span><span class="crayon-v">accuracy</span><span class="crayon-o">=</span><span class="crayon-cn">99.26</span><span class="crayon-o">%</span></div><div class="crayon-line" id="crayon-58f6fff5b799d319239611-7"><span class="crayon-v">k</span><span class="crayon-o">=</span><span class="crayon-cn">13</span><span class="crayon-sy">,</span><span class="crayon-h"> </span><span class="crayon-v">accuracy</span><span class="crayon-o">=</span><span class="crayon-cn">99.26</span><span class="crayon-o">%</span></div><div class="crayon-line crayon-striped-line" id="crayon-58f6fff5b799d319239611-8"><span class="crayon-v">k</span><span class="crayon-o">=</span><span class="crayon-cn">15</span><span class="crayon-sy">,</span><span class="crayon-h"> </span><span class="crayon-v">accuracy</span><span class="crayon-o">=</span><span class="crayon-cn">99.26</span><span class="crayon-o">%</span></div><div class="crayon-line" id="crayon-58f6fff5b799d319239611-9"><span class="crayon-v">k</span><span class="crayon-o">=</span><span class="crayon-cn">17</span><span class="crayon-sy">,</span><span class="crayon-h"> </span><span class="crayon-v">accuracy</span><span class="crayon-o">=</span><span class="crayon-cn">98.52</span><span class="crayon-o">%</span></div><div class="crayon-line crayon-striped-line" id="crayon-58f6fff5b799d319239611-10"><span class="crayon-v">k</span><span class="crayon-o">=</span><span class="crayon-cn">19</span><span class="crayon-sy">,</span><span class="crayon-h"> </span><span class="crayon-v">accuracy</span><span class="crayon-o">=</span><span class="crayon-cn">98.52</span><span class="crayon-o">%</span></div><div class="crayon-line" id="crayon-58f6fff5b799d319239611-11"><span class="crayon-v">k</span><span class="crayon-o">=</span><span class="crayon-cn">21</span><span class="crayon-sy">,</span><span class="crayon-h"> </span><span class="crayon-v">accuracy</span><span class="crayon-o">=</span><span class="crayon-cn">97.78</span><span class="crayon-o">%</span></div><div class="crayon-line crayon-striped-line" id="crayon-58f6fff5b799d319239611-12"><span class="crayon-v">k</span><span class="crayon-o">=</span><span class="crayon-cn">23</span><span class="crayon-sy">,</span><span class="crayon-h"> </span><span class="crayon-v">accuracy</span><span class="crayon-o">=</span><span class="crayon-cn">97.04</span><span class="crayon-o">%</span></div><div class="crayon-line" id="crayon-58f6fff5b799d319239611-13"><span class="crayon-v">k</span><span class="crayon-o">=</span><span class="crayon-cn">25</span><span class="crayon-sy">,</span><span class="crayon-h"> </span><span class="crayon-v">accuracy</span><span class="crayon-o">=</span><span class="crayon-cn">97.78</span><span class="crayon-o">%</span></div><div class="crayon-line crayon-striped-line" id="crayon-58f6fff5b799d319239611-14"><span class="crayon-v">k</span><span class="crayon-o">=</span><span class="crayon-cn">27</span><span class="crayon-sy">,</span><span class="crayon-h"> </span><span class="crayon-v">accuracy</span><span class="crayon-o">=</span><span class="crayon-cn">97.04</span><span class="crayon-o">%</span></div><div class="crayon-line" id="crayon-58f6fff5b799d319239611-15"><span class="crayon-v">k</span><span class="crayon-o">=</span><span class="crayon-cn">29</span><span class="crayon-sy">,</span><span class="crayon-h"> </span><span class="crayon-v">accuracy</span><span class="crayon-o">=</span><span class="crayon-cn">97.04</span><span class="crayon-o">%</span></div><div class="crayon-line crayon-striped-line" id="crayon-58f6fff5b799d319239611-16"><span class="crayon-v">k</span><span class="crayon-o">=</span><span class="crayon-cn">1</span><span class="crayon-h"> </span><span class="crayon-e">achieved </span><span class="crayon-e">highest </span><span class="crayon-e">accuracy </span><span class="crayon-i">of</span><span class="crayon-h"> </span><span class="crayon-cn">99.26</span><span class="crayon-o">%</span><span class="crayon-h"> </span><span class="crayon-e">on </span><span class="crayon-e">validation </span><span class="crayon-v">data</span></div></div></td>
+					</tr>
+				</tbody></table>
+			</div>
+		</div>
+<!-- [Format Time: 0.0029 seconds] -->
+<p>
+Notice how the values of&nbsp;<em>k=1</em> to&nbsp;<em>k=15</em> all&nbsp;obtained the same accuracy. However, computing the distance to only a <em>single neighbor</em> is substantially more efficient, thus we will&nbsp;use&nbsp;<em>k=1</em> to train and evaluate our classifier on the final testing data:</p><!-- Crayon Syntax Highlighter v_2.7.2_beta -->
+
+		<div id="crayon-58f6fff5b79a0674730588" class="crayon-syntax crayon-theme-arduino-ide crayon-font-ubuntu-mono crayon-os-pc print-yes notranslate" data-settings=" minimize scroll-mouseover" style="margin-top: 12px; margin-bottom: 12px; font-size: 14px !important; line-height: 17px !important; height: auto;">
+		
+			<div class="crayon-toolbar" data-settings=" show" style="font-size: 14px !important;height: 21px !important; line-height: 21px !important;"><span class="crayon-title"></span>
+			<div class="crayon-tools" style="font-size: 14px !important;height: 21px !important; line-height: 21px !important;"><div class="crayon-button crayon-nums-button crayon-pressed" title="Toggle Line Numbers"><div class="crayon-button-icon"></div></div><div class="crayon-button crayon-plain-button" title="Toggle Plain Code"><div class="crayon-button-icon"></div></div><div class="crayon-button crayon-wrap-button" title="Toggle Line Wrap"><div class="crayon-button-icon"></div></div><div class="crayon-button crayon-expand-button" title="Expand Code" style="display: none;"><div class="crayon-button-icon"></div></div><div class="crayon-button crayon-copy-button" title="Copy"><div class="crayon-button-icon"></div></div><div class="crayon-button crayon-popup-button" title="Open Code In New Window"><div class="crayon-button-icon"></div></div><span class="crayon-language">Python</span></div></div>
+			<div class="crayon-info" style="min-height: 19.6px !important; line-height: 19.6px !important;"></div>
+			<div class="crayon-plain-wrap"><textarea wrap="soft" class="crayon-plain print-no" data-settings="dblclick" readonly="" style="tab-size: 4; font-size: 14px !important; line-height: 17px !important; z-index: 0; opacity: 0; overflow: hidden;"># import the necessary packages
+from __future__ import print_function
+from sklearn.cross_validation import train_test_split
+from sklearn.neighbors import KNeighborsClassifier
+from sklearn.metrics import classification_report
+from sklearn import datasets
+from skimage import exposure
+import numpy as np
+import imutils
+import cv2
+
+# load the MNIST digits dataset
+mnist = datasets.load_digits()
+
+# take the MNIST data and construct the training and testing split, using 75% of the
+# data for training and 25% for testing
+(trainData, testData, trainLabels, testLabels) = train_test_split(np.array(mnist.data),
+	mnist.target, test_size=0.25, random_state=42)
+
+# now, let's take 10% of the training data and use that for validation
+(trainData, valData, trainLabels, valLabels) = train_test_split(trainData, trainLabels,
+	test_size=0.1, random_state=84)
+
+# show the sizes of each data split
+print("training data points: {}".format(len(trainLabels)))
+print("validation data points: {}".format(len(valLabels)))
+print("testing data points: {}".format(len(testLabels)))
+
+# initialize the values of k for our k-Nearest Neighbor classifier along with the
+# list of accuracies for each value of k
+kVals = range(1, 30, 2)
+accuracies = []
+
+# loop over various values of `k` for the k-Nearest Neighbor classifier
+for k in xrange(1, 30, 2):
+	# train the k-Nearest Neighbor classifier with the current value of `k`
+	model = KNeighborsClassifier(n_neighbors=k)
+	model.fit(trainData, trainLabels)
+
+	# evaluate the model and update the accuracies list
+	score = model.score(valData, valLabels)
+	print("k=%d, accuracy=%.2f%%" % (k, score * 100))
+	accuracies.append(score)
+
+# find the value of k that has the largest accuracy
+i = np.argmax(accuracies)
+print("k=%d achieved highest accuracy of %.2f%% on validation data" % (kVals[i],
+	accuracies[i] * 100))
+
+# re-train our classifier using the best k value and predict the labels of the
+# test data
+model = KNeighborsClassifier(n_neighbors=kVals[i])
+model.fit(trainData, trainLabels)
+predictions = model.predict(testData)
+
+# show a final classification report demonstrating the accuracy of the classifier
+# for each of the digits
+print("EVALUATION ON TESTING DATA")
+print(classification_report(testLabels, predictions))</textarea></div>
+			<div class="crayon-main" style="position: relative; z-index: 1; overflow: hidden;">
+				<table class="crayon-table">
+					<tbody><tr class="crayon-row">
+				<td class="crayon-nums " data-settings="show">
+					<div class="crayon-nums-content" style="font-size: 14px !important; line-height: 17px !important;"><div class="crayon-num crayon-striped-num" data-line="crayon-58f6fff5b79a0674730588-50">50</div><div class="crayon-num" data-line="crayon-58f6fff5b79a0674730588-51">51</div><div class="crayon-num crayon-striped-num" data-line="crayon-58f6fff5b79a0674730588-52">52</div><div class="crayon-num" data-line="crayon-58f6fff5b79a0674730588-53">53</div><div class="crayon-num crayon-striped-num" data-line="crayon-58f6fff5b79a0674730588-54">54</div><div class="crayon-num" data-line="crayon-58f6fff5b79a0674730588-55">55</div><div class="crayon-num crayon-striped-num" data-line="crayon-58f6fff5b79a0674730588-56">56</div><div class="crayon-num" data-line="crayon-58f6fff5b79a0674730588-57">57</div><div class="crayon-num crayon-striped-num" data-line="crayon-58f6fff5b79a0674730588-58">58</div><div class="crayon-num" data-line="crayon-58f6fff5b79a0674730588-59">59</div></div>
+				</td>
+						<td class="crayon-code"><div class="crayon-pre" style="font-size: 14px !important; line-height: 17px !important; -moz-tab-size:4; -o-tab-size:4; -webkit-tab-size:4; tab-size:4;"><div class="crayon-line crayon-striped-line" id="crayon-58f6fff5b79a0674730588-50"><span class="crayon-c"># re-train our classifier using the best k value and predict the labels of the</span></div><div class="crayon-line" id="crayon-58f6fff5b79a0674730588-51"><span class="crayon-c"># test data</span></div><div class="crayon-line crayon-striped-line" id="crayon-58f6fff5b79a0674730588-52"><span class="crayon-v">model</span><span class="crayon-h"> </span><span class="crayon-o">=</span><span class="crayon-h"> </span><span class="crayon-e">KNeighborsClassifier</span><span class="crayon-sy">(</span><span class="crayon-v">n_neighbors</span><span class="crayon-o">=</span><span class="crayon-v">kVals</span><span class="crayon-sy">[</span><span class="crayon-v">i</span><span class="crayon-sy">]</span><span class="crayon-sy">)</span></div><div class="crayon-line" id="crayon-58f6fff5b79a0674730588-53"><span class="crayon-v">model</span><span class="crayon-sy">.</span><span class="crayon-e">fit</span><span class="crayon-sy">(</span><span class="crayon-v">trainData</span><span class="crayon-sy">,</span><span class="crayon-h"> </span><span class="crayon-v">trainLabels</span><span class="crayon-sy">)</span></div><div class="crayon-line crayon-striped-line" id="crayon-58f6fff5b79a0674730588-54"><span class="crayon-v">predictions</span><span class="crayon-h"> </span><span class="crayon-o">=</span><span class="crayon-h"> </span><span class="crayon-v">model</span><span class="crayon-sy">.</span><span class="crayon-e">predict</span><span class="crayon-sy">(</span><span class="crayon-v">testData</span><span class="crayon-sy">)</span></div><div class="crayon-line" id="crayon-58f6fff5b79a0674730588-55">&nbsp;</div><div class="crayon-line crayon-striped-line" id="crayon-58f6fff5b79a0674730588-56"><span class="crayon-c"># show a final classification report demonstrating the accuracy of the classifier</span></div><div class="crayon-line" id="crayon-58f6fff5b79a0674730588-57"><span class="crayon-c"># for each of the digits</span></div><div class="crayon-line crayon-striped-line" id="crayon-58f6fff5b79a0674730588-58"><span class="crayon-k ">print</span><span class="crayon-sy">(</span><span class="crayon-s">"EVALUATION ON TESTING DATA"</span><span class="crayon-sy">)</span></div><div class="crayon-line" id="crayon-58f6fff5b79a0674730588-59"><span class="crayon-k ">print</span><span class="crayon-sy">(</span><span class="crayon-e">classification_report</span><span class="crayon-sy">(</span><span class="crayon-v">testLabels</span><span class="crayon-sy">,</span><span class="crayon-h"> </span><span class="crayon-v">predictions</span><span class="crayon-sy">)</span><span class="crayon-sy">)</span></div></div></td>
+					</tr>
+				</tbody></table>
+			</div>
+		</div>
+<!-- [Format Time: 0.0101 seconds] -->
+<p>
+The code here is fairly straightforward: we are simply taking the value of&nbsp;<em>k</em> that achieved the highest accuracy, re-training our 
+			<span id="crayon-58f6fff5b79a4923667009" class="crayon-syntax crayon-syntax-inline  crayon-theme-arduino-ide crayon-theme-arduino-ide-inline crayon-font-ubuntu-mono" style="font-size: 14px !important; line-height: 17px !important;font-size: 14px !important;"><span class="crayon-pre crayon-code" style="font-size: 14px !important; line-height: 17px !important;font-size: 14px !important; -moz-tab-size:4; -o-tab-size:4; -webkit-tab-size:4; tab-size:4;"><span class="crayon-v">KNeighborsClassifier</span></span></span>&nbsp; using this value of&nbsp;<em>k</em>, and then evaluating the performance using the 
+			<span id="crayon-58f6fff5b79a7885750430" class="crayon-syntax crayon-syntax-inline  crayon-theme-arduino-ide crayon-theme-arduino-ide-inline crayon-font-ubuntu-mono" style="font-size: 14px !important; line-height: 17px !important;font-size: 14px !important;"><span class="crayon-pre crayon-code" style="font-size: 14px !important; line-height: 17px !important;font-size: 14px !important; -moz-tab-size:4; -o-tab-size:4; -webkit-tab-size:4; tab-size:4;"><span class="crayon-v">classification_report</span></span></span>&nbsp; function, the output of which you can see below:</p><!-- Crayon Syntax Highlighter v_2.7.2_beta -->
+
+		<div id="crayon-58f6fff5b79a9640237596" class="crayon-syntax crayon-theme-arduino-ide crayon-font-ubuntu-mono crayon-os-pc print-yes notranslate" data-settings=" minimize scroll-mouseover" style="margin-top: 12px; margin-bottom: 12px; font-size: 14px !important; line-height: 17px !important; height: auto;">
+		
+			<div class="crayon-toolbar" data-settings=" show" style="font-size: 14px !important;height: 21px !important; line-height: 21px !important;"><span class="crayon-title">Evaluating our k-NN classifier on MNIST</span>
+			<div class="crayon-tools" style="font-size: 14px !important;height: 21px !important; line-height: 21px !important;"><div class="crayon-button crayon-nums-button crayon-pressed" title="Toggle Line Numbers"><div class="crayon-button-icon"></div></div><div class="crayon-button crayon-plain-button" title="Toggle Plain Code"><div class="crayon-button-icon"></div></div><div class="crayon-button crayon-wrap-button" title="Toggle Line Wrap"><div class="crayon-button-icon"></div></div><div class="crayon-button crayon-expand-button" title="Expand Code" style="display: none;"><div class="crayon-button-icon"></div></div><div class="crayon-button crayon-copy-button" title="Copy"><div class="crayon-button-icon"></div></div><div class="crayon-button crayon-popup-button" title="Open Code In New Window"><div class="crayon-button-icon"></div></div><span class="crayon-language">Shell</span></div></div>
+			<div class="crayon-info" style="min-height: 19.6px !important; line-height: 19.6px !important;"></div>
+			<div class="crayon-plain-wrap"><textarea wrap="soft" class="crayon-plain print-no" data-settings="dblclick" readonly="" style="tab-size: 4; font-size: 14px !important; line-height: 17px !important; z-index: 0; opacity: 0; overflow: hidden;">EVALUATION ON TESTING DATA
+             precision    recall  f1-score   support
+
+          0       1.00      1.00      1.00        43
+          1       0.95      1.00      0.97        37
+          2       1.00      1.00      1.00        38
+          3       0.98      0.98      0.98        46
+          4       0.98      0.98      0.98        55
+          5       0.98      1.00      0.99        59
+          6       1.00      1.00      1.00        45
+          7       1.00      0.98      0.99        41
+          8       0.97      0.95      0.96        38
+          9       0.96      0.94      0.95        48
+
+avg / total       0.98      0.98      0.98       450</textarea></div>
+			<div class="crayon-main" style="position: relative; z-index: 1; overflow: hidden;">
+				<table class="crayon-table">
+					<tbody><tr class="crayon-row">
+				<td class="crayon-nums " data-settings="show">
+					<div class="crayon-nums-content" style="font-size: 14px !important; line-height: 17px !important;"><div class="crayon-num" data-line="crayon-58f6fff5b79a9640237596-1">1</div><div class="crayon-num crayon-striped-num" data-line="crayon-58f6fff5b79a9640237596-2">2</div><div class="crayon-num" data-line="crayon-58f6fff5b79a9640237596-3">3</div><div class="crayon-num crayon-striped-num" data-line="crayon-58f6fff5b79a9640237596-4">4</div><div class="crayon-num" data-line="crayon-58f6fff5b79a9640237596-5">5</div><div class="crayon-num crayon-striped-num" data-line="crayon-58f6fff5b79a9640237596-6">6</div><div class="crayon-num" data-line="crayon-58f6fff5b79a9640237596-7">7</div><div class="crayon-num crayon-striped-num" data-line="crayon-58f6fff5b79a9640237596-8">8</div><div class="crayon-num" data-line="crayon-58f6fff5b79a9640237596-9">9</div><div class="crayon-num crayon-striped-num" data-line="crayon-58f6fff5b79a9640237596-10">10</div><div class="crayon-num" data-line="crayon-58f6fff5b79a9640237596-11">11</div><div class="crayon-num crayon-striped-num" data-line="crayon-58f6fff5b79a9640237596-12">12</div><div class="crayon-num" data-line="crayon-58f6fff5b79a9640237596-13">13</div><div class="crayon-num crayon-striped-num" data-line="crayon-58f6fff5b79a9640237596-14">14</div><div class="crayon-num" data-line="crayon-58f6fff5b79a9640237596-15">15</div></div>
+				</td>
+						<td class="crayon-code"><div class="crayon-pre" style="font-size: 14px !important; line-height: 17px !important; -moz-tab-size:4; -o-tab-size:4; -webkit-tab-size:4; tab-size:4;"><div class="crayon-line" id="crayon-58f6fff5b79a9640237596-1"><span class="crayon-e">EVALUATION </span><span class="crayon-e">ON </span><span class="crayon-e">TESTING </span><span class="crayon-e">DATA</span></div><div class="crayon-line crayon-striped-line" id="crayon-58f6fff5b79a9640237596-2"><span class="crayon-e">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; </span><span class="crayon-e">precision&nbsp;&nbsp;&nbsp;&nbsp;</span><span class="crayon-e">recall&nbsp;&nbsp;</span><span class="crayon-v">f1</span><span class="crayon-o">-</span><span class="crayon-e">score&nbsp;&nbsp; </span><span class="crayon-i">support</span></div><div class="crayon-line" id="crayon-58f6fff5b79a9640237596-3">&nbsp;</div><div class="crayon-line crayon-striped-line" id="crayon-58f6fff5b79a9640237596-4"><span class="crayon-h">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span><span class="crayon-cn">0</span><span class="crayon-h">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; </span><span class="crayon-cn">1.00</span><span class="crayon-h">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span><span class="crayon-cn">1.00</span><span class="crayon-h">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span><span class="crayon-cn">1.00</span><span class="crayon-h">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span><span class="crayon-cn">43</span></div><div class="crayon-line" id="crayon-58f6fff5b79a9640237596-5"><span class="crayon-h">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span><span class="crayon-cn">1</span><span class="crayon-h">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; </span><span class="crayon-cn">0.95</span><span class="crayon-h">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span><span class="crayon-cn">1.00</span><span class="crayon-h">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span><span class="crayon-cn">0.97</span><span class="crayon-h">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span><span class="crayon-cn">37</span></div><div class="crayon-line crayon-striped-line" id="crayon-58f6fff5b79a9640237596-6"><span class="crayon-h">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span><span class="crayon-cn">2</span><span class="crayon-h">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; </span><span class="crayon-cn">1.00</span><span class="crayon-h">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span><span class="crayon-cn">1.00</span><span class="crayon-h">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span><span class="crayon-cn">1.00</span><span class="crayon-h">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span><span class="crayon-cn">38</span></div><div class="crayon-line" id="crayon-58f6fff5b79a9640237596-7"><span class="crayon-h">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span><span class="crayon-cn">3</span><span class="crayon-h">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; </span><span class="crayon-cn">0.98</span><span class="crayon-h">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span><span class="crayon-cn">0.98</span><span class="crayon-h">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span><span class="crayon-cn">0.98</span><span class="crayon-h">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span><span class="crayon-cn">46</span></div><div class="crayon-line crayon-striped-line" id="crayon-58f6fff5b79a9640237596-8"><span class="crayon-h">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span><span class="crayon-cn">4</span><span class="crayon-h">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; </span><span class="crayon-cn">0.98</span><span class="crayon-h">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span><span class="crayon-cn">0.98</span><span class="crayon-h">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span><span class="crayon-cn">0.98</span><span class="crayon-h">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span><span class="crayon-cn">55</span></div><div class="crayon-line" id="crayon-58f6fff5b79a9640237596-9"><span class="crayon-h">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span><span class="crayon-cn">5</span><span class="crayon-h">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; </span><span class="crayon-cn">0.98</span><span class="crayon-h">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span><span class="crayon-cn">1.00</span><span class="crayon-h">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span><span class="crayon-cn">0.99</span><span class="crayon-h">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span><span class="crayon-cn">59</span></div><div class="crayon-line crayon-striped-line" id="crayon-58f6fff5b79a9640237596-10"><span class="crayon-h">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span><span class="crayon-cn">6</span><span class="crayon-h">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; </span><span class="crayon-cn">1.00</span><span class="crayon-h">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span><span class="crayon-cn">1.00</span><span class="crayon-h">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span><span class="crayon-cn">1.00</span><span class="crayon-h">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span><span class="crayon-cn">45</span></div><div class="crayon-line" id="crayon-58f6fff5b79a9640237596-11"><span class="crayon-h">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span><span class="crayon-cn">7</span><span class="crayon-h">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; </span><span class="crayon-cn">1.00</span><span class="crayon-h">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span><span class="crayon-cn">0.98</span><span class="crayon-h">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span><span class="crayon-cn">0.99</span><span class="crayon-h">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span><span class="crayon-cn">41</span></div><div class="crayon-line crayon-striped-line" id="crayon-58f6fff5b79a9640237596-12"><span class="crayon-h">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span><span class="crayon-cn">8</span><span class="crayon-h">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; </span><span class="crayon-cn">0.97</span><span class="crayon-h">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span><span class="crayon-cn">0.95</span><span class="crayon-h">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span><span class="crayon-cn">0.96</span><span class="crayon-h">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span><span class="crayon-cn">38</span></div><div class="crayon-line" id="crayon-58f6fff5b79a9640237596-13"><span class="crayon-h">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span><span class="crayon-cn">9</span><span class="crayon-h">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; </span><span class="crayon-cn">0.96</span><span class="crayon-h">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span><span class="crayon-cn">0.94</span><span class="crayon-h">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span><span class="crayon-cn">0.95</span><span class="crayon-h">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span><span class="crayon-cn">48</span></div><div class="crayon-line crayon-striped-line" id="crayon-58f6fff5b79a9640237596-14">&nbsp;</div><div class="crayon-line" id="crayon-58f6fff5b79a9640237596-15"><span class="crayon-v">avg</span><span class="crayon-h"> </span><span class="crayon-o">/</span><span class="crayon-h"> </span><span class="crayon-i">total</span><span class="crayon-h">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; </span><span class="crayon-cn">0.98</span><span class="crayon-h">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span><span class="crayon-cn">0.98</span><span class="crayon-h">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span><span class="crayon-cn">0.98</span><span class="crayon-h">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; </span><span class="crayon-cn">450</span></div></div></td>
+					</tr>
+				</tbody></table>
+			</div>
+		</div>
+<!-- [Format Time: 0.0027 seconds] -->
+<p>
+<strong>Wow, 98% accuracy! That’s quite high!&nbsp;</strong>Furthermore, we can see the digits&nbsp;<em>0</em>, <i>2</i>,<i>&nbsp;6</i>, and<i> 7 </i>are classified correctly 100% of the time. The digit&nbsp;<em>1</em>&nbsp;obtains the lowest classification accuracy of 95%.</p>
+<p>So given this high classification accuracy, does this mean that we have “solved” handwritten digit recognition? Unfortunately, no — it does not. While the MNIST dataset is well known and heavily used as a benchmark, it doesn’t necessarily translate into real-world viability. This is mainly due to the dataset itself, where each and every image has been heavily pre-processed — including cropping, perfect thresholding, and centered.</p>
+<p>In the real world, your dataset will never be as&nbsp;“nice” and cleanly pre-processed as the MNIST dataset. And as we’ll find out in our case study on <strong><a href="https://gurus.pyimagesearch.com/lesson-sample-k-nearest-neighbor-classification/?email=deshmukhps95@gmail.com&amp;__s=g47dwoaicn3csu3kv1b8#tour_modal">real-world handwriting recognition</a></strong>, we’ll need to extract feature vectors from each digit rather than relying on the raw pixel intensities of the image. With&nbsp;that said, it’s still useful to see how computing the Euclidean distance between raw pixel intensities can lead to high accuracy classifiers <em><strong>provided</strong></em> that the dataset has been appropriately pre-processed.</p>
+<p>Finally, let’s end this code example by examining some of the individual predictions from our k-NN classifier:</p><!-- Crayon Syntax Highlighter v_2.7.2_beta -->
+
+		<div id="crayon-58f6fff5b79ad011216744" class="crayon-syntax crayon-theme-arduino-ide crayon-font-ubuntu-mono crayon-os-pc print-yes notranslate" data-settings=" minimize scroll-mouseover" style="margin-top: 12px; margin-bottom: 12px; font-size: 14px !important; line-height: 17px !important; height: auto;">
+		
+			<div class="crayon-toolbar" data-settings=" show" style="font-size: 14px !important;height: 21px !important; line-height: 21px !important;"><span class="crayon-title">mnist_demo.py</span>
+			<div class="crayon-tools" style="font-size: 14px !important;height: 21px !important; line-height: 21px !important;"><div class="crayon-button crayon-nums-button crayon-pressed" title="Toggle Line Numbers"><div class="crayon-button-icon"></div></div><div class="crayon-button crayon-plain-button" title="Toggle Plain Code"><div class="crayon-button-icon"></div></div><div class="crayon-button crayon-wrap-button" title="Toggle Line Wrap"><div class="crayon-button-icon"></div></div><div class="crayon-button crayon-expand-button" title="Expand Code" style="display: none;"><div class="crayon-button-icon"></div></div><div class="crayon-button crayon-copy-button" title="Copy"><div class="crayon-button-icon"></div></div><div class="crayon-button crayon-popup-button" title="Open Code In New Window"><div class="crayon-button-icon"></div></div><span class="crayon-language">Python</span></div></div>
+			<div class="crayon-info" style="min-height: 19.6px !important; line-height: 19.6px !important;"></div>
+			<div class="crayon-plain-wrap"><textarea wrap="soft" class="crayon-plain print-no" data-settings="dblclick" readonly="" style="tab-size: 4; font-size: 14px !important; line-height: 17px !important; z-index: 0; opacity: 0; overflow: hidden;"># import the necessary packages
+from __future__ import print_function
+from sklearn.cross_validation import train_test_split
+from sklearn.neighbors import KNeighborsClassifier
+from sklearn.metrics import classification_report
+from sklearn import datasets
+from skimage import exposure
+import numpy as np
+import imutils
+import cv2
+
+# load the MNIST digits dataset
+mnist = datasets.load_digits()
+
+# take the MNIST data and construct the training and testing split, using 75% of the
+# data for training and 25% for testing
+(trainData, testData, trainLabels, testLabels) = train_test_split(np.array(mnist.data),
+	mnist.target, test_size=0.25, random_state=42)
+
+# now, let's take 10% of the training data and use that for validation
+(trainData, valData, trainLabels, valLabels) = train_test_split(trainData, trainLabels,
+	test_size=0.1, random_state=84)
+
+# show the sizes of each data split
+print("training data points: {}".format(len(trainLabels)))
+print("validation data points: {}".format(len(valLabels)))
+print("testing data points: {}".format(len(testLabels)))
+
+# initialize the values of k for our k-Nearest Neighbor classifier along with the
+# list of accuracies for each value of k
+kVals = range(1, 30, 2)
+accuracies = []
+
+# loop over various values of `k` for the k-Nearest Neighbor classifier
+for k in xrange(1, 30, 2):
+	# train the k-Nearest Neighbor classifier with the current value of `k`
+	model = KNeighborsClassifier(n_neighbors=k)
+	model.fit(trainData, trainLabels)
+
+	# evaluate the model and update the accuracies list
+	score = model.score(valData, valLabels)
+	print("k=%d, accuracy=%.2f%%" % (k, score * 100))
+	accuracies.append(score)
+
+# find the value of k that has the largest accuracy
+i = np.argmax(accuracies)
+print("k=%d achieved highest accuracy of %.2f%% on validation data" % (kVals[i],
+	accuracies[i] * 100))
+
+# re-train our classifier using the best k value and predict the labels of the
+# test data
+model = KNeighborsClassifier(n_neighbors=kVals[i])
+model.fit(trainData, trainLabels)
+predictions = model.predict(testData)
+
+# show a final classification report demonstrating the accuracy of the classifier
+# for each of the digits
+print("EVALUATION ON TESTING DATA")
+print(classification_report(testLabels, predictions))
+
+# loop over a few random digits
+for i in np.random.randint(0, high=len(testLabels), size=(5,)):
+	# grab the image and classify it
+	image = testData[i]
+	prediction = model.predict(image)[0]
+
+	# convert the image for a 64-dim array to an 8 x 8 image compatible with OpenCV,
+	# then resize it to 32 x 32 pixels so we can see it better
+	image = image.reshape((8, 8)).astype("uint8")
+	image = exposure.rescale_intensity(image, out_range=(0, 255))
+	image = imutils.resize(image, width=32, inter=cv2.INTER_CUBIC)
+
+	# show the prediction
+	print("I think that digit is: {}".format(prediction))
+	cv2.imshow("Image", image)
+	cv2.waitKey(0)</textarea></div>
+			<div class="crayon-main" style="position: relative; z-index: 1; overflow: hidden;">
+				<table class="crayon-table">
+					<tbody><tr class="crayon-row">
+				<td class="crayon-nums " data-settings="show">
+					<div class="crayon-nums-content" style="font-size: 14px !important; line-height: 17px !important;"><div class="crayon-num" data-line="crayon-58f6fff5b79ad011216744-61">61</div><div class="crayon-num crayon-striped-num" data-line="crayon-58f6fff5b79ad011216744-62">62</div><div class="crayon-num" data-line="crayon-58f6fff5b79ad011216744-63">63</div><div class="crayon-num crayon-striped-num" data-line="crayon-58f6fff5b79ad011216744-64">64</div><div class="crayon-num" data-line="crayon-58f6fff5b79ad011216744-65">65</div><div class="crayon-num crayon-striped-num" data-line="crayon-58f6fff5b79ad011216744-66">66</div><div class="crayon-num" data-line="crayon-58f6fff5b79ad011216744-67">67</div><div class="crayon-num crayon-striped-num" data-line="crayon-58f6fff5b79ad011216744-68">68</div><div class="crayon-num" data-line="crayon-58f6fff5b79ad011216744-69">69</div><div class="crayon-num crayon-striped-num" data-line="crayon-58f6fff5b79ad011216744-70">70</div><div class="crayon-num" data-line="crayon-58f6fff5b79ad011216744-71">71</div><div class="crayon-num crayon-striped-num" data-line="crayon-58f6fff5b79ad011216744-72">72</div><div class="crayon-num" data-line="crayon-58f6fff5b79ad011216744-73">73</div><div class="crayon-num crayon-striped-num" data-line="crayon-58f6fff5b79ad011216744-74">74</div><div class="crayon-num" data-line="crayon-58f6fff5b79ad011216744-75">75</div><div class="crayon-num crayon-striped-num" data-line="crayon-58f6fff5b79ad011216744-76">76</div></div>
+				</td>
+						<td class="crayon-code"><div class="crayon-pre" style="font-size: 14px !important; line-height: 17px !important; -moz-tab-size:4; -o-tab-size:4; -webkit-tab-size:4; tab-size:4;"><div class="crayon-line" id="crayon-58f6fff5b79ad011216744-61"><span class="crayon-c"># loop over a few random digits</span></div><div class="crayon-line crayon-striped-line" id="crayon-58f6fff5b79ad011216744-62"><span class="crayon-st">for</span><span class="crayon-h"> </span><span class="crayon-i">i</span><span class="crayon-h"> </span><span class="crayon-st">in</span><span class="crayon-h"> </span><span class="crayon-v">np</span><span class="crayon-sy">.</span><span class="crayon-k ">random</span><span class="crayon-sy">.</span><span class="crayon-e">randint</span><span class="crayon-sy">(</span><span class="crayon-cn">0</span><span class="crayon-sy">,</span><span class="crayon-h"> </span><span class="crayon-v">high</span><span class="crayon-o">=</span><span class="crayon-k ">len</span><span class="crayon-sy">(</span><span class="crayon-v">testLabels</span><span class="crayon-sy">)</span><span class="crayon-sy">,</span><span class="crayon-h"> </span><span class="crayon-v">size</span><span class="crayon-o">=</span><span class="crayon-sy">(</span><span class="crayon-cn">5</span><span class="crayon-sy">,</span><span class="crayon-sy">)</span><span class="crayon-sy">)</span><span class="crayon-o">:</span></div><div class="crayon-line" id="crayon-58f6fff5b79ad011216744-63"><span class="crayon-h">	</span><span class="crayon-c"># grab the image and classify it</span></div><div class="crayon-line crayon-striped-line" id="crayon-58f6fff5b79ad011216744-64"><span class="crayon-h">	</span><span class="crayon-v">image</span><span class="crayon-h"> </span><span class="crayon-o">=</span><span class="crayon-h"> </span><span class="crayon-v">testData</span><span class="crayon-sy">[</span><span class="crayon-v">i</span><span class="crayon-sy">]</span></div><div class="crayon-line" id="crayon-58f6fff5b79ad011216744-65"><span class="crayon-h">	</span><span class="crayon-v">prediction</span><span class="crayon-h"> </span><span class="crayon-o">=</span><span class="crayon-h"> </span><span class="crayon-v">model</span><span class="crayon-sy">.</span><span class="crayon-e">predict</span><span class="crayon-sy">(</span><span class="crayon-v">image</span><span class="crayon-sy">)</span><span class="crayon-sy">[</span><span class="crayon-cn">0</span><span class="crayon-sy">]</span></div><div class="crayon-line crayon-striped-line" id="crayon-58f6fff5b79ad011216744-66">&nbsp;</div><div class="crayon-line" id="crayon-58f6fff5b79ad011216744-67"><span class="crayon-h">	</span><span class="crayon-c"># convert the image for a 64-dim array to an 8 x 8 image compatible with OpenCV,</span></div><div class="crayon-line crayon-striped-line" id="crayon-58f6fff5b79ad011216744-68"><span class="crayon-h">	</span><span class="crayon-c"># then resize it to 32 x 32 pixels so we can see it better</span></div><div class="crayon-line" id="crayon-58f6fff5b79ad011216744-69"><span class="crayon-h">	</span><span class="crayon-v">image</span><span class="crayon-h"> </span><span class="crayon-o">=</span><span class="crayon-h"> </span><span class="crayon-v">image</span><span class="crayon-sy">.</span><span class="crayon-e">reshape</span><span class="crayon-sy">(</span><span class="crayon-sy">(</span><span class="crayon-cn">8</span><span class="crayon-sy">,</span><span class="crayon-h"> </span><span class="crayon-cn">8</span><span class="crayon-sy">)</span><span class="crayon-sy">)</span><span class="crayon-sy">.</span><span class="crayon-e">astype</span><span class="crayon-sy">(</span><span class="crayon-s">"uint8"</span><span class="crayon-sy">)</span></div><div class="crayon-line crayon-striped-line" id="crayon-58f6fff5b79ad011216744-70"><span class="crayon-h">	</span><span class="crayon-v">image</span><span class="crayon-h"> </span><span class="crayon-o">=</span><span class="crayon-h"> </span><span class="crayon-v">exposure</span><span class="crayon-sy">.</span><span class="crayon-e">rescale_intensity</span><span class="crayon-sy">(</span><span class="crayon-v">image</span><span class="crayon-sy">,</span><span class="crayon-h"> </span><span class="crayon-v">out_range</span><span class="crayon-o">=</span><span class="crayon-sy">(</span><span class="crayon-cn">0</span><span class="crayon-sy">,</span><span class="crayon-h"> </span><span class="crayon-cn">255</span><span class="crayon-sy">)</span><span class="crayon-sy">)</span></div><div class="crayon-line" id="crayon-58f6fff5b79ad011216744-71"><span class="crayon-h">	</span><span class="crayon-v">image</span><span class="crayon-h"> </span><span class="crayon-o">=</span><span class="crayon-h"> </span><span class="crayon-v">imutils</span><span class="crayon-sy">.</span><span class="crayon-e">resize</span><span class="crayon-sy">(</span><span class="crayon-v">image</span><span class="crayon-sy">,</span><span class="crayon-h"> </span><span class="crayon-v">width</span><span class="crayon-o">=</span><span class="crayon-cn">32</span><span class="crayon-sy">,</span><span class="crayon-h"> </span><span class="crayon-v">inter</span><span class="crayon-o">=</span><span class="crayon-v">cv2</span><span class="crayon-sy">.</span><span class="crayon-v">INTER_CUBIC</span><span class="crayon-sy">)</span></div><div class="crayon-line crayon-striped-line" id="crayon-58f6fff5b79ad011216744-72">&nbsp;</div><div class="crayon-line" id="crayon-58f6fff5b79ad011216744-73"><span class="crayon-h">	</span><span class="crayon-c"># show the prediction</span></div><div class="crayon-line crayon-striped-line" id="crayon-58f6fff5b79ad011216744-74"><span class="crayon-h">	</span><span class="crayon-k ">print</span><span class="crayon-sy">(</span><span class="crayon-s">"I think that digit is: {}"</span><span class="crayon-sy">.</span><span class="crayon-k ">format</span><span class="crayon-sy">(</span><span class="crayon-v">prediction</span><span class="crayon-sy">)</span><span class="crayon-sy">)</span></div><div class="crayon-line" id="crayon-58f6fff5b79ad011216744-75"><span class="crayon-h">	</span><span class="crayon-v">cv2</span><span class="crayon-sy">.</span><span class="crayon-e">imshow</span><span class="crayon-sy">(</span><span class="crayon-s">"Image"</span><span class="crayon-sy">,</span><span class="crayon-h"> </span><span class="crayon-v">image</span><span class="crayon-sy">)</span></div><div class="crayon-line crayon-striped-line" id="crayon-58f6fff5b79ad011216744-76"><span class="crayon-h">	</span><span class="crayon-v">cv2</span><span class="crayon-sy">.</span><span class="crayon-e">waitKey</span><span class="crayon-sy">(</span><span class="crayon-cn">0</span><span class="crayon-sy">)</span></div></div></td>
+					</tr>
+				</tbody></table>
+			</div>
+		</div>
+<!-- [Format Time: 0.0121 seconds] -->
+<p>
+On&nbsp;<strong>Line 62</strong>, we loop over five&nbsp;random images from our testing set. <strong>Line 65</strong>&nbsp;takes the random image and predict what digit the image contains. Finally,&nbsp;<strong>Lines 69-71</strong> reshape the 64-dim raw pixel intensity feature vector to an&nbsp;<em>8 x 8</em> image, which we blow up to&nbsp;<em>32 x 32&nbsp;</em>pixels, so we can better visualize it.</p>
+<p>Here are a few examples of individual classifications from our 
+			<span id="crayon-58f6fff5b79b2752714766" class="crayon-syntax crayon-syntax-inline  crayon-theme-arduino-ide crayon-theme-arduino-ide-inline crayon-font-ubuntu-mono" style="font-size: 14px !important; line-height: 17px !important;font-size: 14px !important;"><span class="crayon-pre crayon-code" style="font-size: 14px !important; line-height: 17px !important;font-size: 14px !important; -moz-tab-size:4; -o-tab-size:4; -webkit-tab-size:4; tab-size:4;"><span class="crayon-v">mnist_demo</span><span class="crayon-sy">.</span><span class="crayon-v">py</span></span></span>&nbsp; script:</p>
+<div id="attachment_2278" style="width: 810px" class="wp-caption aligncenter"><a href="https://gurus.pyimagesearch.com/lesson-sample-k-nearest-neighbor-classification/?email=deshmukhps95@gmail.com&amp;__s=g47dwoaicn3csu3kv1b8#tour_modal"><img class="wp-image-2278" src="./k-Nearest Neighbor classification _ PyImageSearch Gurus_files/lbp_mnist_01.jpg" alt="Figure 6: Our k-NN classifier is able to correctly recognize the digit &quot;6&quot;." width="800" height="545" srcset="https://gurus.pyimagesearch.com/wp-content/uploads/2015/03/lbp_mnist_01-300x204.jpg 300w, https://gurus.pyimagesearch.com/wp-content/uploads/2015/03/lbp_mnist_01-100x68.jpg 100w, https://gurus.pyimagesearch.com/wp-content/uploads/2015/03/lbp_mnist_01-865x589.jpg 865w, https://gurus.pyimagesearch.com/wp-content/uploads/2015/03/lbp_mnist_01.jpg 1000w" sizes="(max-width: 800px) 100vw, 800px"></a><p class="wp-caption-text"><strong>Figure 7:</strong> Our k-NN classifier is able to correctly recognize the digit “6”.</p></div>
+<p>Let’s give another one a try:</p>
+<div id="attachment_2279" style="width: 810px" class="wp-caption aligncenter"><a href="https://gurus.pyimagesearch.com/lesson-sample-k-nearest-neighbor-classification/?email=deshmukhps95@gmail.com&amp;__s=g47dwoaicn3csu3kv1b8#tour_modal"><img class="wp-image-2279" src="./k-Nearest Neighbor classification _ PyImageSearch Gurus_files/lbp_mnist_02.jpg" alt="Figure 7: Simply computing the Euclidean distance between raw pixel intensities of the images allows us to correctly classify the handwritten digit &quot;7&quot;." width="800" height="538" srcset="https://gurus.pyimagesearch.com/wp-content/uploads/2015/03/lbp_mnist_02-300x202.jpg 300w, https://gurus.pyimagesearch.com/wp-content/uploads/2015/03/lbp_mnist_02-865x581.jpg 865w, https://gurus.pyimagesearch.com/wp-content/uploads/2015/03/lbp_mnist_02.jpg 1000w" sizes="(max-width: 800px) 100vw, 800px"></a><p class="wp-caption-text"><strong>Figure 8:</strong> Simply computing the Euclidean distance between raw pixel intensities of the images allows us to correctly classify the handwritten digit “7”.</p></div>
+<p>Here’s another sample, this one being more skewed and distorted than the others:</p>
+<div id="attachment_2280" style="width: 810px" class="wp-caption aligncenter"><a href="https://gurus.pyimagesearch.com/lesson-sample-k-nearest-neighbor-classification/?email=deshmukhps95@gmail.com&amp;__s=g47dwoaicn3csu3kv1b8#tour_modal"><img class="wp-image-2280" src="./k-Nearest Neighbor classification _ PyImageSearch Gurus_files/lbp_mnist_03.jpg" alt="Figure 8: Even though the &quot;5&quot; is skewed and distorted, we can still recognize it." width="800" height="550" srcset="https://gurus.pyimagesearch.com/wp-content/uploads/2015/03/lbp_mnist_03-300x206.jpg 300w, https://gurus.pyimagesearch.com/wp-content/uploads/2015/03/lbp_mnist_03-865x595.jpg 865w, https://gurus.pyimagesearch.com/wp-content/uploads/2015/03/lbp_mnist_03.jpg 1000w" sizes="(max-width: 800px) 100vw, 800px"></a><p class="wp-caption-text"><strong>Figure 9:</strong> Even though the “5” is skewed and distorted, we can still recognize it.</p></div>
+<p>The digit “0” is also not a problem for our classifier:</p>
+<div id="attachment_2281" style="width: 810px" class="wp-caption aligncenter"><a href="https://gurus.pyimagesearch.com/lesson-sample-k-nearest-neighbor-classification/?email=deshmukhps95@gmail.com&amp;__s=g47dwoaicn3csu3kv1b8#tour_modal"><img class="wp-image-2281" src="./k-Nearest Neighbor classification _ PyImageSearch Gurus_files/lbp_mnist_04.jpg" alt="Figure 9: Another example of our k-NN classifier in action." width="800" height="543" srcset="https://gurus.pyimagesearch.com/wp-content/uploads/2015/03/lbp_mnist_04-300x204.jpg 300w, https://gurus.pyimagesearch.com/wp-content/uploads/2015/03/lbp_mnist_04-100x68.jpg 100w, https://gurus.pyimagesearch.com/wp-content/uploads/2015/03/lbp_mnist_04-865x587.jpg 865w, https://gurus.pyimagesearch.com/wp-content/uploads/2015/03/lbp_mnist_04.jpg 1000w" sizes="(max-width: 800px) 100vw, 800px"></a><p class="wp-caption-text"><strong>Figure 10:</strong> Another example of our k-NN classifier in action.</p></div>
+<p>One last example:</p>
+<div id="attachment_2282" style="width: 810px" class="wp-caption aligncenter"><a href="https://gurus.pyimagesearch.com/lesson-sample-k-nearest-neighbor-classification/?email=deshmukhps95@gmail.com&amp;__s=g47dwoaicn3csu3kv1b8#tour_modal"><img class="wp-image-2282" src="./k-Nearest Neighbor classification _ PyImageSearch Gurus_files/lbp_mnist_05.jpg" alt="Figure 10: The digit &quot;6&quot; is also trivially easy for our k-NN classifier." width="800" height="552" srcset="https://gurus.pyimagesearch.com/wp-content/uploads/2015/03/lbp_mnist_05-300x207.jpg 300w, https://gurus.pyimagesearch.com/wp-content/uploads/2015/03/lbp_mnist_05-100x69.jpg 100w, https://gurus.pyimagesearch.com/wp-content/uploads/2015/03/lbp_mnist_05-865x597.jpg 865w, https://gurus.pyimagesearch.com/wp-content/uploads/2015/03/lbp_mnist_05.jpg 1000w" sizes="(max-width: 800px) 100vw, 800px"></a><p class="wp-caption-text"><strong>Figure 11:</strong> The digit “6” is also easy for our k-NN classifier.</p></div>
+<h2>Pros and Cons of k-NN</h2>
+<p>Before we wrap up this lesson, we should first discuss some of the advantages and disadvantages of the k-NN classifier.</p>
+<p>One main advantage of the k-NN algorithm is that it’s <em>extremely simple</em> to implement and understand. Furthermore, the classifier takes absolutely no time to train, since all we need to do is store our data points for the purpose of later computing distances to them and obtaining our final classification.</p>
+<p>However, we pay for this simplicity at classification time. Classifying a new testing data point requires a comparison to <em>every single</em> data point in our training data, which scales <img src="./k-Nearest Neighbor classification _ PyImageSearch Gurus_files/33697ce7dfa48ba80980d298c8089378-ffffff-000000-0.png" alt="O(N)" title="O(N)" class="latex">, making working with large datasets computationally prohibitive. We can combat this problem by using&nbsp;<strong>Approximate Nearest Neighbor&nbsp;</strong>(ANN) algorithms (such as kd-trees, FLANN, and random projections, etc.); however, this requires that we trade space/time complexity for the the “correctness” of our nearest neighbor algorithm, since we are performing an approximation. That said, in many cases it is well worth the effort and small loss in accuracy to use the k-NN algorithm.&nbsp;This is in contrast to most machine learning algorithms, where we spend a large amount of time up front training our classifier so that we have very fast classifications at testing time.</p>
+<p>Finally, the k-NN algorithm is more suited for low-dimensional feature spaces. Distances in high-dimensional feature spaces are often unintuitive, which we refer to as the&nbsp;<em><a href="https://gurus.pyimagesearch.com/lesson-sample-k-nearest-neighbor-classification/?email=deshmukhps95@gmail.com&amp;__s=g47dwoaicn3csu3kv1b8#tour_modal">curse of dimensionality</a>.</em></p>
+<p>It’s also important to note that the k-NN algorithm doesn’t actually “learn” anything — the algorithm is not able to make itself smarter if it makes mistakes; it’s simply relying on distances in a&nbsp;<em>n</em>-dimensional space to make the classification.</p>
+<p>All that said,&nbsp;I normally recommend running k-NN on your dataset as a “first attempt” to obtain a baseline for classification accuracy. From there, you can apply more advanced techniques and spot-check more powerful algorithms.</p>
+<h1>Summary</h1>
+<p>In this lesson, we learned about the most simple machine learning classifier — the&nbsp;<em>k-Nearest Neighbor classifier,</em> or simply&nbsp;<em>k-NN</em> for short. The k-NN algorithm classifies unknown data points by comparing the unknown data point to&nbsp;each data point in the training set. This comparison is done using a distance function or similarity metric. Then, from the&nbsp;<em>k</em> most similar examples in the training set, we accumulate the number of “votes” for each label. The category with the highest number of votes “wins” and is chosen as the overall classification.</p>
+<p>While simple and intuitive, and though it can even obtain very good accuracy in certain situations, the k-NN algorithm has a number of drawbacks. The first is that it doesn’t actually “learn” anything — if the algorithm makes a mistake, it has no way to “correct” and “improve” itself for later classifications. Secondly, without specialized data structures, the k-NN algorithm scales linearly with the number of data points, making it a questionable choice for large datasets.</p>
+<p>To conclude, we applied the k-NN algorithm to the MNIST dataset for handwriting recognition. Simply by computing the Euclidean distance between raw pixel intensities, we were able to obtain a <strong>very high accuracy of&nbsp;98%.&nbsp;</strong>However, it’s important to note that the MNIST dataset is heavily pre-processed, and we will require more advanced methods for recognize handwriting in real-world images.</p>
+<h1>Downloads:</h1>
+<p><a class="x-btn x-btn-real x-btn-rounded x-btn-x-large" href="https://gurus.pyimagesearch.com/lesson-sample-k-nearest-neighbor-classification/?email=deshmukhps95@gmail.com&amp;__s=g47dwoaicn3csu3kv1b8#tour_modal" data-options="thumbnail: &#39;&#39;">Download the Code</a></p>
+  
+
+</div>
+
+
+  <footer class="entry-footer cf">
+    <p><i class="x-icon-tags" data-x-icon=""></i> Tags: <a href="https://gurus.pyimagesearch.com/lesson-sample-k-nearest-neighbor-classification/?email=deshmukhps95@gmail.com&amp;__s=g47dwoaicn3csu3kv1b8#tour_modal" rel="tag">sample lesson</a></p>  </footer>
+  </div>
+</article>        
+      
+    </div>
+
+    
+
+
+  <aside class="x-sidebar right" role="complementary">
+          <div id="pyimgtourwidget-2" class="widget widget_pyimgtourwidget"><div class="widget widget-text pyimg_tour_signup_widget_box">
+	<h4 class="h-widget">Ready to join the course?</h4>	<p>
+		Learning computer vision &amp; OpenCV used to be <strong><em>hard</em></strong>. <strong>But not anymore.</strong> Click the button below to join the PyImageSearch Gurus course and start your journey to computer vision mastery.
+	</p>
+	<a href="https://gurus.pyimagesearch.com/lesson-sample-k-nearest-neighbor-classification/?email=deshmukhps95@gmail.com&amp;__s=g47dwoaicn3csu3kv1b8#tour_modal">Join the course!</a>
+</div>
+</div>      </aside>
+
+
+  </div>
+
+
+
+  
+    
+
+  <a class="x-scroll-top right fade in" href="https://gurus.pyimagesearch.com/lesson-sample-k-nearest-neighbor-classification/?email=deshmukhps95@gmail.com&amp;__s=g47dwoaicn3csu3kv1b8#tour_modal" title="Back to Top">
+    <i class="x-icon-angle-up" data-x-icon=""></i>
+  </a>
+
+  <script>
+
+  jQuery(document).ready(function($) {
+
+    var windowObj            = $(window);
+    var body                 = $('body');
+    var bodyOffsetBottom     = windowObj.scrollBottom();             // 1
+    var bodyHeightAdjustment = body.height() - bodyOffsetBottom;     // 2
+    var bodyHeightAdjusted   = body.height() - bodyHeightAdjustment; // 3
+    var scrollTopAnchor      = $('.x-scroll-top');
+
+    function sizingUpdate(){
+      var bodyOffsetTop = windowObj.scrollTop();
+      if ( bodyOffsetTop > ( bodyHeightAdjusted * 0.75 ) ) {
+        scrollTopAnchor.addClass('in');
+      } else {
+        scrollTopAnchor.removeClass('in');
+      }
+    }
+
+    windowObj.bind('scroll', sizingUpdate).resize(sizingUpdate);
+    sizingUpdate();
+
+    scrollTopAnchor.click(function(){
+      $('html,body').animate({ scrollTop: 0 }, 850, 'easeInOutExpo');
+      return false;
+    });
+
+  });
+
+  </script>
+
+  
+
+  
+    <footer class="x-colophon bottom" role="contentinfo">
+      <div class="x-container max width">
+
+        
+        
+                  <div class="x-colophon-content">
+            <p>© 2015 PyImageSearch. All Rights Reserved.</p>          </div>
+        
+      </div>
+    </footer>
+
+  
+
+  
+  </div> <!-- END #top.site -->
+
+  
+<!-- Drip -->
+<script type="text/javascript">
+  var _dcq = _dcq || [];
+  var _dcs = _dcs || {}; 
+  _dcs.account = '4768429';
+  
+  (function() {
+    var dc = document.createElement('script');
+    dc.type = 'text/javascript'; dc.async = true; 
+    dc.src = '//tag.getdrip.com/4768429.js';
+    var s = document.getElementsByTagName('script')[0];
+    s.parentNode.insertBefore(dc, s);
+  })();
+</script>
+
+<script type="text/javascript">
+jQuery(document).ready(function(){
+  // extract the path from the URL
+  path = window.location.pathname.substring(1);
+  path = path.substring(0, path.indexOf("/"));
+
+  // check if this is the thank you page
+  if (path == "thank-you"){
+    // track that the user has made a purchase
+    window._dcq = window._dcq || [];
+    window._dcq.push(["track", "purchased gurus membership", {}]);
+  }
+
+  // check if this is the registration page
+  else if (path == "register"){
+    // grab reference to Drip
+    window._dcq = window._dcq || [];
+
+    // check to see if the user is checking out
+    if (window.location.search.indexOf("action=checkout") != -1){
+      // track that the user has started checkout
+      window._dcq.push(["track", "started gurus checkout", {}]);
+    }
+
+    else{
+      // track that the user is registering
+      window._dcq.push(["track", "viewed gurus registration", {}]);
+    }
+  }
+});
+</script>
+<div id="un-thankyou" style="display: none;">
+	<h2>Thank you!</h2>
+	<p>
+		Your message has been received, I will get back to you ASAP!	</p>
+	<a href="https://gurus.pyimagesearch.com/lesson-sample-k-nearest-neighbor-classification/?email=deshmukhps95@gmail.com&amp;__s=g47dwoaicn3csu3kv1b8#tour_modal" id="un-feedback-close"><img src="./k-Nearest Neighbor classification _ PyImageSearch Gurus_files/ok.png" id="thankyou-image" alt="Close" width="32" height="32"></a>
+</div>
+<script type="text/javascript">
+  (function() {
+    window._pa = window._pa || {};
+    // _pa.orderId = "myOrderId"; // OPTIONAL: attach unique conversion identifier to conversions
+    // _pa.revenue = "19.99"; // OPTIONAL: attach dynamic purchase values to conversions
+    // _pa.productId = "myProductId"; // OPTIONAL: Include product ID for use with dynamic ads
+    var pa = document.createElement('script'); pa.type = 'text/javascript'; pa.async = true;
+    pa.src = ('https:' == document.location.protocol ? 'https:' : 'http:') + "//tag.perfectaudience.com/serve/54220efd7ab7f03f7e000043.js";
+    var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(pa, s);
+  })();
+</script><!-- Drip -->
+<script type="text/javascript">
+  var _dcq = _dcq || [];
+  var _dcs = _dcs || {}; 
+  _dcs.account = '4768429';
+  
+  (function() {
+    var dc = document.createElement('script');
+    dc.type = 'text/javascript'; dc.async = true; 
+    dc.src = '//tag.getdrip.com/4768429.js';
+    var s = document.getElementsByTagName('script')[0];
+    s.parentNode.insertBefore(dc, s);
+  })();
+</script><link rel="stylesheet" id="badgeos-front-css" href="./k-Nearest Neighbor classification _ PyImageSearch Gurus_files/badgeos-front.css" type="text/css" media="all">
+<script type="text/javascript">
+/* <![CDATA[ */
+var thickboxL10n = {"next":"Next >","prev":"< Prev","image":"Image","of":"of","close":"Close","noiframes":"This feature requires inline frames. You have iframes disabled or your browser does not support them.","loadingAnimation":"https:\/\/gurus.pyimagesearch.com\/wp-includes\/js\/thickbox\/loadingAnimation.gif"};
+/* ]]> */
+</script>
+<script type="text/javascript" src="./k-Nearest Neighbor classification _ PyImageSearch Gurus_files/thickbox.js.download"></script>
+<script type="text/javascript" src="./k-Nearest Neighbor classification _ PyImageSearch Gurus_files/credly-badge-builder.js.download"></script>
+<script type="text/javascript">
+/* <![CDATA[ */
+var badgeos_feedback_buttons = {"ajax_url":"\/wp-admin\/admin-ajax.php","user_id":"0"};
+var badgeos_feedback_buttons = {"ajax_url":"\/wp-admin\/admin-ajax.php","user_id":"0"};
+var BadgeosCredlyData = {"ajax_url":"\/wp-admin\/admin-ajax.php","message":"Would you like to display this badge on social networks and add it to your lifelong badge collection?","confirm":"Yes, send to Credly","cancel":"Cancel","share":"Share on Credly!","localized_error":"Error:","errormessage":"Error: Timed out"};
+/* ]]> */
+</script>
+<script type="text/javascript" src="./k-Nearest Neighbor classification _ PyImageSearch Gurus_files/badgeos-achievements.js.download"></script>
+<script type="text/javascript" src="./k-Nearest Neighbor classification _ PyImageSearch Gurus_files/jquery.form.min.js.download"></script>
+<script type="text/javascript">
+/* <![CDATA[ */
+var _wpcf7 = {"loaderUrl":"https:\/\/gurus.pyimagesearch.com\/wp-content\/plugins\/contact-form-7\/images\/ajax-loader.gif","recaptchaEmpty":"Please verify that you are not a robot.","sending":"Sending ..."};
+/* ]]> */
+</script>
+<script type="text/javascript" src="./k-Nearest Neighbor classification _ PyImageSearch Gurus_files/scripts.js.download"></script>
+<script type="text/javascript" src="./k-Nearest Neighbor classification _ PyImageSearch Gurus_files/x-body.min.js.download"></script>
+<script type="text/javascript" src="./k-Nearest Neighbor classification _ PyImageSearch Gurus_files/x-shortcodes-body.min.js.download"></script>
+<script type="text/javascript" src="./k-Nearest Neighbor classification _ PyImageSearch Gurus_files/wp-embed.min.js.download"></script>
+<script type="text/javascript" src="./k-Nearest Neighbor classification _ PyImageSearch Gurus_files/learndash_template_script.js.download"></script>
+
+  
+    <script id="x-customizer-js">
+      // if the unauthorized login link is on the page, remove it
+if (jQuery("div.mepr-unauthorized-message").length){
+jQuery(document).ready(function(){jQuery("div.mepr-login-form-wrap").hide();});}
+
+// if the unauthorized query string is set, then hide the introductory login
+if (location.search.indexOf("action=mepr_unauthorized") != -1){jQuery("p.gurus_login_info").hide();}
+
+jQuery(".achievement_tweet").click(function(e){
+	e.preventDefault();
+	win = window.open(jQuery(this).attr("href"), 'Post on Twitter','height=350,width=600');
+	if (window.focus){win.focus()}
+	return false;
+});    </script>
+
+  
+  <script>
+  (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+  (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+  m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+  })(window,document,'script','//www.google-analytics.com/analytics.js','ga');
+
+  ga('create', 'UA-61169353-1', 'auto');
+  ga('send', 'pageview');
+</script>
+
+<a href="https://gurus.pyimagesearch.com/lesson-sample-k-nearest-neighbor-classification/?email=deshmukhps95@gmail.com&amp;__s=g47dwoaicn3csu3kv1b8#tour_modal" id="un-button" class="un-right css3" style="background-color: rgb(22, 159, 230); color: rgb(255, 255, 255); margin-top: -27px; right: 38px;">Feedback</a><div class="remodal" data-remodal-id="signup_modal" role="dialog">	<button data-remodal-action="close" class="remodal-close"></button>	<div id="tour_signup_container">		<h2><span>Ready to become a computer vision guru?</span><br>Just select your membership plan below...</h2>		<div class="memberships">			<div class="membership-right">				<div class="membership-title">					Instant Access Membership				</div>				<div class="membership-pricing">					$995					<div class="membership-terms">One-time Payment — <strong>Save 15%!</strong></div>				</div>				<div class="membership-features">					<ul>						<li>Admission to the PyImageSearch Gurus course.</li>						<li><strong>Instant access</strong> to <strong><em>every lesson</em></strong> in the PyImageSearch Gurus course for an upfront one-time payment.</li>						<li><strong>100% fully self-paced:</strong> work at your own speed, focus on the lessons that interest you the most.</li>						<li><strong>Accelerate your progress</strong> and finish the course <em>faster</em> than 6 months.</li>						<li>Access to the <strong>private PyImageSearch Gurus Community + Forums</strong>.</li>						<li><strong><em>SAVE 15%</em></strong> by going with the instant access membership.</li>					</ul>				</div>				<div class="membership-join">					<div class="signupbtn" data-product="instant_access_tp" data-url="https://gurus.pyimagesearch.com/register/pyimagesearch-gurus-instant-access-membership-fcff7b5e/">Join the course!</div>				</div>			</div>			<div class="membership-left">				<div class="membership-title">					Apprentice Membership				</div>				<div class="membership-pricing">					$95					<div class="membership-terms">Billed monthly</div>				</div>				<div class="membership-features">					<ul>						<li>Admission to the PyImageSearch Gurus course.</li>						<li><strong>Preset course schedule:</strong> each month for 6 months (based on your signup date) a new set of lessons is released.</li>						<li>Finish the course in as little as 6 months.</li>						<li>Access to the <strong>private PyImageSearch Gurus Community + Forums</strong>.</li>					</ul>				</div>				<div class="membership-join">					<div class="signupbtn" data-product="apprentice_membership_tp" data-url="https://gurus.pyimagesearch.com/register/pyimagesearch-gurus-apprentice-membership/">Join the course!</div>				</div>			</div>		</div>	</div></div><div class="remodal-overlay remodal-is-closed" style="display: none;"></div><div class="remodal-wrapper remodal-is-closed" style="display: none;"><div class="remodal remodal-is-initialized remodal-is-closed" data-remodal-id="tour_modal" role="dialog" tabindex="-1">	<button data-remodal-action="close" class="remodal-close"></button>	<div>		<h2>Ready to become a computer vision Guru?</h2>		<p>			These sample lessons are just the beginning. Join the PyImageSearch Gurus course and you'll get access to over <strong>13 modules</strong> covering <strong>168 lessons</strong> and <strong>2,161 pages of content.</strong> You won't find a more detailed computer vision course anywhere else online, I guarantee it.		</p>	<br>	<button data-remodal-action="confirm" class="remodal-confirm">I'm ready to join!</button>	<button data-remodal-action="cancel" class="remodal-cancel">Not yet.</button></div></div></div><div class="credly-share-popup" style="display: none;"><div class="credly-wrap"><span>Would you like to display this badge on social networks and add it to your lifelong badge collection?</span><div class="badgeos-spinner"></div><span class="credly-message" style="display: none;"><strong class="error">Error: Timed out</strong></span><input type="submit" class="credly-button credly-send" value="Yes, send to Credly"><a class="credly-button credly-cancel" href="https://gurus.pyimagesearch.com/lesson-sample-k-nearest-neighbor-classification/?email=deshmukhps95@gmail.com&amp;__s=g47dwoaicn3csu3kv1b8#">Cancel</a><div style="clear: both;"></div></div><div style="clear: both;"></div></div></body></html>

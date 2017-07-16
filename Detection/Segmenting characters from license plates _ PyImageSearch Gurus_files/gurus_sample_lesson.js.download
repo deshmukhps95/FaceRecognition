@@ -1,0 +1,362 @@
+TourModal = function(opts){
+	// call the init method with the supplied options
+	this.init(opts);
+}
+
+jQuery.extend(TourModal.prototype, {
+	opts: {},
+	lastHref: null,
+
+	init: function(opts){
+		// store the options dictionary
+		this.opts = opts;
+
+		// inject the modals into the DOM, then block all links that are
+		// not part of the 'allowed' list
+		this.injectBlockedModal();
+		this.injectSignupModal();
+		this.blockLinks();
+	},
+
+	injectBlockedModal: function(){
+		// define the HTML for the modal
+		modal = '<div class="remodal" data-remodal-id="tour_modal" role="dialog">';
+		modal += '	<button data-remodal-action="close" class="remodal-close"></button>';
+		modal += '	<div>';
+		modal += '		<h2>Ready to become a computer vision Guru?</h2>';
+		modal += '		<p>';
+		modal += '			These sample lessons are just the beginning. Join the PyImageSearch Gurus course and you\'ll get access to over <strong>13 modules</strong> covering <strong>168 lessons</strong> and <strong>2,161 pages of content.</strong> You won\'t find a more detailed computer vision course anywhere else online, I guarantee it.';
+		modal += '		</p';
+		modal += '	</div>';
+		modal += '	<br>';
+		modal += '	<button data-remodal-action="confirm" class="remodal-confirm">I\'m ready to join!</button>';
+		modal += '	<button data-remodal-action="cancel" class="remodal-cancel">Not yet.</button>';
+		modal += '</div>';
+
+		// inject the modal into the DOM
+		jQuery("body").append(modal);
+
+		// monitor when the 'confirm' button is clicked
+		jQuery(document).on("closed", "[data-remodal-id='tour_modal']", function(e){
+			// if the reason for closing is a confirmation, then open the
+			// signup modal
+			 if (e.reason == "confirmation"){
+			 	M = jQuery("[data-remodal-id='signup_modal']").remodal();
+			 	M.open();
+			 }
+		});
+	},
+
+	injectSignupModal: function(){
+		// grab the URL query parameters and the current Unix timestamp
+		// current Unix timestamp
+		params = this.getQueryParams();
+		now = Math.round((new Date()).getTime() / 1000);
+		st = null;
+		ts = null;
+
+		// if a sales type query parameter was supplied, grab it
+		if (params["st"] != null){
+			st = params["st"];
+		}
+
+		// if a timestamp query parameter was supplied, grab it
+		if (params["ts"] != null){
+			ts = parseInt(params["ts"]);
+		}
+
+		// START DEBUG
+		// **expired launch date:
+		// now += (60 * 60 * 24 * 10);
+		// **valid launch date:
+		// now += (60 * 60 * 24 * 7);	
+		// console.log("ts: " + new Date(ts * 1000));
+		// console.log("now: " + new Date(now * 1000));
+		// END DEBUG
+
+		// start defining the HTML for the modal
+		modal = '<div class="remodal" data-remodal-id="signup_modal" role="dialog">';
+		modal += '	<button data-remodal-action="close" class="remodal-close"></button>';
+		modal += '	<div id="tour_signup_container">';
+		modal += '		<h2><span>Ready to become a computer vision guru?</span><br/>Just select your membership plan below...</h2>';
+		modal += '		<div class="memberships">';
+		modal += '			<div class="membership-right">';
+		modal += '				<div class="membership-title">'
+		modal += '					Instant Access Membership';
+		modal += '				</div>';
+		modal += '				<div class="membership-pricing">';
+		modal += '					$995';
+		modal += '					<div class="membership-terms">One-time Payment &mdash; <strong>Save 15%!</strong></div>';
+		modal += '				</div>';
+		modal += '				<div class="membership-features">';
+		modal += '					<ul>';
+		modal += '						<li>Admission to the PyImageSearch Gurus course.</li>';
+		modal += '						<li><strong>Instant access</strong> to <strong><em>every lesson</em></strong> in the PyImageSearch Gurus course for an upfront one-time payment.</li>';
+		modal += '						<li><strong>100% fully self-paced:</strong> work at your own speed, focus on the lessons that interest you the most.</li>';
+		modal += '						<li><strong>Accelerate your progress</strong> and finish the course <em>faster</em> than 6 months.</li>';
+		modal += '						<li>Access to the <strong>private PyImageSearch Gurus Community + Forums</strong>.</li>';
+		modal += '						<li><strong><em>SAVE 15%</em></strong> by going with the instant access membership.</li>';
+		modal += '					</ul>';
+		modal += '				</div>';
+
+		// check to see if this is a cohort launch
+		if (params["st"] == "42d80b43fe5840bdacba365094110c97"){
+			// registration is open
+			if (this.isRegistrationAllowed(ts, now)){
+				modal += this.addRegisterBtn("instant_access_tp", "https://gurus.pyimagesearch.com/register/pyimagesearch-gurus-instant-access-membership-fcff7b5e/");
+			}
+
+			// registration is closed
+			else{
+				modal += this.addRegistrationClosed(ts, now);
+			}
+		}
+
+		// otherwise, this is the 'normal' launch
+		else{
+			modal += this.addRegisterBtn("instant_access_tp", "https://gurus.pyimagesearch.com/register/pyimagesearch-gurus-instant-access-membership-fcff7b5e/");
+		}
+
+		// continue constructing the modal
+		modal += '			</div>';
+		modal += '			<div class="membership-left">';
+		modal += '				<div class="membership-title">'
+		modal += '					Apprentice Membership';
+		modal += '				</div>';
+		modal += '				<div class="membership-pricing">';
+		modal += '					' + this.getRegistrationPrice(st, ts, now);
+		modal += '					<div class="membership-terms">' + this.getBillingTerms(st, ts, now) + '</div>';
+		modal += '				</div>';
+		modal += '				<div class="membership-features">';
+		modal += '					<ul>';
+		modal += '						<li>Admission to the PyImageSearch Gurus course.</li>';
+		modal += '						<li><strong>Preset course schedule:</strong> each month for 6 months (based on your signup date) a new set of lessons is released.</li>';
+		modal += '						<li>Finish the course in as little as 6 months.</li>';
+		modal += '						<li>Access to the <strong>private PyImageSearch Gurus Community + Forums</strong>.</li>';
+		modal += '					</ul>';
+		modal += '				</div>';
+
+		// check to see if this is a cohort launch
+		if (params["st"] == "42d80b43fe5840bdacba365094110c97"){
+			// registration is open
+			if (this.isRegistrationAllowed(ts, now)){
+				modal += this.addRegisterBtn("apprentice_membership_tp", "https://gurus.pyimagesearch.com/register/pyimagesearch-gurus-apprentice-membership/?cpn=KOMGBM2H07");
+			}
+			// registration is closed
+			else{
+				modal += this.addRegistrationClosed(ts, now);
+			}
+		}
+
+		// otherwise, this is the 'normal' launch
+		else{
+			modal += this.addRegisterBtn("apprentice_membership_tp", "https://gurus.pyimagesearch.com/register/pyimagesearch-gurus-apprentice-membership/");
+		}
+
+		// finish constructing the modal
+		modal += '			</div>';
+		modal += '		</div>';
+		modal += '	</div>';
+		modal += '</div>';
+
+		// inject the modal into the DOM
+		jQuery("body").append(modal);
+		_this = this;
+
+		// handle when either of the sign up buttons are clicked
+		jQuery(".signupbtn").click(function(){
+			// grab the product name, product URL and query parameters,
+			// then initialize the email address
+			product = jQuery(this).attr("data-product");
+			_this.lastHref = jQuery(this).attr("data-url");
+			params = _this.getQueryParams();
+			email = "";
+
+			// determine the Drip event
+			dripTag = product.split("_");
+
+			// check to see if this is the "instant access membership"
+			if (dripTag[0] == "instant"){
+				dripTag = "clicked instant access membership";
+			}
+
+			// otherwise, this is the "apprentice membership"
+			else{
+				dripTag = "clicked apprentice membership";
+			}
+
+			// send the tag to Drip
+			window._dcq = window._dcq || [];
+			window._dcq.push(["identify", {"tags": [dripTag]}]);
+
+			// retargeting
+			window._pq = window._pq || [];;
+			_pq.push(["track", "gurus_add_to_cart"]);
+
+			// if the email address is set, grab it
+			if (params["email"]){
+			    email = decodeURIComponent(params["email"]);
+			}
+
+			// determine if the email contains a hash
+			i = email.indexOf("#");
+
+			// if a has is found in the email, strip it out
+			if (i != -1){
+				email = email.substring(0, i);
+			}
+
+			// construct the URL to track the click
+			url = "https://www.pyimagesearch.com/static/app/cart_tracker/track_jsonp/";
+			url += "?email=" + email + "&product=" + product;
+
+			// track the click
+			jQuery.ajax({
+				type: "POST",
+				url: url,
+				dataType: "jsonp"});
+		});
+	},
+
+	addRegisterBtn: function(dataProduct, dataURL){
+		// construct the HTML for the registration button
+		html = '				<div class="membership-join">';
+		html += '					<div class="signupbtn" data-product="' + dataProduct + '" data-url="' + dataURL + '">Join the course!</div>';
+		html += '				</div>';
+
+		// return the HTML associated with the registration button
+		return html;
+	},
+
+	addRegistrationClosed: function(ts, now){
+		// format the launch timestamp, then initialize the message
+		date = jQuery.format.date(ts * 1000, "ddd, MMMM D");
+		msg = 'Registration to PyImageSearch Gurus is currently <strong><em>closed</em></strong>, but will <strong><em>re-open again on ' + date + ' at 12:00PM</em></strong>.';
+
+		// if registration time period has *passed*, then update the message
+		if (now >= ts + this.opts["elapsed"]){
+			msg = '<strong>You just missed it!</strong> Registration to PyImageSearch Gurus is currently <strong><em>closed</em></strong>. Please register for the next open enrollment on <span onClick="document.location=\'https://www.pyimagesearch.com/pyimagesearch-gurus/\'">PyImageSearch.com</span>.';
+		}
+
+		// construct the HTML for the registration closed message
+		html = '				<div class="membership-closed">';
+		html += '					' + msg;
+		html += '				</div>';
+
+		// return the HTML associated with the registration closed message
+		return html;
+	},
+
+	isRegistrationAllowed: function(ts, now){
+		// if the launch timestamp or the current timestamp is null, then
+		// registration is not allowed
+		if (ts == null || now == null){
+			return false;
+		}
+
+		// registration is allowed if the current time is greater than the
+		// launch timestamp AND the current time is less than launch
+		// timestamp plus the elapsed time
+		return ((now >= ts) && (now < ts + this.opts["elapsed"]));
+	},
+
+	getRegistrationPrice: function(st, ts, now){
+		// initialize the registration price
+		price = "$95";
+
+		// check if we are performing a cohort launch
+		if (st == "42d80b43fe5840bdacba365094110c97" && this.isRegistrationAllowed(ts, now)){
+			price = "<del>$95</del>&nbsp;$1"
+		}
+
+		// return the registration price
+		return price;
+	},
+
+	getBillingTerms: function(st, ts, now){
+		// initialize the billng terms
+		terms = "Billed monthly";
+
+		// check if we are performing a cohort launch
+		if (st == "42d80b43fe5840bdacba365094110c97" && this.isRegistrationAllowed(ts, now)){
+			terms = "30 day trial for only $1, then $95/month";
+		}
+
+		// return the billing terms
+		return terms;
+	},
+
+	blockLinks: function(){
+		// grab a reference to the current 'this' context
+		_this = this;
+
+		// loop over all link elements
+		jQuery("a").each(function(){
+			// grab the href and target of the link, then initialize the
+			// 'allowed' indicator variable
+			href = jQuery(this).attr("href");
+			target = jQuery(this).attr("target");
+			allowed = false;
+
+			// if the target is 'blank', reset it -- this ensures that
+			// new windows will not open *before* the modal does
+			if (target){
+				jQuery(this).removeAttr("target");
+			}
+
+			// loop over the allowed URL fragments
+			for (i = 0; i < _this.opts["allowed_urls"].length; i++){
+				// if the URL contains the allowed URL fragment, then
+				// update the allowed indicator
+				if (href.indexOf(_this.opts["allowed_urls"][i]) != -1){
+					allowed = true;
+					break;
+				}
+			}
+
+			// if allowed indicator is false, then disable the link
+			if (!allowed){
+				// set the 'href' attribute to open up the modal
+				jQuery(this).attr("href", "#tour_modal");
+			}
+		});
+
+		// after all links have been blocked, we need to manually
+		// call remodal
+		jQuery("[data-remodal-id='tour_modal']").remodal();
+	},
+
+	getQueryParams: function(){
+		// initialize the list of query variables and grab
+		// the hashes
+		vars = [];
+		hashes = window.location.href.slice(window.location.href.indexOf("?") + 1).split("&");
+
+		// loop over the hashes
+		for (i = 0; i < hashes.length; i++){
+			// parse out the hash value
+			hash = hashes[i].split("=");
+			vars.push(hash[0])
+			vars[hash[0]] = hash[1];
+		}
+
+		// return the query parameter mappings
+		return vars;
+	}
+});
+
+// initialize the tour modal
+tm = null;
+
+// kick-off the process
+jQuery(document).ready(function(){
+	// initialize the tour modal
+	tm = new TourModal({
+		allowed_urls: [],
+		elapsed: 216000});
+});
+
+function TourModalJSONPCallback(){
+	// redirect to the last stored page
+	document.location = tm.lastHref;
+}

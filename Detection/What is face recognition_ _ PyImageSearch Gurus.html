@@ -1,0 +1,508 @@
+<!DOCTYPE html>
+<!-- saved from url=(0101)https://gurus.pyimagesearch.com/lesson-sample-what-is-face-recognition/?email=deshmukhps95@gmail.com# -->
+<html class="js no-touch cssanimations csstransforms csstransforms3d csstransitions" lang="en-US"><!--<![endif]--><head><meta http-equiv="Content-Type" content="text/html; charset=UTF-8"><script type="text/javascript" src="./What is face recognition_ _ PyImageSearch Gurus_files/beacon"></script><script type="text/javascript" src="./What is face recognition_ _ PyImageSearch Gurus_files/identify"></script>
+  
+
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>What is face recognition? | PyImageSearch Gurus</title>
+<link rel="pingback" href="https://gurus.pyimagesearch.com/xmlrpc.php"><link rel="shortcut icon" href="https://www.pyimagesearch.com/wp-content/themes/canvas/favicon.ico"><link rel="alternate" type="application/rss+xml" title="PyImageSearch Gurus » Feed" href="https://gurus.pyimagesearch.com/feed/">
+<link rel="alternate" type="application/rss+xml" title="PyImageSearch Gurus » Comments Feed" href="https://gurus.pyimagesearch.com/comments/feed/">
+		<script async="" src="./What is face recognition_ _ PyImageSearch Gurus_files/fbevents.js.download"></script><script async="" src="./What is face recognition_ _ PyImageSearch Gurus_files/analytics.js.download"></script><script type="text/javascript" async="" src="./What is face recognition_ _ PyImageSearch Gurus_files/4768429.js.download"></script><script type="text/javascript" async="" src="./What is face recognition_ _ PyImageSearch Gurus_files/54220efd7ab7f03f7e000043.js.download"></script><script type="text/javascript" async="" src="./What is face recognition_ _ PyImageSearch Gurus_files/4768429.js.download"></script><script type="text/javascript">
+			window._wpemojiSettings = {"baseUrl":"https:\/\/s.w.org\/images\/core\/emoji\/72x72\/","ext":".png","source":{"concatemoji":"https:\/\/gurus.pyimagesearch.com\/wp-includes\/js\/wp-emoji-release.min.js?ver=4.4.2"}};
+			!function(a,b,c){function d(a){var c,d=b.createElement("canvas"),e=d.getContext&&d.getContext("2d"),f=String.fromCharCode;return e&&e.fillText?(e.textBaseline="top",e.font="600 32px Arial","flag"===a?(e.fillText(f(55356,56806,55356,56826),0,0),d.toDataURL().length>3e3):"diversity"===a?(e.fillText(f(55356,57221),0,0),c=e.getImageData(16,16,1,1).data.toString(),e.fillText(f(55356,57221,55356,57343),0,0),c!==e.getImageData(16,16,1,1).data.toString()):("simple"===a?e.fillText(f(55357,56835),0,0):e.fillText(f(55356,57135),0,0),0!==e.getImageData(16,16,1,1).data[0])):!1}function e(a){var c=b.createElement("script");c.src=a,c.type="text/javascript",b.getElementsByTagName("head")[0].appendChild(c)}var f,g;c.supports={simple:d("simple"),flag:d("flag"),unicode8:d("unicode8"),diversity:d("diversity")},c.DOMReady=!1,c.readyCallback=function(){c.DOMReady=!0},c.supports.simple&&c.supports.flag&&c.supports.unicode8&&c.supports.diversity||(g=function(){c.readyCallback()},b.addEventListener?(b.addEventListener("DOMContentLoaded",g,!1),a.addEventListener("load",g,!1)):(a.attachEvent("onload",g),b.attachEvent("onreadystatechange",function(){"complete"===b.readyState&&c.readyCallback()})),f=c.source||{},f.concatemoji?e(f.concatemoji):f.wpemoji&&f.twemoji&&(e(f.twemoji),e(f.wpemoji)))}(window,document,window._wpemojiSettings);
+		</script><script src="./What is face recognition_ _ PyImageSearch Gurus_files/wp-emoji-release.min.js.download" type="text/javascript"></script>
+		<style type="text/css">
+img.wp-smiley,
+img.emoji {
+	display: inline !important;
+	border: none !important;
+	box-shadow: none !important;
+	height: 1em !important;
+	width: 1em !important;
+	margin: 0 .07em !important;
+	vertical-align: -0.1em !important;
+	background: none !important;
+	padding: 0 !important;
+}
+</style>
+<link rel="stylesheet" id="usernoise-button-css" href="./What is face recognition_ _ PyImageSearch Gurus_files/button.css" type="text/css" media="all">
+<link rel="stylesheet" id="usernoise-form-css" href="./What is face recognition_ _ PyImageSearch Gurus_files/form.css" type="text/css" media="all">
+<link rel="stylesheet" id="font-awesome-css" href="./What is face recognition_ _ PyImageSearch Gurus_files/font-awesome.css" type="text/css" media="all">
+<link rel="stylesheet" id="dashicons-css" href="./What is face recognition_ _ PyImageSearch Gurus_files/dashicons.min.css" type="text/css" media="all">
+<link rel="stylesheet" id="thickbox-css" href="./What is face recognition_ _ PyImageSearch Gurus_files/thickbox.css" type="text/css" media="all">
+<link rel="stylesheet" id="crayon-css" href="./What is face recognition_ _ PyImageSearch Gurus_files/crayon.min.css" type="text/css" media="all">
+<link rel="stylesheet" id="gurus_remodal_css-css" href="./What is face recognition_ _ PyImageSearch Gurus_files/remodal.css" type="text/css" media="all">
+<link rel="stylesheet" id="gurus_remodal_theme_css-css" href="./What is face recognition_ _ PyImageSearch Gurus_files/remodal-default-theme.css" type="text/css" media="all">
+<link rel="stylesheet" id="gurus_sample_lesson_css-css" href="./What is face recognition_ _ PyImageSearch Gurus_files/gurus_sample_lessons.css" type="text/css" media="all">
+<link rel="stylesheet" id="mp-theme-css" href="./What is face recognition_ _ PyImageSearch Gurus_files/theme.css" type="text/css" media="all">
+<link rel="stylesheet" id="wpProQuiz_front_style-css" href="./What is face recognition_ _ PyImageSearch Gurus_files/wpProQuiz_front.min.css" type="text/css" media="all">
+<link rel="stylesheet" id="learndash_style-css" href="./What is face recognition_ _ PyImageSearch Gurus_files/style.css" type="text/css" media="all">
+<link rel="stylesheet" id="sfwd_front_css-css" href="./What is face recognition_ _ PyImageSearch Gurus_files/front.css" type="text/css" media="all">
+<link rel="stylesheet" id="jquery-dropdown-css-css" href="./What is face recognition_ _ PyImageSearch Gurus_files/jquery.dropdown.min.css" type="text/css" media="all">
+<link rel="stylesheet" id="sfwd_template_css-css" href="./What is face recognition_ _ PyImageSearch Gurus_files/learndash_template_style.css" type="text/css" media="all">
+<link rel="stylesheet" id="badgeos-single-css" href="./What is face recognition_ _ PyImageSearch Gurus_files/badgeos-single.css" type="text/css" media="all">
+<link rel="stylesheet" id="x-stack-css" href="./What is face recognition_ _ PyImageSearch Gurus_files/renew.css" type="text/css" media="all">
+<link rel="stylesheet" id="x-child-css" href="./What is face recognition_ _ PyImageSearch Gurus_files/style(1).css" type="text/css" media="all">
+<link rel="stylesheet" id="x-google-fonts-css" href="./What is face recognition_ _ PyImageSearch Gurus_files/css" type="text/css" media="all">
+<script type="text/javascript" src="./What is face recognition_ _ PyImageSearch Gurus_files/jquery.js.download"></script>
+<script type="text/javascript" src="./What is face recognition_ _ PyImageSearch Gurus_files/jquery-migrate.min.js.download"></script>
+<script type="text/javascript">
+/* <![CDATA[ */
+var usernoiseButton = {"text":"Feedback","style":"background-color: #169FE6; color: #FFFFFF","class":"un-right","windowUrl":"\/wp-admin\/admin-ajax.php?action=un_load_window","showButton":"1","disableOnMobiles":"1"};
+/* ]]> */
+</script>
+<script type="text/javascript" src="./What is face recognition_ _ PyImageSearch Gurus_files/usernoise.js.download"></script>
+<script type="text/javascript" src="./What is face recognition_ _ PyImageSearch Gurus_files/button.js.download"></script>
+<script type="text/javascript">
+/* <![CDATA[ */
+var CrayonSyntaxSettings = {"version":"_2.7.2_beta","is_admin":"0","ajaxurl":"https:\/\/gurus.pyimagesearch.com\/wp-admin\/admin-ajax.php","prefix":"crayon-","setting":"crayon-setting","selected":"crayon-setting-selected","changed":"crayon-setting-changed","special":"crayon-setting-special","orig_value":"data-orig-value","debug":""};
+var CrayonSyntaxStrings = {"copy":"Press %s to Copy, %s to Paste","minimize":"Click To Expand Code"};
+/* ]]> */
+</script>
+<script type="text/javascript" src="./What is face recognition_ _ PyImageSearch Gurus_files/crayon.min.js.download"></script>
+<script type="text/javascript" src="./What is face recognition_ _ PyImageSearch Gurus_files/remodal.min.js.download"></script>
+<script type="text/javascript" src="./What is face recognition_ _ PyImageSearch Gurus_files/jquery-dateFormat.min.js.download"></script>
+<script type="text/javascript" src="./What is face recognition_ _ PyImageSearch Gurus_files/gurus_sample_lesson.js.download"></script>
+<script type="text/javascript" src="./What is face recognition_ _ PyImageSearch Gurus_files/x-head.min.js.download"></script>
+<script type="text/javascript" src="./What is face recognition_ _ PyImageSearch Gurus_files/x-shortcodes-head.min.js.download"></script>
+<link rel="https://api.w.org/" href="https://gurus.pyimagesearch.com/wp-json/">
+<link rel="canonical" href="https://gurus.pyimagesearch.com/lesson-sample-what-is-face-recognition/">
+<link rel="shortlink" href="https://gurus.pyimagesearch.com/?p=39389">
+<link rel="alternate" type="application/json+oembed" href="https://gurus.pyimagesearch.com/wp-json/oembed/1.0/embed?url=https%3A%2F%2Fgurus.pyimagesearch.com%2Flesson-sample-what-is-face-recognition%2F">
+<link rel="alternate" type="text/xml+oembed" href="https://gurus.pyimagesearch.com/wp-json/oembed/1.0/embed?url=https%3A%2F%2Fgurus.pyimagesearch.com%2Flesson-sample-what-is-face-recognition%2F&amp;format=xml">
+<style type="text/css">
+/* <![CDATA[ */
+img.latex { vertical-align: middle; border: none; }
+/* ]]> */
+</style>
+<style id="x-generated-css" type="text/css">a,h1 a:hover,h2 a:hover,h3 a:hover,h4 a:hover,h5 a:hover,h6 a:hover,.x-comment-time:hover,#reply-title small a,.comment-reply-link:hover,.x-comment-author a:hover,.x-recent-posts a:hover .h-recent-posts{color:#169fe6;}a:hover,#reply-title small a:hover{color:#169fe6;}.entry-title:before{color:#f1ba63;}a.x-img-thumbnail:hover,li.bypostauthor > article.comment{border-color:#169fe6;}.flex-direction-nav a,.flex-control-nav a:hover,.flex-control-nav a.flex-active,.x-dropcap,.x-skill-bar .bar,.x-pricing-column.featured h2,.h-comments-title small,.x-pagination a:hover,.x-entry-share .x-share:hover,.entry-thumb,.widget_tag_cloud .tagcloud a:hover,.widget_product_tag_cloud .tagcloud a:hover,.x-highlight,.x-recent-posts .x-recent-posts-img:after,.x-portfolio-filters{background-color:#169fe6;}.x-portfolio-filters:hover{background-color:#169fe6;}.x-main{width:68.79803%;}.x-sidebar{width:24.79803%;}.x-topbar .p-info,.x-topbar .p-info a,.x-topbar .x-social-global a{color:#ffffff;}.x-topbar .p-info a:hover{color:#959baf;}.x-topbar{background-color:#1f2c39;}.x-navbar .desktop .x-nav > li:before{padding-top:35px;}.x-navbar .desktop .x-nav > li > a,.x-navbar .desktop .sub-menu li > a,.x-navbar .mobile .x-nav li a{color:#ffffff;}.x-navbar .desktop .x-nav > li > a:hover,.x-navbar .desktop .x-nav > .x-active > a,.x-navbar .desktop .x-nav > .current-menu-item > a,.x-navbar .desktop .sub-menu li > a:hover,.x-navbar .desktop .sub-menu li.x-active > a,.x-navbar .desktop .sub-menu li.current-menu-item > a,.x-navbar .desktop .x-nav .x-megamenu > .sub-menu > li > a,.x-navbar .mobile .x-nav li > a:hover,.x-navbar .mobile .x-nav li.x-active > a,.x-navbar .mobile .x-nav li.current-menu-item > a{color:#ffffff;}.x-btn-navbar,.x-btn-navbar:hover{color:#ffffff;}.x-navbar .desktop .sub-menu li:before,.x-navbar .desktop .sub-menu li:after{background-color:#ffffff;}.x-navbar,.x-navbar .sub-menu{background-color:#169fe6 !important;}.x-btn-navbar,.x-btn-navbar.collapsed:hover{background-color:#666666;}.x-btn-navbar.collapsed{background-color:#444444;}.x-navbar .desktop .x-nav > li > a:hover > span,.x-navbar .desktop .x-nav > li.x-active > a > span,.x-navbar .desktop .x-nav > li.current-menu-item > a > span{box-shadow:0 2px 0 0 #ffffff;}.x-navbar .desktop .x-nav > li > a{height:90px;padding-top:35px;}.x-navbar .desktop .x-nav > li ul{top:90px;}.x-colophon.bottom{background-color:#ffffff;}.x-colophon.bottom,.x-colophon.bottom a,.x-colophon.bottom .x-social-global a{color:#a1a1a1;}.h-landmark{font-weight:300;}.x-comment-author a{color:#414141;}.x-comment-author a,.comment-form-author label,.comment-form-email label,.comment-form-url label,.comment-form-rating label,.comment-form-comment label,.widget_calendar #wp-calendar caption,.widget_calendar #wp-calendar th,.x-accordion-heading .x-accordion-toggle,.x-nav-tabs > li > a:hover,.x-nav-tabs > .active > a,.x-nav-tabs > .active > a:hover{color:#414141;}.widget_calendar #wp-calendar th{border-bottom-color:#414141;}.x-pagination span.current,.x-portfolio-filters-menu,.widget_tag_cloud .tagcloud a,.h-feature-headline span i,.widget_price_filter .ui-slider .ui-slider-handle{background-color:#414141;}@media (max-width:979px){}body{font-size:12px;font-style:normal;font-weight:300;color:#414141;background-color:#ffffff;}a:focus,select:focus,input[type="file"]:focus,input[type="radio"]:focus,input[type="submit"]:focus,input[type="checkbox"]:focus{outline:thin dotted #333;outline:5px auto #169fe6;outline-offset:-1px;}h1,h2,h3,h4,h5,h6,.h1,.h2,.h3,.h4,.h5,.h6{font-family:"Lato",sans-serif;font-style:normal;font-weight:900;}h1,.h1{letter-spacing:-0.018em;}h2,.h2{letter-spacing:-0.025em;}h3,.h3{letter-spacing:-0.031em;}h4,.h4{letter-spacing:-0.042em;}h5,.h5{letter-spacing:-0.048em;}h6,.h6{letter-spacing:-0.071em;}.w-h{font-weight:900 !important;}.x-container.width{width:90%;}.x-container.max{max-width:1220px;}.x-main.full{float:none;display:block;width:auto;}@media (max-width:979px){.x-main.full,.x-main.left,.x-main.right,.x-sidebar.left,.x-sidebar.right{float:none;display:block;width:auto !important;}}.entry-header,.entry-content{font-size:16px;}body,input,button,select,textarea{font-family:"Lato",sans-serif;}h1,h2,h3,h4,h5,h6,.h1,.h2,.h3,.h4,.h5,.h6,h1 a,h2 a,h3 a,h4 a,h5 a,h6 a,.h1 a,.h2 a,.h3 a,.h4 a,.h5 a,.h6 a,blockquote{color:#414141;}.cfc-h-tx{color:#414141 !important;}.cfc-h-bd{border-color:#414141 !important;}.cfc-h-bg{background-color:#414141 !important;}.cfc-b-tx{color:#414141 !important;}.cfc-b-bd{border-color:#414141 !important;}.cfc-b-bg{background-color:#414141 !important;}.x-navbar-inner{min-height:90px;}.x-brand{margin-top:20px;font-family:"Pacifico",cursive;font-size:44px;font-style:normal;font-weight:400;letter-spacing:-0.068em;color:#444444;}.x-brand:hover,.x-brand:focus{color:#444444;}.x-navbar .x-nav-wrap .x-nav > li > a{font-family:"Lato",sans-serif;font-style:normal;font-weight:700;letter-spacing:0.071em;text-transform:uppercase;}.x-navbar .desktop .x-nav > li > a{font-size:14px;}.x-navbar .desktop .x-nav > li > a:not(.x-btn-navbar-woocommerce){padding-left:14px;padding-right:14px;}.x-navbar .desktop .x-nav > li > a > span{margin-right:-0.071em;}.x-btn-navbar{margin-top:20px;}.x-btn-navbar,.x-btn-navbar.collapsed{font-size:22px;}@media (max-width:979px){.x-widgetbar{left:0;right:0;}}.x-btn,.button,[type="submit"]{color:#ffffff;border-color:#7fbf2a;background-color:#7fbf2a;margin-bottom:0.25em;text-shadow:0 0.075em 0.075em rgba(0,0,0,0.5);box-shadow:0 0.25em 0 0 #5f9f0a,0 4px 9px rgba(0,0,0,0.75);border-radius:0.25em;padding:0.579em 1.105em 0.842em;font-size:19px;}.x-btn:hover,.button:hover,[type="submit"]:hover{color:#fff;border-color:#7fbf2a;background-color:#7fbf2a;margin-bottom:0.25em;text-shadow:0 0.075em 0.075em rgba(0,0,0,0.5);box-shadow:0 0.25em 0 0 #5f9f0a,0 4px 9px rgba(0,0,0,0.75);}.x-btn.x-btn-real,.x-btn.x-btn-real:hover{margin-bottom:0.25em;text-shadow:0 0.075em 0.075em rgba(0,0,0,0.65);}.x-btn.x-btn-real{box-shadow:0 0.25em 0 0 #5f9f0a,0 4px 9px rgba(0,0,0,0.75);}.x-btn.x-btn-real:hover{box-shadow:0 0.25em 0 0 #5f9f0a,0 4px 9px rgba(0,0,0,0.75);}.x-btn.x-btn-flat,.x-btn.x-btn-flat:hover{margin-bottom:0;text-shadow:0 0.075em 0.075em rgba(0,0,0,0.65);box-shadow:none;}.x-btn.x-btn-transparent,.x-btn.x-btn-transparent:hover{margin-bottom:0;border-width:3px;text-shadow:none;text-transform:uppercase;background-color:transparent;box-shadow:none;}/* Adjust the color of paragraph blocks*/
+article p{color: #212121;}
+
+/* Adjust the link hover actions */
+a:hover{text-decoration: underline;}
+
+/* Make the logo fit in the header properly and add a border to the bottom of the header */
+a.x-brand img {margin-top: -15px;}
+header.masthead.masthead-inline{border-top: 5px solid #068fd6; border-bottom: 1px solid #068fd6}
+
+/* Adjust post header sizes */
+article.post header.entry-header h1.entry-title{font-size: 250%;}
+article.post .entry-content.content h1{font-size: 200%;}
+article.post .entry-content.content h2{font-size: 142.85%;}
+article.post .entry-content.content h3{font-size: 114.25%;}
+article.post .entry-content.content h4{font-size: 85.7%;}
+article.post .entry-content.content h5{font-size: 75%;}
+article.post .entry-content.content h6{font-size: 50%;}
+article.post header.entry-header h1.entry-title, article.sfwd-lessons header.entry-header h1.entry-title, article.sfwd-topic header.entry-header h1.entry-title{font-size: 250%;}
+
+/* Adjust the course in post headers */
+article.sfwd-lessons .learndash.user_has_access h1, article.sfwd-topic .learndash.user_has_access h1, article.page h1{font-size: 200%;}
+article.sfwd-lessons .learndash.user_has_access h2, article.sfwd-topic .learndash.user_has_access h2, article.page h2{font-size: 142.85%;}
+article.sfwd-lessons .learndash.user_has_access h3, article.sfwd-topic .learndash.user_has_access h3, article.page h3{font-size: 114.25%;}
+article.sfwd-lessons .learndash.user_has_access h4, article.sfwd-topic .learndash.user_has_access h4, article.page h4{font-size: 85.7%;}
+article.sfwd-lessons .learndash.user_has_access h5, article.sfwd-topic .learndash.user_has_access h5, article.page h5{font-size: 75%;}
+article.sfwd-lessons .learndash.user_has_access h6, article.sfwd-topic.learndash.user_has_access h6, article.page h6{font-size: 50%;}
+article.post header.entry-header h1.entry-title{font-size: 250%;}
+
+/* Make the post icon the standard blue */
+h1.entry-title::before, h2.entry-title::before{color: #169fe6}
+
+/* Hide the author attribution section and the tags section */
+article.post p.p-meta, article.post footer.entry-footer.cf{display: none;}
+article.sfwd-lessons header.entry-header p.p-meta{display: none;}
+article.sfwd-topic header.entry-header p.p-meta{display: none;}
+article.sfwd-courses header.entry-header{display: none;}
+article.sfwd-courses footer.entry-footer.cf{display: none;}
+article.sfwd-topic footer.entry-footer.cf{display: none;}
+article.page footer.entry-footer.cf{display: none;}
+
+/* Format quizzes */
+article.sfwd-quiz header.entry-header{display: none;}
+article.sfwd-quiz footer.entry-footer{display: none;}
+article.sfwd-quiz .wpProQuiz_content h2{margin-top: 0px;}
+
+/* Course table updates */
+article.sfwd-courses #learndash_lessons a{font-weight: bold;}
+article.sfwd-courses .notavailable_message{font-size: 13px; font-family: "Helvetica Neue",Helvetica,sans-serif; color: #717171;}
+
+/* Hide the post header section from unauthorized access */
+article.category-uncategorized header.entry-header{display: none;}
+article.category-uncategorized .mepr-unauthorized-message h4{margin-top: 0px;}
+article.sfwd-lessons footer.entry-footer.cf{display: none;}
+
+/* Fix the header on the login and authorized page */
+article#post-6 h4{font-size: 142.85%;}
+
+/* Adjust the size of the login form inputs */
+input#user_login, input#user_pass{width: 60%;}
+
+/* Adjust the widths of input fields on the registration form */
+#mepr_registerform input[type=text], input[type=password]{width: 35%;}
+
+/* Hide the header breadcrumb certain pages */
+.postid-28 header.x-header-landmark, .postid-3148 header.x-header-landmark, .postid-91 header.x-header-landmark, .postid-95 header.x-header-landmark, .postid-92 header.x-header-landmark, .postid-97 header.x-header-landmark, .postid-98 header.x-header-landmark, .postid-93 header.x-header-landmark, .postid-96 header.x-header-landmark, .postid-99 header.x-header-landmark, .postid-94 header.x-header-landmark, .postid-100 header.x-header-landmark, .page-id-6 header.x-header-landmark{display: none;}
+
+/* Adjust letter spacing on lesson not available spacing */
+small.notavailable_message{letter-spacing: -0.5px;}
+
+/* Extra padding for full line Latex equations */
+div.latex_equation_line{margin-bottom: 1.5em;}
+
+.page-id-4042 #top, .page-id-4044 #top, .page-id-4036 #top, .page-id-4103 #top, .page-id-4101 #top{background: url('https://gurus.pyimagesearch.com/wp-content/uploads/2015/10/sample_lesson.png') 0px 0px repeat;}
+
+/* BadgeOS Notification styles */
+#TB_ajaxContent{width: 640px !important;}
+#TB_title{color: #FFFFFF;}
+#badgeos_congrats .badgeos-congrats-achievement{padding: 10px; padding-left: 15px;}
+#badgeos_congrats .badgeos-congrats-achievement p.title{margin-bottom: 10px;}
+#badgeos_congrats .badgeos-congrats-achievement .content{margin-top: 10px;}
+#badgeos_congrats .badgeos-congrats-achievement .content p{margin: 0px; padding: 0px; font-size: 16px; line-height: 22px;}
+#badgeos_congrats .badgeos-congrats-achievement .content .course_progress{margin-left: 0px;}
+
+/* User achievements page */
+article.user-has-earned header.entry-header p.p-meta, article.user-has-not-earned header.entry-header p.p-meta{display: none;}
+article.user-has-earned .entry-featured, article.user-has-not-earned .entry-featured{display: none;}
+article.user-has-earned .badgeos-achievement-congratulations, article.user-has-not-earned .badgeos-achievement-congratulations{display: none;}
+
+/* Hide breadcrumb on Certificates page */
+body.page-id-10138 .x-header-landmark{display: none;}</style><script type="text/javascript" async="" src="./What is face recognition_ _ PyImageSearch Gurus_files/tagjs"></script><img src="./What is face recognition_ _ PyImageSearch Gurus_files/saved_resource" width="1" height="1" border="0"><img src="./What is face recognition_ _ PyImageSearch Gurus_files/tr" width="1" height="1" border="0"><img src="./What is face recognition_ _ PyImageSearch Gurus_files/seg" width="1" height="1" border="0"><img src="./What is face recognition_ _ PyImageSearch Gurus_files/tr(1)" width="1" height="1" border="0"><img src="https://secure.adnxs.com/seg?t=2&amp;add=2064627" width="1" height="1" border="0"></head>
+
+<body class="page page-id-39389 page-template-default x-renew x-navbar-static-active x-full-width-layout-active x-content-sidebar-active x-v4_3_4 x-child-theme-active x-shortcodes-v3_0_5" style="padding-right: 0px;">
+
+  
+  <div id="top" class="site">
+
+  
+  
+  <header class="masthead masthead-inline" role="banner">
+    
+    
+
+  <div class="x-navbar-wrap">
+    <div class="x-navbar">
+      <div class="x-navbar-inner">
+        <div class="x-container max width">
+          
+
+<a href="https://gurus.pyimagesearch.com/lesson-sample-what-is-face-recognition/?email=deshmukhps95@gmail.com#tour_modal" class="x-brand img" title="A course and community designed to take you from computer vision beginner to guru.">
+  <img src="./What is face recognition_ _ PyImageSearch Gurus_files/pyimagesearch_gurus_logo.png" alt="A course and community designed to take you from computer vision beginner to guru."></a>          
+<a href="https://gurus.pyimagesearch.com/lesson-sample-what-is-face-recognition/?email=deshmukhps95@gmail.com#tour_modal" class="x-btn-navbar collapsed" data-toggle="collapse" data-target=".x-nav-wrap.mobile">
+  <i class="x-icon-bars" data-x-icon=""></i>
+  <span class="visually-hidden">Navigation</span>
+</a>
+
+<nav class="x-nav-wrap desktop" role="navigation">
+  <ul id="menu-main-menu" class="x-nav"><li id="menu-item-16" class="menu-item menu-item-type-post_type menu-item-object-page menu-item-16"><a href="https://gurus.pyimagesearch.com/lesson-sample-what-is-face-recognition/?email=deshmukhps95@gmail.com#tour_modal"><span>Login</span></a></li>
+<li id="menu-item-52" class="menu-item menu-item-type-custom menu-item-object-custom menu-item-52"><a href="https://gurus.pyimagesearch.com/lesson-sample-what-is-face-recognition/?email=deshmukhps95@gmail.com#tour_modal"><span>Community</span></a></li>
+</ul></nav>
+
+<div class="x-nav-wrap mobile collapse">
+  <ul id="menu-main-menu-1" class="x-nav"><li class="menu-item menu-item-type-post_type menu-item-object-page menu-item-16"><a href="https://gurus.pyimagesearch.com/lesson-sample-what-is-face-recognition/?email=deshmukhps95@gmail.com#tour_modal"><span>Login</span></a></li>
+<li class="menu-item menu-item-type-custom menu-item-object-custom menu-item-52"><a href="https://gurus.pyimagesearch.com/lesson-sample-what-is-face-recognition/?email=deshmukhps95@gmail.com#tour_modal"><span>Community</span></a></li>
+</ul></div>        </div>
+      </div>
+    </div>
+  </div>
+
+  </header>
+
+    
+  
+    <header class="x-header-landmark">
+      <div class="x-container max width">
+        <div class="x-landmark-breadcrumbs-wrap">
+          <div class="x-landmark">
+
+          
+            <h1 class="h-landmark entry-title"><span>What is face recognition?</span></h1>
+
+          
+          </div>
+
+                                    <div class="x-breadcrumbs-wrap">
+                <div class="x-breadcrumbs"><a href="https://gurus.pyimagesearch.com/lesson-sample-what-is-face-recognition/?email=deshmukhps95@gmail.com#tour_modal"><span class="home"><i class="x-icon-home" data-x-icon=""></i></span></a> <span class="delimiter"><i class="x-icon-angle-right" data-x-icon=""></i></span> <span class="current">What is face recognition?</span></div>              </div>
+                      
+          
+        </div>
+      </div>
+    </header>
+
+  
+  <div class="x-container max width offset">
+    <div class="x-main left" role="main">
+
+              
+<article id="post-39389" class="post-39389 page type-page status-publish hentry user-has-not-earned no-post-thumbnail">
+  <div class="entry-wrap">
+            
+
+
+<div class="entry-content content">
+
+
+  <p>Unlike <strong><a href="https://gurus.pyimagesearch.com/lesson-sample-what-is-face-recognition/?email=deshmukhps95@gmail.com#tour_modal">face detection</a></strong>, which is the process of simply&nbsp;<em>detecting the presence</em>&nbsp;of a face in an image or video stream,&nbsp;<strong><em>face recognition</em></strong> takes the faces detected from the localization&nbsp;phase and attempts to identify <em>whom</em> the face belongs to.&nbsp;Face recognition can thus be thought of as a method of&nbsp;<em>person identification</em>,<em>&nbsp;</em>which we use heavily in security and surveillance systems.</p>
+<p>Since face recognition, by definition, requires face detection, we can&nbsp;think of face recognition as a two-phase process.</p>
+<ul>
+<li><strong>Phase #1:</strong> Detect the presence of faces in an image or video stream using methods such as Haar cascades, HOG + Linear SVM, deep learning, or any other algorithm that can localize faces.</li>
+<li><strong>Phase #2:</strong> Take each of the faces detected during the localization phase and identify each of them — this is where we actually assign a&nbsp;<em>name to a face</em>.</li>
+</ul>
+<p>In the remainder of this lesson we’ll review a quick history of face recognition, followed by introducing the two main facial identification algorithms we’ll be covering in this module:&nbsp;<em>Eigenfaces</em> and&nbsp;<em>LBPs for face recognition</em>.</p>
+<h1>Objectives:</h1>
+<p>In this lesson we will:</p>
+<ul>
+<li>Provide a brief history of face recognition.</li>
+<li>Introduce the Eigenfaces and LBPs for face recognition algorithms.</li>
+</ul>
+<h1>What is face recognition?</h1>
+<p>Face recognition is the process of taking a face in an image and actually <i>identifying who the face belongs to.</i> Face recognition is thus a form of&nbsp;<em>person identification</em>.</p>
+<p>Early face&nbsp;recognition systems relied on&nbsp;<em>facial landmarks</em>&nbsp;extracted from images, such as the relative position and size of the eyes, nose, cheekbone, and jaw. However, these systems were often highly subjective and prone to error since these quantifications of the face were&nbsp;<em>manually extracted</em> by the computer scientists and administrators running the face recognition software.</p>
+<p>More recent face recognition systems rely on&nbsp;<em>feature extraction</em> and&nbsp;<em>machine learning</em> to train classifiers to identify faces in images. Not only are these systems non-subjective, but they are also&nbsp;<em>automatic</em> — no hand labeling of the face is required. We simply extract features from the faces, train our classifier, and then use it to identify subsequent faces.</p>
+<h2>A brief history of face recognition</h2>
+<p>In the history of computer vision, face recognition can actually be seen as a relatively “new” concept.</p>
+<p>Prior to the work of Goldstein, et al. in the 1970’s, face recognition was often regarded as science fiction, sequestered to the movies and books set in ultra-future times. In short, face recognition was a fantasy, and whether or not&nbsp;it would become a reality was unclear.</p>
+<p>This all changed in 1971 when Goldstein, et al. published&nbsp;<i><a href="https://gurus.pyimagesearch.com/lesson-sample-what-is-face-recognition/?email=deshmukhps95@gmail.com#tour_modal">Identification of human faces</a></i>. A crude first attempt at face identification, this method proposed 21 subjective facial&nbsp;features, such as hair color and &nbsp;lip thickness, to identify a face in a photograph.</p>
+<p>The largest drawback of this approach was that the 21 measurements (besides being highly subjective) were&nbsp;<em>manually computed</em> — an obvious flaw in a computer science community that was rapidly&nbsp;approaching unsupervised computation and classification (at least in terms of human oversight).</p>
+<p>Then, over a decade later in 1987, Kirby and Sirovich published their seminal work&nbsp;<em><a href="https://gurus.pyimagesearch.com/lesson-sample-what-is-face-recognition/?email=deshmukhps95@gmail.com#tour_modal">A Low-Dimensional Procedure for the Characterization of Human Faces</a></em>. You may be more familiar with this work under a different name —&nbsp;<strong><em>the Eigenfaces algorithm.</em></strong></p>
+<p>Kirby and Sirovich were able to demonstrate that a standard linear algebra technique for dimensionality reduction called <i><a href="https://gurus.pyimagesearch.com/lesson-sample-what-is-face-recognition/?email=deshmukhps95@gmail.com#tour_modal">Principal Component Analysis</a>&nbsp; </i>(PCA)&nbsp;could be used to identify a face using a feature vector smaller than 100-dim. Furthermore, the “principal components” (i.e., the eigenvectors, or the “eigenfaces”) could be used to actually&nbsp;<em>reconstruct</em> faces from the original dataset. This&nbsp;implies that a face could be represented (and eventually identified) as a&nbsp;<em>linear combination</em> of the eigenfaces:</p>
+<p><em>Query Face = 36% of Eigenface #1 + -8% of Eigenface #2 … + 21% of Eigenface N</em></p>
+<p>Following the work&nbsp;of Kirby and Sirovich, further research in face recognition exploded — we now see other linear algebra techniques such as <em><a href="https://gurus.pyimagesearch.com/lesson-sample-what-is-face-recognition/?email=deshmukhps95@gmail.com#tour_modal">Linear Discriminant Analysis</a></em> being used for&nbsp;face recognition. These are commonly known as&nbsp;<strong><em>Fisherfaces</em></strong>.</p>
+<p>Feature-based approaches such as <b><a href="https://gurus.pyimagesearch.com/lesson-sample-what-is-face-recognition/?email=deshmukhps95@gmail.com#tour_modal">Local Binary Patterns</a> for face recognition&nbsp;</b>have also been proposed and are still heavily used in real-world applications.</p>
+<p>We are even starting to see deep learning applied in face identification,&nbsp;but normally for face alignment and funneling, a pre-processing step that takes place&nbsp;<em>before</em> the face is actually identified.</p>
+<h2>Eigenfaces</h2>
+<p>The Eigenfaces algorithm uses <a href="https://gurus.pyimagesearch.com/lesson-sample-what-is-face-recognition/?email=deshmukhps95@gmail.com#tour_modal">Principal Component Analysis</a>&nbsp;to construct a low-dimensional representation of face images.</p>
+<div id="attachment_3422" style="width: 410px" class="wp-caption aligncenter"><a href="https://gurus.pyimagesearch.com/lesson-sample-what-is-face-recognition/?email=deshmukhps95@gmail.com#tour_modal"><img class="wp-image-3422" src="./What is face recognition_ _ PyImageSearch Gurus_files/what_is_fr_eigenfaces.jpg" alt="Figure 1: An example of applying an eigenvalue decomposition to a dataset of faces and extracting the 16 &quot;eigenfaces&quot; with the largest corresponding eigenvalue magnitude." width="400" height="277" srcset="https://gurus.pyimagesearch.com/wp-content/uploads/2015/03/what_is_fr_eigenfaces-300x208.jpg 300w, https://gurus.pyimagesearch.com/wp-content/uploads/2015/03/what_is_fr_eigenfaces-865x598.jpg 865w, https://gurus.pyimagesearch.com/wp-content/uploads/2015/03/what_is_fr_eigenfaces.jpg 876w" sizes="(max-width: 400px) 100vw, 400px"></a><p class="wp-caption-text"><strong>Figure 1:</strong> An example of applying an eigenvalue decomposition to a dataset of faces and extracting the 16 “eigenfaces” with the largest corresponding eigenvalue magnitude.</p></div>
+<p>This involves collecting a dataset of faces with&nbsp;<em>multiple</em> face images per person we want to identify — like having multiple&nbsp;<em>training examples</em>&nbsp;of an image class we would want to label in&nbsp;<strong><a href="https://gurus.pyimagesearch.com/lesson-sample-what-is-face-recognition/?email=deshmukhps95@gmail.com#tour_modal">image classification</a></strong>. Given this dataset of face images (presumed to be the same width,&nbsp;height, and ideally — with their eyes and facial structures aligned at the same&nbsp;<em>(x, y)</em>-coordinates, we apply an eigenvalue decomposition of the dataset, keeping the eigenvectors with the largest corresponding eigenvalues.</p>
+<p>Given these eigenvectors, a face can then be represented as a linear combination of what Kirby and Sirovich call <em><strong>eigenfaces</strong></em>.</p>
+<p>Face identification can be performed by computing the Euclidean distance between the eigenface representations and treating the face identification as a <strong><a href="https://gurus.pyimagesearch.com/lesson-sample-what-is-face-recognition/?email=deshmukhps95@gmail.com#tour_modal">k-Nearest Neighbor classification</a> </strong>problem&nbsp;— however, we tend to&nbsp;commonly apply more advanced machine learning algorithms to the eigenface representations.</p>
+<p>If you’re feeling a bit overwhelmed by the linear algebra terminology or how the Eigenfaces algorithm actually works, no worries — we’ll be covering the Eigenfaces algorithm in detail in our&nbsp;<strong><a href="https://gurus.pyimagesearch.com/lesson-sample-what-is-face-recognition/?email=deshmukhps95@gmail.com#tour_modal">next lesson</a></strong>.</p>
+<h2>LBPs for face recognition</h2>
+<p>While the Eigenfaces algorithm relies on PCA to construct a low-dimensional representation of face images, the Local Binary Patterns (LBPs) method relies, as the name suggests, on feature extraction.</p>
+<p>First introduced by&nbsp;Ahonen, et al. in their 2006&nbsp;paper,&nbsp;<em><a href="https://gurus.pyimagesearch.com/lesson-sample-what-is-face-recognition/?email=deshmukhps95@gmail.com#tour_modal">Face Recognition with Local Binary Patterns</a></em>, their method suggests dividing a&nbsp;face image into an&nbsp;<em>7 x 7</em>&nbsp;grid of equally sized cells:</p>
+<div id="attachment_3421" style="width: 281px" class="wp-caption aligncenter"><a href="https://gurus.pyimagesearch.com/lesson-sample-what-is-face-recognition/?email=deshmukhps95@gmail.com#tour_modal"><img class="wp-image-3421" src="./What is face recognition_ _ PyImageSearch Gurus_files/what_is_fr_lbps.png" alt="Figure 2: Applying LBPs for face recognition starts by dividing the face image into a 7 x 7 grid of equally sized cells." width="271" height="300" srcset="https://gurus.pyimagesearch.com/wp-content/uploads/2015/03/what_is_fr_lbps-271x300.png 271w, https://gurus.pyimagesearch.com/wp-content/uploads/2015/03/what_is_fr_lbps.png 320w" sizes="(max-width: 271px) 100vw, 271px"></a><p class="wp-caption-text"><strong>Figure 2:</strong> Applying LBPs for face recognition starts by dividing the face image into a <em>7 x 7</em> grid of equally sized cells.</p></div>
+<p>We then extract a <strong><a href="https://gurus.pyimagesearch.com/lesson-sample-what-is-face-recognition/?email=deshmukhps95@gmail.com#tour_modal">Local Binary Pattern</a></strong> histogram from each of the <i>49</i>&nbsp;cells. By dividing the image into cells we can introduce <em>locality</em> into our final feature vector. Furthermore,&nbsp;some cells are weighted such that they contribute <em>more</em> to the overall representation. Cells in the corners carry less identifying facial information compared to the cells in the center of the grid (which contain eyes, nose, and lip structures).&nbsp;Finally, we concatenate the weighted LBP histograms from the 49&nbsp;cells to form our final feature vector.</p>
+<p>The actual face identification is performed by&nbsp;<strong><a href="https://gurus.pyimagesearch.com/lesson-sample-what-is-face-recognition/?email=deshmukhps95@gmail.com#tour_modal">k-NN classification</a>&nbsp;</strong>using the <img src="./What is face recognition_ _ PyImageSearch Gurus_files/2f728dbcde765f5a357bce9752c0d878-ffffff-000000-0.png" alt="\chi^{2}" title="\chi^{2}" class="latex"> distance between the query image and the dataset of labeled faces —&nbsp;since we are comparing histograms, the <img src="./What is face recognition_ _ PyImageSearch Gurus_files/2f728dbcde765f5a357bce9752c0d878-ffffff-000000-0.png" alt="\chi^{2}" title="\chi^{2}" class="latex"> distance is a better choice than the Euclidean distance.</p>
+<p>While both Eigenfaces and LBPs for face recognition are fairly straightforward algorithms for face identification, the feature-based LBP method tends to be more resilient against noise (since it does not operate on the raw pixel intensities themselves) and will usually yield better results.</p>
+<p>We’ll be reviewing LBPs for face recognition in detail later in this module.</p>
+<h1>Summary</h1>
+<p>In this lesson we learned that face recognition is a two-phase process consisting of (1) face detection, and (2) identification of each detected face.</p>
+<p>We also introduced two popular algorithms for face recognition:&nbsp;<em>Eigenfaces</em> and&nbsp;<em>LBPs for face recognition</em>.</p>
+<p>In our <strong><a href="https://gurus.pyimagesearch.com/lesson-sample-what-is-face-recognition/?email=deshmukhps95@gmail.com#tour_modal">next lesson</a></strong> we’ll explore how to perform face identification using the Local Binary Patterns for face recognition&nbsp;algorithm.</p>
+  
+
+</div>
+
+
+  <footer class="entry-footer cf">
+    <p><i class="x-icon-tags" data-x-icon=""></i> Tags: <a href="https://gurus.pyimagesearch.com/lesson-sample-what-is-face-recognition/?email=deshmukhps95@gmail.com#tour_modal" rel="tag">sample lesson</a></p>  </footer>
+  </div>
+</article>        
+      
+    </div>
+
+    
+
+
+  <aside class="x-sidebar right" role="complementary">
+          <div id="pyimgtourwidget-2" class="widget widget_pyimgtourwidget"><div class="widget widget-text pyimg_tour_signup_widget_box">
+	<h4 class="h-widget">Ready to join the course?</h4>	<p>
+		Learning computer vision &amp; OpenCV used to be <strong><em>hard</em></strong>. <strong>But not anymore.</strong> Click the button below to join the PyImageSearch Gurus course and start your journey to computer vision mastery.
+	</p>
+	<a href="https://gurus.pyimagesearch.com/lesson-sample-what-is-face-recognition/?email=deshmukhps95@gmail.com#tour_modal">Join the course!</a>
+</div>
+</div>      </aside>
+
+
+  </div>
+
+
+
+  
+    
+
+  <a class="x-scroll-top right fade" href="https://gurus.pyimagesearch.com/lesson-sample-what-is-face-recognition/?email=deshmukhps95@gmail.com#tour_modal" title="Back to Top">
+    <i class="x-icon-angle-up" data-x-icon=""></i>
+  </a>
+
+  <script>
+
+  jQuery(document).ready(function($) {
+
+    var windowObj            = $(window);
+    var body                 = $('body');
+    var bodyOffsetBottom     = windowObj.scrollBottom();             // 1
+    var bodyHeightAdjustment = body.height() - bodyOffsetBottom;     // 2
+    var bodyHeightAdjusted   = body.height() - bodyHeightAdjustment; // 3
+    var scrollTopAnchor      = $('.x-scroll-top');
+
+    function sizingUpdate(){
+      var bodyOffsetTop = windowObj.scrollTop();
+      if ( bodyOffsetTop > ( bodyHeightAdjusted * 0.75 ) ) {
+        scrollTopAnchor.addClass('in');
+      } else {
+        scrollTopAnchor.removeClass('in');
+      }
+    }
+
+    windowObj.bind('scroll', sizingUpdate).resize(sizingUpdate);
+    sizingUpdate();
+
+    scrollTopAnchor.click(function(){
+      $('html,body').animate({ scrollTop: 0 }, 850, 'easeInOutExpo');
+      return false;
+    });
+
+  });
+
+  </script>
+
+  
+
+  
+    <footer class="x-colophon bottom" role="contentinfo">
+      <div class="x-container max width">
+
+        
+        
+                  <div class="x-colophon-content">
+            <p>© 2015 PyImageSearch. All Rights Reserved.</p>          </div>
+        
+      </div>
+    </footer>
+
+  
+
+  
+  </div> <!-- END #top.site -->
+
+  
+<!-- Drip -->
+<script type="text/javascript">
+  var _dcq = _dcq || [];
+  var _dcs = _dcs || {}; 
+  _dcs.account = '4768429';
+  
+  (function() {
+    var dc = document.createElement('script');
+    dc.type = 'text/javascript'; dc.async = true; 
+    dc.src = '//tag.getdrip.com/4768429.js';
+    var s = document.getElementsByTagName('script')[0];
+    s.parentNode.insertBefore(dc, s);
+  })();
+</script>
+
+<script type="text/javascript">
+jQuery(document).ready(function(){
+  // extract the path from the URL
+  path = window.location.pathname.substring(1);
+  path = path.substring(0, path.indexOf("/"));
+
+  // check if this is the thank you page
+  if (path == "thank-you"){
+    // track that the user has made a purchase
+    window._dcq = window._dcq || [];
+    window._dcq.push(["track", "purchased gurus membership", {}]);
+  }
+
+  // check if this is the registration page
+  else if (path == "register"){
+    // grab reference to Drip
+    window._dcq = window._dcq || [];
+
+    // check to see if the user is checking out
+    if (window.location.search.indexOf("action=checkout") != -1){
+      // track that the user has started checkout
+      window._dcq.push(["track", "started gurus checkout", {}]);
+    }
+
+    else{
+      // track that the user is registering
+      window._dcq.push(["track", "viewed gurus registration", {}]);
+    }
+  }
+});
+</script>
+<div id="un-thankyou" style="display: none;">
+	<h2>Thank you!</h2>
+	<p>
+		Your message has been received, I will get back to you ASAP!	</p>
+	<a href="https://gurus.pyimagesearch.com/lesson-sample-what-is-face-recognition/?email=deshmukhps95@gmail.com#tour_modal" id="un-feedback-close"><img src="./What is face recognition_ _ PyImageSearch Gurus_files/ok.png" id="thankyou-image" alt="Close" width="32" height="32"></a>
+</div>
+<script type="text/javascript">
+  (function() {
+    window._pa = window._pa || {};
+    // _pa.orderId = "myOrderId"; // OPTIONAL: attach unique conversion identifier to conversions
+    // _pa.revenue = "19.99"; // OPTIONAL: attach dynamic purchase values to conversions
+    // _pa.productId = "myProductId"; // OPTIONAL: Include product ID for use with dynamic ads
+    var pa = document.createElement('script'); pa.type = 'text/javascript'; pa.async = true;
+    pa.src = ('https:' == document.location.protocol ? 'https:' : 'http:') + "//tag.perfectaudience.com/serve/54220efd7ab7f03f7e000043.js";
+    var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(pa, s);
+  })();
+</script><!-- Drip -->
+<script type="text/javascript">
+  var _dcq = _dcq || [];
+  var _dcs = _dcs || {}; 
+  _dcs.account = '4768429';
+  
+  (function() {
+    var dc = document.createElement('script');
+    dc.type = 'text/javascript'; dc.async = true; 
+    dc.src = '//tag.getdrip.com/4768429.js';
+    var s = document.getElementsByTagName('script')[0];
+    s.parentNode.insertBefore(dc, s);
+  })();
+</script><link rel="stylesheet" id="badgeos-front-css" href="./What is face recognition_ _ PyImageSearch Gurus_files/badgeos-front.css" type="text/css" media="all">
+<script type="text/javascript">
+/* <![CDATA[ */
+var thickboxL10n = {"next":"Next >","prev":"< Prev","image":"Image","of":"of","close":"Close","noiframes":"This feature requires inline frames. You have iframes disabled or your browser does not support them.","loadingAnimation":"https:\/\/gurus.pyimagesearch.com\/wp-includes\/js\/thickbox\/loadingAnimation.gif"};
+/* ]]> */
+</script>
+<script type="text/javascript" src="./What is face recognition_ _ PyImageSearch Gurus_files/thickbox.js.download"></script>
+<script type="text/javascript" src="./What is face recognition_ _ PyImageSearch Gurus_files/credly-badge-builder.js.download"></script>
+<script type="text/javascript">
+/* <![CDATA[ */
+var badgeos_feedback_buttons = {"ajax_url":"\/wp-admin\/admin-ajax.php","user_id":"0"};
+var badgeos_feedback_buttons = {"ajax_url":"\/wp-admin\/admin-ajax.php","user_id":"0"};
+var BadgeosCredlyData = {"ajax_url":"\/wp-admin\/admin-ajax.php","message":"Would you like to display this badge on social networks and add it to your lifelong badge collection?","confirm":"Yes, send to Credly","cancel":"Cancel","share":"Share on Credly!","localized_error":"Error:","errormessage":"Error: Timed out"};
+/* ]]> */
+</script>
+<script type="text/javascript" src="./What is face recognition_ _ PyImageSearch Gurus_files/badgeos-achievements.js.download"></script>
+<script type="text/javascript" src="./What is face recognition_ _ PyImageSearch Gurus_files/jquery.form.min.js.download"></script>
+<script type="text/javascript">
+/* <![CDATA[ */
+var _wpcf7 = {"loaderUrl":"https:\/\/gurus.pyimagesearch.com\/wp-content\/plugins\/contact-form-7\/images\/ajax-loader.gif","recaptchaEmpty":"Please verify that you are not a robot.","sending":"Sending ..."};
+/* ]]> */
+</script>
+<script type="text/javascript" src="./What is face recognition_ _ PyImageSearch Gurus_files/scripts.js.download"></script>
+<script type="text/javascript" src="./What is face recognition_ _ PyImageSearch Gurus_files/x-body.min.js.download"></script>
+<script type="text/javascript" src="./What is face recognition_ _ PyImageSearch Gurus_files/x-shortcodes-body.min.js.download"></script>
+<script type="text/javascript" src="./What is face recognition_ _ PyImageSearch Gurus_files/wp-embed.min.js.download"></script>
+<script type="text/javascript" src="./What is face recognition_ _ PyImageSearch Gurus_files/learndash_template_script.js.download"></script>
+
+  
+    <script id="x-customizer-js">
+      // if the unauthorized login link is on the page, remove it
+if (jQuery("div.mepr-unauthorized-message").length){
+jQuery(document).ready(function(){jQuery("div.mepr-login-form-wrap").hide();});}
+
+// if the unauthorized query string is set, then hide the introductory login
+if (location.search.indexOf("action=mepr_unauthorized") != -1){jQuery("p.gurus_login_info").hide();}
+
+jQuery(".achievement_tweet").click(function(e){
+	e.preventDefault();
+	win = window.open(jQuery(this).attr("href"), 'Post on Twitter','height=350,width=600');
+	if (window.focus){win.focus()}
+	return false;
+});    </script>
+
+  
+  <script>
+  (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+  (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+  m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+  })(window,document,'script','//www.google-analytics.com/analytics.js','ga');
+
+  ga('create', 'UA-61169353-1', 'auto');
+  ga('send', 'pageview');
+</script>
+
+<a href="https://gurus.pyimagesearch.com/lesson-sample-what-is-face-recognition/?email=deshmukhps95@gmail.com#tour_modal" id="un-button" class="un-right css3" style="background-color: rgb(22, 159, 230); color: rgb(255, 255, 255); margin-top: -24.5px; right: 38px;">Feedback</a><div class="remodal-overlay remodal-is-closed" style="display: none;"></div><div class="remodal-wrapper remodal-is-closed" style="display: none;"><div class="remodal remodal-is-initialized remodal-is-closed" data-remodal-id="tour_modal" role="dialog" tabindex="-1">	<button data-remodal-action="close" class="remodal-close"></button>	<div>		<h2>Ready to become a computer vision Guru?</h2>		<p>			These sample lessons are just the beginning. Join the PyImageSearch Gurus course and you'll get access to over <strong>13 modules</strong> covering <strong>168 lessons</strong> and <strong>2,161 pages of content.</strong> You won't find a more detailed computer vision course anywhere else online, I guarantee it.		</p>	<br>	<button data-remodal-action="confirm" class="remodal-confirm">I'm ready to join!</button>	<button data-remodal-action="cancel" class="remodal-cancel">Not yet.</button></div></div></div><div class="credly-share-popup" style="display: none;"><div class="credly-wrap"><span>Would you like to display this badge on social networks and add it to your lifelong badge collection?</span><div class="badgeos-spinner"></div><span class="credly-message" style="display: none;"><strong class="error">Error: Timed out</strong></span><input type="submit" class="credly-button credly-send" value="Yes, send to Credly"><a class="credly-button credly-cancel" href="https://gurus.pyimagesearch.com/lesson-sample-what-is-face-recognition/?email=deshmukhps95@gmail.com#">Cancel</a><div style="clear: both;"></div></div><div style="clear: both;"></div></div><div class="remodal-wrapper remodal-is-closed" style="display: none;"><div class="remodal remodal-is-initialized remodal-is-closed" data-remodal-id="signup_modal" role="dialog" tabindex="-1">	<button data-remodal-action="close" class="remodal-close"></button>	<div id="tour_signup_container">		<h2><span>Ready to become a computer vision guru?</span><br>Just select your membership plan below...</h2>		<div class="memberships">			<div class="membership-right">				<div class="membership-title">					Instant Access Membership				</div>				<div class="membership-pricing">					$995					<div class="membership-terms">One-time Payment — <strong>Save 15%!</strong></div>				</div>				<div class="membership-features">					<ul>						<li>Admission to the PyImageSearch Gurus course.</li>						<li><strong>Instant access</strong> to <strong><em>every lesson</em></strong> in the PyImageSearch Gurus course for an upfront one-time payment.</li>						<li><strong>100% fully self-paced:</strong> work at your own speed, focus on the lessons that interest you the most.</li>						<li><strong>Accelerate your progress</strong> and finish the course <em>faster</em> than 6 months.</li>						<li>Access to the <strong>private PyImageSearch Gurus Community + Forums</strong>.</li>						<li><strong><em>SAVE 15%</em></strong> by going with the instant access membership.</li>					</ul>				</div>				<div class="membership-join">					<div class="signupbtn" data-product="instant_access_tp" data-url="https://gurus.pyimagesearch.com/register/pyimagesearch-gurus-instant-access-membership-fcff7b5e/">Join the course!</div>				</div>			</div>			<div class="membership-left">				<div class="membership-title">					Apprentice Membership				</div>				<div class="membership-pricing">					$95					<div class="membership-terms">Billed monthly</div>				</div>				<div class="membership-features">					<ul>						<li>Admission to the PyImageSearch Gurus course.</li>						<li><strong>Preset course schedule:</strong> each month for 6 months (based on your signup date) a new set of lessons is released.</li>						<li>Finish the course in as little as 6 months.</li>						<li>Access to the <strong>private PyImageSearch Gurus Community + Forums</strong>.</li>					</ul>				</div>				<div class="membership-join">					<div class="signupbtn" data-product="apprentice_membership_tp" data-url="https://gurus.pyimagesearch.com/register/pyimagesearch-gurus-apprentice-membership/">Join the course!</div>				</div>			</div>		</div>	</div></div></div></body></html>
